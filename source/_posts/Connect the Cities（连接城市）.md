@@ -5,9 +5,7 @@ categories: []
 date: 2020-12-12 17:12:30
 ---
 
-<!--more-->
 
-@author:yefeng
 
 In 2100, since the sea level rise, most of the cities disappear. Though some survived cities are still connected with others, but most of them become disconnected. The government wants to build some roads to connect all of these cities again, but they don’t want to take too much money.  
 

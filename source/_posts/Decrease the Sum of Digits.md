@@ -5,7 +5,7 @@ categories: []
 date: 2020-12-12 17:50:59
 ---
 
-<!--more-->
+
 
 You are given a positive integer n. In one move, you can increase n by one (i.e. make n:=n+1). Your task is to find the minimum number of moves you need to perform in order to make the sum of digits of n be less than or equal to s.
 

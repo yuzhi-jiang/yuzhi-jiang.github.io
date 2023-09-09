@@ -5,7 +5,7 @@ categories: []
 date: 2020-12-12 17:36:35
 ---
 
-<!--more-->
+
 
 We have a secret array. You don't know this array and you have to restore it. However, you know some facts about this array:
 
