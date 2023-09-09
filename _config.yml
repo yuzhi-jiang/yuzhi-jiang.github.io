@@ -1,5 +1,5 @@
 
-root: /hexo/
+#root: /hexo/
 theme: "Chic"
 auto_category:
  enable: true
