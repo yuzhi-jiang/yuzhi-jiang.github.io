@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="John Doe">
+
+
+
+
+
+<title>7-2 吃鱼还是吃肉 (10 分) | Hexo</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">7-2 吃鱼还是吃肉 (10 分)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">John Doe</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 4, 2019&nbsp;&nbsp;21:13:45</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <span id="more"></span>
+
+<p>东软学习小组：烈焰（代号）<br><img src="https://img-blog.csdnimg.cn/2019110421112411.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzI3MjI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><img src="https://img-blog.csdnimg.cn/2019110421111846.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzI3MjI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>国家给出了 8 岁男宝宝的标准身高为 130 厘米、标准体重为 27 公斤；8 岁女宝宝的标准身高为 129 厘米、标准体重为 25 公斤。</p>
+<p>现在你要根据小宝宝的身高体重，给出补充营养的建议。</p>
+<p>输入格式：<br>输入在第一行给出一个不超过 10 的正整数 N，随后 N 行，每行给出一位宝宝的身体数据：</p>
+<p>性别 身高 体重<br>其中性别是 1 表示男生，0 表示女生。身高和体重都是不超过 200 的正整数。</p>
+<p>输出格式：<br>对于每一位宝宝，在一行中给出你的建议：</p>
+<p>如果太矮了，输出：duo chi yu!（多吃鱼）；<br>如果太瘦了，输出：duo chi rou!（多吃肉）；<br>如果正标准，输出：wan mei!（完美）；<br>如果太高了，输出：ni li hai!（你厉害）；<br>如果太胖了，输出：shao chi rou!（少吃肉）。<br>先评价身高，再评价体重。两句话之间要有 1 个空格。</p>
+<p>输入样例：<br>4<br>0 130 23<br>1 129 27<br>1 130 30<br>0 128 27<br>输出样例：<br>ni li hai! duo chi rou!<br>duo chi yu! wan mei!<br>wan mei! shao chi rou!<br>duo chi yu! shao chi rou!</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">  int N,s,t,a,i=0;</span><br><span class="line">  scanf(&quot;%d&quot;,&amp;N);</span><br><span class="line">  while(i&lt;N)</span><br><span class="line">  </span><br><span class="line">  &#123;</span><br><span class="line">    scanf(&quot;%d %d %d&quot;,&amp;a,&amp;s,&amp;t);//把身高体重都分开讨论。</span><br><span class="line">    if(a==1)</span><br><span class="line">    &#123;</span><br><span class="line">      if(s&lt;130) printf(&quot;duo chi yu! &quot;);</span><br><span class="line">      if(s==130) printf(&quot;wan mei! &quot;);</span><br><span class="line">      if(s&gt;130) printf(&quot;ni li hai! &quot;);</span><br><span class="line">      if(t&lt;27) printf(&quot;duo chi rou!\n&quot;);</span><br><span class="line">      if(t==27) printf(&quot;wan mei!\n&quot;);</span><br><span class="line">      if(t&gt;27) printf(&quot;shao chi rou!\n&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    if(a==0)</span><br><span class="line">    &#123;</span><br><span class="line">      if(s&lt;129) printf(&quot;duo chi yu! &quot;);</span><br><span class="line">      if(s==129) printf(&quot;wan mei! &quot;);</span><br><span class="line">      if(s&gt;129) printf(&quot;ni li hai! &quot;);</span><br><span class="line">      if(t&lt;25) printf(&quot;duo chi rou!\n&quot;);</span><br><span class="line">      if(t==25) printf(&quot;wan mei!\n&quot;);</span><br><span class="line">      if(t&gt;25) printf(&quot;shao chi rou!\n&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line">  return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>John Doe</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2019/11/04/7-2%20%E5%90%83%E9%B1%BC%E8%BF%98%E6%98%AF%E5%90%83%E8%82%89%20(10%20%E5%88%86)/">http://example.com/2019/11/04/7-2%20%E5%90%83%E9%B1%BC%E8%BF%98%E6%98%AF%E5%90%83%E8%82%89%20(10%20%E5%88%86)/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/11/04/2%20%E8%BE%93%E5%87%BA%E5%80%92%E4%B8%89%E8%A7%92%E5%9B%BE%E6%A1%88/">2 输出倒三角图案</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/04/7-1%2012-24%E5%B0%8F%E6%97%B6%E5%88%B6%20(15%20%E5%88%86)/">7-1 12-24小时制 (15 分)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© John Doe | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
