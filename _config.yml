@@ -1,3 +1,5 @@
+
+root: /hexo/
 theme: "Chic"
 auto_category:
  enable: true
@@ -5,6 +7,6 @@ auto_category:
  depth: 2
 deploy:
  type: git
- repo: https://github.com/yuzhi-jiang/yuzhi-jiang.github.io
+ repo: https://github.com/yuzhi-jiang/hexo
  # example, https://github.com/hexojs/hexojs.github.io
  branch: gh-pages
