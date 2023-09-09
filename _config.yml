@@ -1,0 +1,10 @@
+theme: "Chic"
+auto_category:
+ enable: true
+ multiple: false
+ depth: 2
+deploy:
+ type: git
+ repo: https://github.com/yuzhi-jiang/yuzhi-jiang.github.io
+ # example, https://github.com/hexojs/hexojs.github.io
+ branch: gh-pages
