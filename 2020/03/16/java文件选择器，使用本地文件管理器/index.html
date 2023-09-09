@@ -149,10 +149,7 @@
         </header>
 
         <div class="post-content">
-            <span id="more"></span>
-
-
-<p>java默认的选择器太丑了</p>
+            <p>java默认的选择器太丑了</p>
 <p>如下选择管理器</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(fileChooser.showOpenDialog(<span class="literal">null</span>)==JFileChooser.APPROVE_OPTION)&#123;</span><br><span class="line">            pathField.setText(fileChooser.getSelectedFile().getPath());<span class="comment">//文本框给出路径</span></span><br><span class="line">            imgname = fileChooser.getSelectedFile().getName();<span class="comment">//获取加密文件名</span></span><br><span class="line">            imgpath = pathField.getText() ;</span><br><span class="line">            imgpath = imgpath.substring(<span class="number">0</span>,imgpath.length()-imgname.length());<span class="comment">//获取加密的文件所在的文件夹</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 <p>增加下面代码<br><a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/425294497293157012.html">参考链接如下</a><br><a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/425294497293157012.html">https://zhidao.baidu.com/question/425294497293157012.html</a></p>

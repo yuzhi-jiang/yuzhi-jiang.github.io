@@ -214,15 +214,13 @@
         </header>
 
         <div class="post-content">
-            <span id="more"></span>
-
-<p>东软学习小组成员：夜枫</p>
-<h2 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h2><p>创建一颗二叉树，并进行广度优先遍历<br>输入格式:<br>abd##e##cf###，#代表空节点<br>输出格式:<br>按广度优先顺序输出，两个字符间有一个空格<br>输入样例:<br>在这里给出一组输入。例如：</p>
+            <h2 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h2><p>创建一颗二叉树，并进行广度优先遍历<br>输入格式:<br>abd##e##cf###，#代表空节点<br>输出格式:<br>按广度优先顺序输出，两个字符间有一个空格<br>输入样例:<br>在这里给出一组输入。例如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abd#<span class="meta">#e##cf###</span></span><br></pre></td></tr></table></figure>
 
 <p>输出样例:<br>在这里给出相应的输出。例如：</p>
 <p>注意：最后一个没有空格</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a b c d e f</span><br></pre></td></tr></table></figure>
+
 <p> 1.构建结构体</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> data;</span><br><span class="line">	node* left;</span><br><span class="line">	node* right;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">typedef</span> node* Node;<span class="comment">//节点的指针</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>2.全局变量</p>

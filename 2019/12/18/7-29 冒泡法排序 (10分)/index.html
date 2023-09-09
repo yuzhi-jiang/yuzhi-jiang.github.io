@@ -127,71 +127,6 @@
                 <div class="container">
     
     
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Back to top</a>
-        <a onclick="go_bottom()">Go to bottom</a>
-    </div>
-</div>
-
-<script>
-    var tocbot_timer;
-    var DEPTH_MAX = 6; // 为 6 时展开所有
-    var tocbot_default_config = {
-        tocSelector: '.tocbot-list',
-        contentSelector: '.post-content',
-        headingSelector: 'h1, h2, h3, h4, h5',
-        orderedList: false,
-        scrollSmooth: true,
-        onClick: extend_click,
-    };
-
-    function extend_click() {
-        clearTimeout(tocbot_timer);
-        tocbot_timer = setTimeout(function() {
-            tocbot.refresh(obj_merge(tocbot_default_config, {
-                hasInnerContainers: true
-            }));
-        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
-    }
-
-    document.ready(function() {
-        tocbot.init(obj_merge(tocbot_default_config, {
-            collapseDepth: 1
-        }));
-    });
-
-    function expand_toc() {
-        var b = document.querySelector('.tocbot-toc-expand');
-        var expanded = b.getAttribute('data-expanded');
-        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
-        tocbot.refresh(obj_merge(tocbot_default_config, {
-            collapseDepth: expanded ? 1 : DEPTH_MAX
-        }));
-        b.innerText = expanded ? 'Expand all' : 'Collapse all';
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    function obj_merge(target, source) {
-        for (var item in source) {
-            if (source.hasOwnProperty(item)) {
-                target[item] = source[item];
-            }
-        }
-        return target;
-    }
-</script>
-    
 
     
     <article class="post-wrap">
@@ -214,9 +149,7 @@
         </header>
 
         <div class="post-content">
-            <span id="more"></span>
-
-<h2 id="东软学习小组成员：夜枫"><a href="#东软学习小组成员：夜枫" class="headerlink" title="东软学习小组成员：夜枫"></a>东软学习小组成员：夜枫</h2><p>题目：</p>
+            <p>题目：</p>
 <p>输入1个正整数n（1&lt;&#x3D;n&lt;&#x3D;10），然后输入n个整数并存放在数组中，将这n个整数从大到小排序后输出，相邻数字间有一个空格，行末不得有多余空格。<br>输入格式:<br>输入第一行给出一个不超过10的正整数n。第二行给出n个整数，其间以空格分隔。<br>输出格式:<br>在一行中输出从大到小有序的数列，相邻数字间有一个空格，行末不得有多余空格。<br>输入样例:<br>4<br>75 71 77 76<br>输出样例:<br>77 76 75 71</p>
 <p>代码：：<br>c++，排序算法为指针函数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sort</span><span class="params">(<span class="type">int</span> *p,<span class="type">int</span> num)</span></span>&#123;<span class="comment">//降序排序 </span></span><br><span class="line">	<span class="comment">//int num=sizeof(p)/sizeof(int);</span></span><br><span class="line">	<span class="comment">//cout&lt;&lt;num&lt;&lt;endl;</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> *i=p;i&lt;p+(num<span class="number">-1</span>);i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> *j=i;j&lt;p+num;j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(*j&gt;*i)&#123;</span><br><span class="line">				</span><br><span class="line">			<span class="type">int</span> t=*i;</span><br><span class="line">			*i=*j;</span><br><span class="line">			*j=t;</span><br><span class="line">				</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    <span class="type">int</span> num[n];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        cin&gt;&gt;num[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> size=<span class="built_in">sizeof</span>(num)/<span class="built_in">sizeof</span>(<span class="type">int</span>);</span><br><span class="line">    <span class="built_in">sort</span>(num,size);</span><br><span class="line">    <span class="comment">//printf</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i&lt;n<span class="number">-1</span>)&#123;</span><br><span class="line">            cout&lt;&lt;num[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            cout&lt;&lt;num[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
