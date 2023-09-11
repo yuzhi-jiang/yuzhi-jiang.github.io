@@ -1,3 +1,10 @@
+---
+tags: maven,笔记,私库
+categories: [java]
+date: 2020-11-21 12:09:07
+title:
+---
+
 [maven==docker搭建私有maven仓库，编写starter并发布到私有maven仓库，在项目中使用私有仓库中的starter](https://blog.csdn.net/hebian1994/article/details/126084836)
 
 [如何自定义一个springboot starter（超详细）](https://blog.csdn.net/johnhum123/article/details/118880781?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-2-118880781-blog-93760751.pc_relevant_vip_default&spm=1001.2101.3001.4242.2&utm_relevant_index=5)
