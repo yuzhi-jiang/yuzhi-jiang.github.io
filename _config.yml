@@ -21,3 +21,9 @@ deploy:
  repo: https://github.com/yuzhi-jiang/hexo
  # example, https://github.com/hexojs/hexojs.github.io
  branch: gh-pages
+
+#使用 Markdown 嵌入图片
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true

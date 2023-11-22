@@ -1,3 +1,6 @@
+---
+categories: []
+---
 ### 移除现存snaps
 
 在新安装的Ubuntu中，已经默认安装了部分snaps，可以通过以下命令查看:

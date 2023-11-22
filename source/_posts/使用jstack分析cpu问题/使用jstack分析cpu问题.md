@@ -1,8 +1,9 @@
 ---
 tags: 笔记
-categories: [分析]
-date: 2020-11-21 12:09:07
+categories:
+  - 使用jstack分析cpu问题
 title: 使用jstack分析cpu问题笔记
+date: 2023-7-21 12:09:07
 ---
 
 **我们先用ps命令找到对应进程的pid(如果你有好几个目标进程，可以先用top看一下哪个占用比较高)。**

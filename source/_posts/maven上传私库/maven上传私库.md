@@ -1,8 +1,9 @@
 ---
-tags: maven,笔记,私库
-categories: [java]
-date: 2020-11-21 12:09:07
-title:
+tags: 'maven,笔记,私库'
+categories:
+  - maven上传私库
+title: maven上传私库
+date: 2023-7-21 12:09:07
 ---
 
 [maven==docker搭建私有maven仓库，编写starter并发布到私有maven仓库，在项目中使用私有仓库中的starter](https://blog.csdn.net/hebian1994/article/details/126084836)
