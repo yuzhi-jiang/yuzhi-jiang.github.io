@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -13,7 +14,7 @@
 
 
 
-<title>yuzhi</title>
+<title>maven上传私库 | yuzhi</title>
 
 
 
@@ -131,7 +132,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title"></h1>
+            <h1 class="post-title">maven上传私库</h1>
             
                 <div class="post-meta">
                     
@@ -140,14 +141,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">November 21, 2020&nbsp;&nbsp;12:09:07</a>
+                        Date: <a href="#">July 21, 2023&nbsp;&nbsp;12:09:07</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/java/">java</a>
+                                <a href="/categories/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/">maven上传私库</a>
                             
                         </span>
                     
@@ -180,13 +181,13 @@
 
 <br/>
 
-<p><img src="/7addcd443621b3f45a04b39984c27288.png" alt="截图"></p>
+<p><img src="/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/7addcd443621b3f45a04b39984c27288.png" alt="截图"></p>
 <br/>
 
 <p>需要注意的是，因为上图中，我们仓库有好几个，我是上传到了3对应的仓库，你可以根据你们实际的仓库地址来就行。<br>  另外id对应的releases其实是与指定的maven配置文件conf&#x2F;setttings.xml中对应，如下图所示：</p>
 <br/>
 
-<p><img src="/4d80825744ab7433181459f4d8374464.png" alt="截图"></p>
+<p><img src="/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/4d80825744ab7433181459f4d8374464.png" alt="截图"></p>
 <p>  如果对应的settings.xml里没有配置<servers>对应的标签，那也需要添加一下。如下示例：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;servers&gt;</span><br><span class="line">  &lt;server&gt;</span><br><span class="line">  	&lt;!--与2.1.1中的id值对应--&gt;</span><br><span class="line">      &lt;id&gt;releases&lt;/id&gt;</span><br><span class="line">      &lt;!--账号密码需要与私服登录账号密码一致--&gt;</span><br><span class="line">      &lt;username&gt;admin&lt;/username&gt;</span><br><span class="line">      &lt;password&gt;znxd&lt;/password&gt;</span><br><span class="line">  &lt;/server&gt;</span><br><span class="line">&lt;/servers&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -202,7 +203,7 @@
 <br/>
 
 <p>2.3 成功后的依赖<br>   上传成功后，可以通过地址找一下，如下图即表示成功：</p>
-<p><img src="/422f18d7bcb66b0b8c12bc338275d598.png" alt="截图"></p>
+<p><img src="/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/422f18d7bcb66b0b8c12bc338275d598.png" alt="截图"></p>
 <ol start="3">
 <li>扩展<br>   比如你做这个依赖包，可能后边还会有更新的时候，但是如果以前的依赖包已经被别人使用，那不可能一个个的通知使用者，maven本身提供这种自动下载高版本的功能，只需要对version标签的值改一下。如下：</li>
 </ol>
@@ -220,7 +221,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://blog.yefeng.love/2020/11/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/">https://blog.yefeng.love/2020/11/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/</a></span>
+                        <span><a href="https://blog.yefeng.love/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/">https://blog.yefeng.love/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/</a></span>
                     </p>
                 
                 
@@ -247,10 +248,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/11/21/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8/"></a>
+                <a class="prev" rel="prev" href="/2023/11/22/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
             
             
-            <a class="next" rel="next" href="/2020/11/21/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/">使用jstack分析cpu问题笔记</a>
+            <a class="next" rel="next" href="/2023/07/21/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/">使用jstack分析cpu问题笔记</a>
             
         </section>
 
