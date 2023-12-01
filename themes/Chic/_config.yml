@@ -26,7 +26,7 @@ links:
   Blog: ./archives
   # Category:
   # Tags: 
-  # Link:
+  # Link: 
   # Resume:
   # Publish:
   # Trophy:
@@ -39,14 +39,15 @@ links:
   # Twitter:
   # Skype:
   # CodeSandBox:
-  # CodePen:
+  CodePen: https://yuzhi-jiang.github.io/memos/
   # Sketch:
   # Gitlab:
   # Dribbble:
-  Instagram:
+  memosPage: 
+  #Instagram:
   Reddit:
   # YouTube:
-  # QQ:
+  #  QQ: 1226325909
   # Weibo:
   # WeChat:
   Github: https://github.com/yuzhi-jiang
