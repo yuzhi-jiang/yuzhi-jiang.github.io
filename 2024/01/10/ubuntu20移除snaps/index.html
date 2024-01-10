@@ -14,7 +14,7 @@
 
 
 
-<title>sqlserver连接问题 | yuzhi</title>
+<title>yuzhi</title>
 
 
 
@@ -197,7 +197,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">sqlserver连接问题</h1>
+            <h1 class="post-title"></h1>
             
                 <div class="post-meta">
                     
@@ -206,60 +206,54 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">December 1, 2023&nbsp;&nbsp;13:14:56</a>
+                        Date: <a href="#">January 10, 2024&nbsp;&nbsp;16:00:57</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/">sqlserver连接问题</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在公司有一个plm的项目，使用的是jdk1.8.0_66，有个需求是需要在plm项目中引入</p>
-<p><strong>SQLServer</strong> 与<strong>PostgreSQL</strong>组成两个数据源，因为项目之前引入过SQLServer，便直接将该依赖引入，然后跑起来，不出意外的确实出意外了。所以便记录了这次排查过程</p>
+            <h3 id="移除现存snaps"><a href="#移除现存snaps" class="headerlink" title="移除现存snaps"></a>移除现存snaps</h3><p>在新安装的Ubuntu中，已经默认安装了部分snaps，可以通过以下命令查看:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snap list</span><br></pre></td></tr></table></figure>
+
+<p>例如，Raspberry Pi 4的Ubuntu Server 64位版本，输出显示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Name    Version   Rev    Tracking       Publisher   Notes</span><br><span class="line">core18  20200707  1883   latest/stable  canonical✓  base</span><br><span class="line">lxd     4.0.2     16103  4.0/stable/…   canonical✓  -</span><br><span class="line">snapd   2.45.2    8543   latest/stable  canonical✓  snapd</span><br></pre></td></tr></table></figure>
+
+<p>并且，如果你执行 df -h 命令可以看到已经挂载了snap的服务:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/dev/loop0       49M   49M     0 100% /snap/core18/1883</span><br><span class="line">/dev/loop1       64M   64M     0 100% /snap/lxd/16103</span><br><span class="line">/dev/loop2       26M   26M     0 100% /snap/snapd/8543</span><br><span class="line">/dev/loop3       49M   49M     0 100% /snap/core18/1888</span><br></pre></td></tr></table></figure>
+
+<h5 id="注意-删除snap之前要先删除-包"><a href="#注意-删除snap之前要先删除-包" class="headerlink" title="注意 删除snap之前要先删除 包"></a>注意 删除snap之前要先删除 包</h5><p>使用 sudo snap remove <package> 命令移除:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove lxd</span><br></pre></td></tr></table></figure>
+
+<p>但是不能先移除 snapd ，如果你执行 sudo snap remove snapd 会提示错误:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: cannot remove &quot;snapd&quot;: snap &quot;snapd&quot; is not removable: remove all other snaps first</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>所以先移除 core18</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove core18</span><br></pre></td></tr></table></figure>
+
+<p>最后移除 snapd</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove snapd</span><br></pre></td></tr></table></figure>
+
 <br/>
 
-<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><h4 id="在plm中引用了sqlServer版本10-2-1-jre8版本"><a href="#在plm中引用了sqlServer版本10-2-1-jre8版本" class="headerlink" title="在plm中引用了sqlServer版本10.2.1.jre8版本"></a>在plm中引用了sqlServer版本10.2.1.jre8版本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt; </span><br><span class="line">  &lt;groupId&gt;com.microsoft.sqlserver&lt;/groupId&gt; </span><br><span class="line">  &lt;artifactId&gt;mssql-jdbc&lt;/artifactId&gt; </span><br><span class="line">  &lt;version&gt;10.2.1.jre8&lt;/version&gt; </span><br><span class="line">&lt;/dependency&gt; </span><br></pre></td></tr></table></figure>
+<p>此时 snapd 服务依然在运行，需要卸载 snapd 软件包来清理</p>
+<p>检查文件系统挂载 df -h 可以看到所有snaps相关挂载都已经消除:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            876M     0  876M   0% /dev</span><br><span class="line">tmpfs           185M  2.7M  183M   2% /run</span><br><span class="line">/dev/mmcblk0p2  117G  5.0G  108G   5% /</span><br><span class="line">tmpfs           925M     0  925M   0% /dev/shm</span><br><span class="line">tmpfs           5.0M     0  5.0M   0% /run/lock</span><br><span class="line">tmpfs           925M     0  925M   0% /sys/fs/cgroup</span><br><span class="line">/dev/mmcblk0p1  253M   97M  156M  39% /boot/firmware</span><br><span class="line">tmpfs           185M     0  185M   0% /run/user/1000</span><br></pre></td></tr></table></figure>
 
-<h4 id="配置如下："><a href="#配置如下：" class="headerlink" title="配置如下："></a>配置如下：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url: jdbc:sqlserver//ip:1433;databaseName=test;</span><br><span class="line">driver-class-name:com.microsoft.sqlserver.jdbc.SQLServerDriver</span><br></pre></td></tr></table></figure>
+<p>删除和清理snapd软件包:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt purge snapd</span><br></pre></td></tr></table></figure>
 
-<h4 id="启动会有如下报错："><a href="#启动会有如下报错：" class="headerlink" title="启动会有如下报错："></a>启动会有如下报错：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x27;PKIX path building failed: </span><br><span class="line">sun.security.provider.certpath.SunCertPathBuilderException: </span><br><span class="line">unable to find valid certification path to requested target&#x27;. </span><br><span class="line">ClientConnectionId:85411829-6853-4fdb-9373-b4c93e1d5e8f</span><br></pre></td></tr></table></figure>
+<p>执行 apt autoremove 清理所有无用软件包:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt autoremove</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/0a3be8d07a4a075f27f1f6382d8a0891.png" alt="截图"></p>
-<p><img src="/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/3acbd3b976f532e2078885f61486df74.png" alt="截图"></p>
 <br/>
 
-<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p><a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/azure-database-support-blog/pkix-path-building-failed-unable-to-find-valid-certification/ba-p/2591304">PKIX 路径构建失败 - 无法找到请求目标的有效证书路径</a></p>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/21076179/pkix-path-building-failed-and-unable-to-find-valid-certification-path-to-requ">stackoverflow分析</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Tencent/TencentKona-8/wiki/%E5%85%B3%E4%BA%8EOpenJDK%E7%A6%81%E7%94%A8TLS-1.0%E4%B8%8E1.1%E7%9A%84%E5%88%86%E6%9E%90">关于OpenJDK禁用TLS 1.0与1.1的分析</a></p>
-<p><a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/sql-server-blog/jdbc-driver-10-2-for-sql-server-released/ba-p/3100754">JDBC Driver 10.2 for SQL Server Released</a></p>
-<p>1.openJdk8_291后连接sqlserver需要ssl安全连接，如果通过 AAD 身份验证连接时客户端计算机上缺少所需的证书，就会报错。</p>
-<p><strong>在项目中，查看了jdk版本是1.8.0_66</strong></p>
-<p><img src="/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/88d21a6da9a04aac1705266e92c5b221.png" alt="截图"></p>
-<p>测试使用了另一个jdk版本<strong>1.8.0_331</strong></p>
-<p><img src="/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/f3ce4db5f1d0d8d620191dd0cb40fcf1.png" alt="截图"></p>
-<p>可以正常启动</p>
-<p><strong>猜测可能是版本比较老，依然允许tls1.0和tls1.1版本,在搜索资料时没有找到oraclejdk禁用tls1.1的信息</strong></p>
-<br/>
+<p>删除snap目录:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~/snap</span><br><span class="line">sudo rm -rf /snap</span><br><span class="line">sudo rm -rf /var/snap</span><br><span class="line">sudo rm -rf /var/lib/snapd</span><br></pre></td></tr></table></figure>
 
-<p><strong>在第四个文档中指出了，sqlserver从10.2 引入了默认情况下应用的重大更改Encrypt&#x3D;true</strong></p>
-<p><img src="/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/c8ecc473578266bb41101a7fb8809359.png" alt="截图"></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ol>
-<li>在此项目中，可以通过使用jdk1.8.0_331 <strong>此项目测试可行</strong></li>
-<li>url参数中添加 encrypt&#x3D;true;trustServerCertificate&#x3D;true <strong>此项目测试可行</strong></li>
-<li>修改sqlServer驱动到10.2以下 如：<strong>9.4.1.jre8</strong>  <strong>此项目测试可行</strong></li>
-<li>将jre中的java.security的禁用算法(路径为JAVA_HOME&#x2F;jre&#x2F;lib&#x2F;security&#x2F;java.security)  将TLSv1和TLSv1.1删除 <strong>此方法没试，此系统中查看jre并没禁用</strong></li>
-</ol>
-<br/>
-
-<p><img src="/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/1edaf951e3fb25cb1f5d60a2eede9ede.png" alt="1edaf951e3fb25cb1f5d60a2eede9ede.png"></p>
+<p>现在，所有snaps已经清理干净，</p>
 
         </div>
 
@@ -274,7 +268,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://blog.yefeng.love/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/">https://blog.yefeng.love/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/</a></span>
+                        <span><a href="https://blog.yefeng.love/2024/01/10/ubuntu20%E7%A7%BB%E9%99%A4snaps/">https://blog.yefeng.love/2024/01/10/ubuntu20%E7%A7%BB%E9%99%A4snaps/</a></span>
                     </p>
                 
                 
@@ -287,10 +281,6 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/%E6%8E%92%E6%9F%A5/"># 排查</a>
-                    
-                        
                 </span>
             </div>
             <div>
@@ -301,10 +291,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/01/10/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
+                <a class="prev" rel="prev" href="/2024/01/10/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">关于nginx_proxy_manager自定义设置映射文件路径</a>
             
             
-            <a class="next" rel="next" href="/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/">maven上传私库</a>
+            <a class="next" rel="next" href="/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/">sqlserver连接问题</a>
             
         </section>
 
