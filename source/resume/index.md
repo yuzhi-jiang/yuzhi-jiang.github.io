@@ -35,7 +35,7 @@ layout: resume
 
 ### 工作经验
 
-| **广东宝特机械制造有些公司** **2023-02 - 至今**
+| **广东宝特智能数字化技术有限公司** **2023-02 - 至今**
 
 **技术选型: SpringBoot、EasyExcel、EasyPoi、vue-plugins-hiprint（标签或报表打印）**
 
