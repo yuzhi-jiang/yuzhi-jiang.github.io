@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>自构建栈类（数组和链表双实现方式） | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">自构建栈类（数组和链表双实现方式）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 27, 2020&nbsp;&nbsp;16:52:09</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>最近学习数据结构与算法，讲到链表和栈，为了满足自己的好奇心和小小的成就感还有巩固知识，便根据栈的特点和功能，自构建栈类（分别使用数组和链表实现)</p>
+<p>在用链表实现时发现用结构体老是报错有问题，想到类本身就是结构体的演化，而且占据的内存是一样的，为什么要执着于用结构体呢，<br>带着想法度娘了一下，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/alantu2018/p/8471167.html">发现这篇博客就是用的类模板</a>，所以验证了心里的想法用类来代替结构体，<br>因知单纯看书看别人的代码是不够的，自己敲出来的才是自己的，所以把自己写的代码分享出来，也方便以后查看回忆</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">构建栈，并完善栈的各项操作，</span></span><br><span class="line"><span class="comment">1，判空</span></span><br><span class="line"><span class="comment">2，判断栈的长度，</span></span><br><span class="line"><span class="comment">3.插入，取出</span></span><br><span class="line"><span class="comment">4.栈顶的元素 </span></span><br><span class="line"><span class="comment">5.栈中的元素个数</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>数组实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">构建栈，并完善栈的各项操作，</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1，判空</span></span><br><span class="line"><span class="comment">2，判断栈的长度，</span></span><br><span class="line"><span class="comment">3.插入，取出</span></span><br><span class="line"><span class="comment">4.栈顶的元素 </span></span><br><span class="line"><span class="comment">5.是否有最长度元素 </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">mystack</span>&#123;</span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		</span><br><span class="line">		<span class="type">int</span> top;</span><br><span class="line">	    <span class="type">int</span> maxn;</span><br><span class="line">		T *data;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="built_in">mystack</span>()&#123;</span><br><span class="line">			top=<span class="number">-1</span>;</span><br><span class="line">			maxn=<span class="number">100</span>;</span><br><span class="line">			data=<span class="keyword">new</span> <span class="built_in">T</span>(maxn);</span><br><span class="line">			<span class="built_in">memset</span>(data,<span class="number">0</span>,<span class="built_in">sizeof</span>(data));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="type">bool</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> top==<span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="type">bool</span> <span class="title">isFull</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> top==maxn<span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="type">bool</span> <span class="title">push</span><span class="params">(T temp)</span></span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(top&lt;maxn)&#123;</span><br><span class="line">			<span class="comment">//	cout&lt;&lt;&quot;top=&quot;&lt;&lt;top&lt;&lt;endl;</span></span><br><span class="line">				data[++top]=temp;</span><br><span class="line">			<span class="comment">//	cout&lt;&lt;&quot;出入成功&quot;&lt;&lt;data[top]&lt;&lt;&quot;成功&quot;&lt;&lt;endl;</span></span><br><span class="line">				<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="function">T <span class="title">pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">			T t=data[top];</span><br><span class="line">			data[top]=<span class="number">0</span>;</span><br><span class="line">			top--;</span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function">T <span class="title">gettop</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//	cout&lt;&lt;&quot;gettop=&quot;&lt;&lt;data[top]&lt;&lt;endl;</span></span><br><span class="line">			T t=data[top];</span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line">		&#125;</span><br><span class="line">		~<span class="built_in">mystack</span>()&#123;</span><br><span class="line">			<span class="keyword">delete</span> data;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	mystack&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">	cout&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;s.<span class="built_in">isFull</span>()&lt;&lt;endl;</span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> a=<span class="number">100</span>;</span><br><span class="line">	<span class="type">int</span> b=<span class="number">200</span>;</span><br><span class="line">	s.<span class="built_in">push</span>(a);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top1=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	s.<span class="built_in">push</span>(b);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top2=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;pop1=&quot;</span>&lt;&lt;s.<span class="built_in">pop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;isempty? &quot;</span>&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;pop2=&quot;</span>&lt;&lt;s.<span class="built_in">pop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;isempty? &quot;</span>&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>2.单向链表是实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	T data;</span><br><span class="line">	Node *pre;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Node</span>()&#123;&#125;</span><br><span class="line">	<span class="built_in">Node</span>(T t,Node* _pre)&#123;</span><br><span class="line">		data = t;</span><br><span class="line">		pre = _pre;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">T <span class="title">getData</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> data;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">setData</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">		data = t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">Node* <span class="title">getPre</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pre;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">setPre</span><span class="params">(Node *_pre)</span></span>&#123;</span><br><span class="line">		pre = _pre;</span><br><span class="line">	&#125;</span><br><span class="line">	~<span class="built_in">Node</span>()&#123;</span><br><span class="line"><span class="comment">//		cout&lt;&lt;&quot;\n执行析构函数Node&quot;&lt;&lt;endl;</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">mystack2</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Node&lt;T&gt;* top;</span><br><span class="line">	Node&lt;T&gt;* Temp;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">mystack2</span>()&#123;</span><br><span class="line">		top = <span class="literal">NULL</span>;</span><br><span class="line">		Temp = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> top == <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">isFull</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> top != <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">push</span><span class="params">(T temp)</span></span>&#123;</span><br><span class="line">			Temp = <span class="keyword">new</span> <span class="built_in">Node</span>&lt;T&gt;(temp, <span class="literal">NULL</span>);</span><br><span class="line">			<span class="keyword">if</span> (top != <span class="literal">NULL</span>)&#123;</span><br><span class="line">				Temp-&gt;<span class="built_in">setPre</span>(top);</span><br><span class="line">			&#125;</span><br><span class="line">			top = Temp;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">T <span class="title">pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">		T t = top-&gt;<span class="built_in">getData</span>();</span><br><span class="line"></span><br><span class="line">		Temp = top;</span><br><span class="line">		top = top-&gt;<span class="built_in">getPre</span>();</span><br><span class="line">		<span class="keyword">delete</span> Temp;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">T <span class="title">gettop</span><span class="params">()</span></span>&#123;</span><br><span class="line">		T t = top-&gt;<span class="built_in">getData</span>();</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125;</span><br><span class="line">	~<span class="built_in">mystack2</span>()&#123;</span><br><span class="line">	<span class="comment">//	cout&lt;&lt;&quot;delete-&gt;&quot;&lt;&lt;top-&gt;getData();</span></span><br><span class="line">	<span class="comment">//	cout&lt;&lt;&quot;\n执行析构函数mystack2&quot;&lt;&lt;endl; </span></span><br><span class="line">			<span class="keyword">while</span> (top)</span><br><span class="line">			&#123;</span><br><span class="line">			<span class="comment">//	cout&lt;&lt;&quot;delete-&gt;&quot;&lt;&lt;top-&gt;getData()&lt;&lt;endl;</span></span><br><span class="line">				Temp = top;</span><br><span class="line">				top = top-&gt;<span class="built_in">getPre</span>();</span><br><span class="line">		<span class="comment">//		cout&lt;&lt;&quot;delete-&gt;&quot;&lt;&lt;top-&gt;getData();</span></span><br><span class="line">				<span class="keyword">delete</span> Temp;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (Temp)&#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">delete</span> Temp;</span><br><span class="line">			Temp=<span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (top)&#123;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">delete</span> top;</span><br><span class="line">				top=<span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	mystack2&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">	cout&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;s.<span class="built_in">isFull</span>()&lt;&lt;endl;</span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> a=<span class="number">100</span>;</span><br><span class="line">	<span class="type">int</span> b=<span class="number">200</span>;</span><br><span class="line">	s.<span class="built_in">push</span>(a);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top1=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	s.<span class="built_in">push</span>(b);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top2=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;pop1=&quot;</span>&lt;&lt;s.<span class="built_in">pop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;isempty? &quot;</span>&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;pop2=&quot;</span>&lt;&lt;s.<span class="built_in">pop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;isempty? &quot;</span>&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">	s.<span class="built_in">push</span>(a);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top3=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	s.<span class="built_in">push</span>(b);</span><br><span class="line">	s.<span class="built_in">push</span>(a);</span><br><span class="line">	s.<span class="built_in">push</span>(b);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>如果看不懂可以看下面带注释的<br>1.数组实现：&#96;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">构建栈，并完善栈的各项操作，</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1，判空</span></span><br><span class="line"><span class="comment">2，判断栈的长度，</span></span><br><span class="line"><span class="comment">3.插入，取出</span></span><br><span class="line"><span class="comment">4.栈顶的元素 </span></span><br><span class="line"><span class="comment">5.是否有最长度元素 </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">mystack</span>&#123;</span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="type">int</span> top;</span><br><span class="line">	    <span class="type">int</span> maxn;</span><br><span class="line">		T *data;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="comment">//初始化 </span></span><br><span class="line">		<span class="built_in">mystack</span>()&#123;</span><br><span class="line">			top=<span class="number">-1</span>;</span><br><span class="line">			maxn=<span class="number">100</span>;<span class="comment">//默认栈的最多100个元素 </span></span><br><span class="line">			<span class="comment">//分配数组内存 //销毁要用delete data </span></span><br><span class="line">			data=<span class="keyword">new</span> <span class="built_in">T</span>(maxn);</span><br><span class="line">			<span class="built_in">memset</span>(data,<span class="number">0</span>,<span class="built_in">sizeof</span>(data));<span class="comment">//初始化数组 </span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//判断栈是否为空，若栈顶为-1，为空，否则为真 </span></span><br><span class="line">		<span class="function"><span class="type">bool</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> top==<span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//判断是否 </span></span><br><span class="line">		<span class="function"><span class="type">bool</span> <span class="title">isFull</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> top==maxn<span class="number">-1</span>;<span class="comment">//如果栈现在是99 0-99为100个，满了 </span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//压入元素到栈，压栈 </span></span><br><span class="line">		<span class="function"><span class="type">bool</span> <span class="title">push</span><span class="params">(T temp)</span></span>&#123;</span><br><span class="line">			<span class="comment">//如果栈未满则压栈 ，返回真，否则假 </span></span><br><span class="line">			<span class="keyword">if</span>(top&lt;maxn)&#123;</span><br><span class="line">				data[++top]=temp;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//出栈 </span></span><br><span class="line">		<span class="function">T <span class="title">pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">			T t=data[top];</span><br><span class="line">			data[top]=<span class="number">0</span>;<span class="comment">//改未初始化 </span></span><br><span class="line">			top--;<span class="comment">//栈顶减1 </span></span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//单纯得到栈顶数值 </span></span><br><span class="line">		<span class="function">T <span class="title">gettop</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//	cout&lt;&lt;&quot;gettop=&quot;&lt;&lt;data[top]&lt;&lt;endl;</span></span><br><span class="line">			T t=data[top];</span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//栈中有多少个元素 </span></span><br><span class="line">		<span class="function"><span class="type">int</span> <span class="title">length</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> top+<span class="number">1</span>;<span class="comment">//栈顶的下标就是个数-1 </span></span><br><span class="line">		&#125; </span><br><span class="line">		~<span class="built_in">mystack</span>()&#123;</span><br><span class="line">			<span class="keyword">delete</span> data;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	mystack&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">	cout&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;s.<span class="built_in">isFull</span>()&lt;&lt;endl;</span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> a=<span class="number">100</span>;</span><br><span class="line">	<span class="type">int</span> b=<span class="number">200</span>;</span><br><span class="line">	s.<span class="built_in">push</span>(a);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top1=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	s.<span class="built_in">push</span>(b);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top2=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;pop1=&quot;</span>&lt;&lt;s.<span class="built_in">pop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;isempty? &quot;</span>&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;pop2=&quot;</span>&lt;&lt;s.<span class="built_in">pop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;isempty? &quot;</span>&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>2.链表实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">//采用模板类节点 ，结构体总是不知道啥毛病，老报错 </span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	T data;<span class="comment">//数据 </span></span><br><span class="line">	<span class="comment">//节点的上一个节点，往栈底方向，如果本节点的前驱节点为空，则本节点为栈的最后一个节点</span></span><br><span class="line">	Node *pre; </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Node</span>()&#123;&#125;</span><br><span class="line">	<span class="built_in">Node</span>(T t,Node* _pre)&#123;</span><br><span class="line">		data = t;</span><br><span class="line">		pre = _pre;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">T <span class="title">getData</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> data;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">setData</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">		data = t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">Node* <span class="title">getPre</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pre;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">setPre</span><span class="params">(Node *_pre)</span></span>&#123;</span><br><span class="line">		pre = _pre;</span><br><span class="line">	&#125;</span><br><span class="line">	~<span class="built_in">Node</span>()&#123;</span><br><span class="line"><span class="comment">//		cout&lt;&lt;&quot;\n执行析构函数Node&quot;&lt;&lt;endl;</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">mystack2</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Node&lt;T&gt;* top;<span class="comment">//定义栈顶节点 </span></span><br><span class="line">	Node&lt;T&gt;* Temp;<span class="comment">//定义中间节点 </span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">mystack2</span>()&#123;<span class="comment">//初始化 </span></span><br><span class="line">		top = <span class="literal">NULL</span>;</span><br><span class="line">		Temp = <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//判空 </span></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> top == <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"><span class="comment">//因压栈和出栈均动态变化并且不会造成内存浪费，故此实现决定不考虑栈的节点上限  </span></span><br><span class="line">	</span><br><span class="line"><span class="comment">//	//判断是否 满了，</span></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">isFull</span><span class="params">()</span></span>&#123;<span class="comment">//一直不满 </span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//压栈 </span></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">push</span><span class="params">(T temp)</span></span>&#123;</span><br><span class="line">			Temp = <span class="keyword">new</span> <span class="built_in">Node</span>&lt;T&gt;(temp, <span class="literal">NULL</span>);<span class="comment">//分配内存 ，并设置数据，前驱为空 </span></span><br><span class="line">			<span class="comment">//如果栈顶存在，即栈里本来有节点，则次节点的前驱指向栈顶 </span></span><br><span class="line">			<span class="keyword">if</span> (top != <span class="literal">NULL</span>)&#123;</span><br><span class="line">				Temp-&gt;<span class="built_in">setPre</span>(top);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">//新压入的节点为栈顶 </span></span><br><span class="line">			top = Temp;<span class="comment">//更新栈顶 </span></span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//出栈 </span></span><br><span class="line">	<span class="function">T <span class="title">pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">		T t = top-&gt;<span class="built_in">getData</span>();<span class="comment">//取出栈顶的值 </span></span><br><span class="line">		Temp = top;<span class="comment">//临时保存 </span></span><br><span class="line">		top = top-&gt;<span class="built_in">getPre</span>();<span class="comment">//出栈后，栈顶的前驱变为栈顶 </span></span><br><span class="line">		<span class="keyword">delete</span> Temp;<span class="comment">//销毁栈顶 </span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> t; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//得到栈顶的数据 </span></span><br><span class="line">	<span class="function">T <span class="title">gettop</span><span class="params">()</span></span>&#123;</span><br><span class="line">		T t = top-&gt;<span class="built_in">getData</span>();</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//析构函数 </span></span><br><span class="line">	~<span class="built_in">mystack2</span>()&#123;</span><br><span class="line">	<span class="comment">//	cout&lt;&lt;&quot;\n执行析构函数mystack2&quot;&lt;&lt;endl; </span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//当栈顶不为空 </span></span><br><span class="line">			<span class="keyword">while</span> (top)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//取出栈顶， </span></span><br><span class="line">				</span><br><span class="line">				Temp = top;</span><br><span class="line">				<span class="comment">//更新栈顶 </span></span><br><span class="line">				top = top-&gt;<span class="built_in">getPre</span>();</span><br><span class="line">				<span class="keyword">delete</span> Temp;<span class="comment">//销毁栈顶 </span></span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="comment">//最后判断 </span></span><br><span class="line">		<span class="keyword">if</span> (Temp)&#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">delete</span> Temp;</span><br><span class="line">			Temp=<span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (top)&#123;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">delete</span> top;</span><br><span class="line">				top=<span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	mystack2&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">	cout&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;s.<span class="built_in">isFull</span>()&lt;&lt;endl;</span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> a=<span class="number">100</span>;</span><br><span class="line">	<span class="type">int</span> b=<span class="number">200</span>;</span><br><span class="line">	s.<span class="built_in">push</span>(a);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top1=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	s.<span class="built_in">push</span>(b);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top2=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;pop1=&quot;</span>&lt;&lt;s.<span class="built_in">pop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;isempty? &quot;</span>&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;pop2=&quot;</span>&lt;&lt;s.<span class="built_in">pop</span>()&lt;&lt;endl;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;isempty? &quot;</span>&lt;&lt;s.<span class="built_in">isEmpty</span>()&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">	s.<span class="built_in">push</span>(a);</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;top3=&quot;</span>&lt;&lt;s.<span class="built_in">gettop</span>()&lt;&lt;endl;</span><br><span class="line">	s.<span class="built_in">push</span>(b);</span><br><span class="line">	s.<span class="built_in">push</span>(a);</span><br><span class="line">	s.<span class="built_in">push</span>(b);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2020/09/27/%E8%87%AA%E6%9E%84%E5%BB%BA%E6%A0%88%E7%B1%BB%EF%BC%88%E6%95%B0%E7%BB%84%E5%92%8C%E9%93%BE%E8%A1%A8%E5%8F%8C%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%EF%BC%89/">https://blog.yefeng.love/2020/09/27/%E8%87%AA%E6%9E%84%E5%BB%BA%E6%A0%88%E7%B1%BB%EF%BC%88%E6%95%B0%E7%BB%84%E5%92%8C%E9%93%BE%E8%A1%A8%E5%8F%8C%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%93%BE%E8%A1%A8-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-c-%E6%A0%88/"># 链表 数据结构 c++ 栈</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/10/26/Dijkstra%E7%AE%97%E6%B3%95%E5%90%84%E7%A7%8D%E5%AE%9E%E7%8E%B0/">Dijkstra算法各种实现</a>
+            
+            
+            <a class="next" rel="next" href="/2020/07/24/%E6%9F%A5%E6%89%BE%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9A%84%E5%85%83%E7%B4%A0/">查找最接近的元素</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

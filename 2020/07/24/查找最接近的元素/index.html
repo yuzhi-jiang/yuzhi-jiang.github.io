@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>查找最接近的元素 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">查找最接近的元素</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 24, 2020&nbsp;&nbsp;16:07:45</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>在一个非降序列中，查找与给定值最接近的元素。</p>
+<p>Input<br>第一行包含一个整数n，为非降序列长度。1 &lt;&#x3D; n &lt;&#x3D; 100000。<br>第二行包含n个整数，为非降序列各元素。所有元素的大小均在0-1,000,000,000之间。<br>第三行包含一个整数m，为要询问的给定值个数。1 &lt;&#x3D; m &lt;&#x3D; 10000。<br>接下来m行，每行一个整数，为要询问最接近元素的给定值。所有给定值的大小均在0-1,000,000,000之间。<br>Output<br>m行，每行一个整数，为最接近相应给定值的元素值，保持输入顺序。若有多个值满足条件，输出最小的一个。<br>Sample Input</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">2 5 8</span><br><span class="line">2</span><br><span class="line">10</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<p>Sample Output</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<p>ac代码<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/justidle/article/details/104617383?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">参考链接</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;bits/stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int MAXN = 1e5+6;</span><br><span class="line">int a[MAXN] = &#123;&#125;;</span><br><span class="line"> </span><br><span class="line">int main() &#123;</span><br><span class="line">	int n,m;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	for(int i=0;i&lt;n;++i)&#123;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;a[i]);</span><br><span class="line">	&#125; </span><br><span class="line">	scanf(&quot;%d&quot;,&amp;m);</span><br><span class="line">	for(int i=0;i&lt;m;++i)&#123;</span><br><span class="line">		int t;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;t);</span><br><span class="line">		if(t&lt;=a[0])&#123;</span><br><span class="line">			printf(&quot;%d\n&quot;,a[0]);</span><br><span class="line">		&#125;else if(t&gt;=a[n-1])&#123;</span><br><span class="line">			printf(&quot;%d\n&quot;,a[n-1]);</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123;</span><br><span class="line">			int l=0,r=n;</span><br><span class="line">			while(l&lt;r)&#123;</span><br><span class="line">				int min=(l+r)/2;</span><br><span class="line">				if(a[min]&gt;t)&#123;</span><br><span class="line">					r=min;</span><br><span class="line">				&#125;else&#123;</span><br><span class="line">					l=min+1;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			int ans=l;//跟下面这函数相同的作用   找到第一个比t大的数 </span><br><span class="line">		//	int ans=upper_bound(a,a+n,t)-a;</span><br><span class="line">			if(a[ans]-t&lt;t-a[ans-1])&#123;</span><br><span class="line">				printf(&quot;%d\n&quot;,a[ans]);</span><br><span class="line">			&#125;else&#123;</span><br><span class="line">				printf(&quot;%d\n&quot;,a[ans-1]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2020/07/24/%E6%9F%A5%E6%89%BE%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9A%84%E5%85%83%E7%B4%A0/">https://blog.yefeng.love/2020/07/24/%E6%9F%A5%E6%89%BE%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9A%84%E5%85%83%E7%B4%A0/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/09/27/%E8%87%AA%E6%9E%84%E5%BB%BA%E6%A0%88%E7%B1%BB%EF%BC%88%E6%95%B0%E7%BB%84%E5%92%8C%E9%93%BE%E8%A1%A8%E5%8F%8C%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%EF%BC%89/">自构建栈类（数组和链表双实现方式）</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/21/6-181%20%E7%AD%9B%E6%B3%95%E6%B1%82%E8%B4%A8%E6%95%B0%20(15%E5%88%86)/">6-181 筛法求质数 (15分)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

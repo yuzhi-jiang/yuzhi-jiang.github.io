@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>Connect the Cities（连接城市） | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Connect the Cities（连接城市）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 12, 2020&nbsp;&nbsp;17:12:30</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>In 2100, since the sea level rise, most of the cities disappear. Though some survived cities are still connected with others, but most of them become disconnected. The government wants to build some roads to connect all of these cities again, but they don’t want to take too much money.  </p>
+<p>Input:<br>The first line contains the number of test cases.<br>Each test case starts with three integers: n, m and k. n (3 &lt;&#x3D; n &lt;&#x3D;500) stands for the number of survived cities, m (0 &lt;&#x3D; m &lt;&#x3D; 25000) stands for the number of roads you can choose to connect the cities and k (0 &lt;&#x3D; k &lt;&#x3D; 100) stands for the number of still connected cities.<br>To make it easy, the cities are signed from 1 to n.<br>Then follow m lines, each contains three integers p, q and c (0 &lt;&#x3D; c &lt;&#x3D; 1000), means it takes c to connect p and q.<br>Then follow k lines, each line starts with an integer t (2 &lt;&#x3D; t &lt;&#x3D; n) stands for the number of this connected cities. Then t integers follow stands for the id of these cities.</p>
+<p>output:<br>For each case, output the least money you need to take, if it’s impossible, just output -1.</p>
+<p>Sample Input</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">6</span> <span class="number">4</span> <span class="number">3</span></span><br><span class="line"><span class="number">1</span> <span class="number">4</span> <span class="number">2</span></span><br><span class="line"><span class="number">2</span> <span class="number">6</span> <span class="number">1</span></span><br><span class="line"><span class="number">2</span> <span class="number">3</span> <span class="number">5</span></span><br><span class="line"><span class="number">3</span> <span class="number">4</span> <span class="number">33</span></span><br><span class="line"><span class="number">2</span> <span class="number">1</span> <span class="number">2</span></span><br><span class="line"><span class="number">2</span> <span class="number">1</span> <span class="number">3</span></span><br><span class="line"><span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span></span><br></pre></td></tr></table></figure>
+<p>Sample Output</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<p>翻译：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2100</span>年，由于海平面上升，大部分城市消失了。虽然一些幸存下来的城市仍然与其他城市相连，但大多数城市已经失去联系。政府想再建一些道路来连接所有这些城市，但他们不想花太多钱。</span><br><span class="line">输入</span><br><span class="line">第一行包含测试用例的数量。</span><br><span class="line">每个测试用例以三个整数开始：n，m和k。n（<span class="number">3</span>&lt;=n&lt;=<span class="number">500</span>）代表幸存城市的数量，m（<span class="number">0</span>&lt;=m&lt;=<span class="number">25000</span>）代表可以选择连接城市的道路数量，k（<span class="number">0</span>&lt;=k&lt;=<span class="number">100</span>）代表仍然连接的城市的数量。</span><br><span class="line">为了方便起见，这些城市的签约从<span class="number">1</span>到n。</span><br><span class="line">然后沿着m行，每行包含三个整数p，q和c（<span class="number">0</span>&lt;=c&lt;=<span class="number">1000</span>），意味着p和q需要c来连接。</span><br><span class="line">然后沿着k条线，每一条线以一个整数t（<span class="number">2</span>&lt;=t&lt;=n）表示这个连通的城市的数量。然后t整数表示这些城市的id。</span><br><span class="line">输出</span><br><span class="line">对于每种情况，输出你需要的最少的钱，如果不可能，只输出<span class="number">-1</span>。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">思路：</span><br><span class="line">如果把每个已经可以连通的城市围起来看作一个，并且它们之间的距离为<span class="number">0</span></span><br><span class="line">这样，剩下来的，不就是一个个点。</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20201212170732185.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzI3MjI1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>这样只要选择其中一个起始点作为目标集合，每次从其他点，选择一个最小的到目标集合的点，并且记录价格，放入集合，循环，直到全部放进去</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="type">int</span> n,m,k;</span><br><span class="line"><span class="type">int</span> dic[<span class="number">550</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span> map[<span class="number">550</span>][<span class="number">550</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span> vis[<span class="number">550</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">int</span> bs[<span class="number">550</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">gets</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> res,cont,tmin,indmin;</span><br><span class="line">	res=cont=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)&#123;</span><br><span class="line">		dic[i]=map[<span class="number">1</span>][i];<span class="comment">//默认初始为1号节点 ，即默认把1号放进铺设集合 </span></span><br><span class="line">		vis[i]=<span class="number">0</span>;</span><br><span class="line">	&#125; </span><br><span class="line">	vis[<span class="number">1</span>]=<span class="number">1</span>; </span><br><span class="line">	dic[<span class="number">1</span>]=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;++i)&#123;<span class="comment">//一共执行n-1次最小值 才能把所有的点加入集合 </span></span><br><span class="line">		tmin=INF;<span class="comment">//最小值 </span></span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;++j)&#123;</span><br><span class="line">			<span class="comment">//find min</span></span><br><span class="line">			<span class="keyword">if</span>(dic[j]&lt;tmin&amp;&amp;!vis[j])&#123;</span><br><span class="line">				tmin=dic[j];</span><br><span class="line">				indmin=j;<span class="comment">//下标 </span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(tmin==INF)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="comment">// min</span></span><br><span class="line">		<span class="comment">//	cout&lt;&lt;&quot;indmin=&quot;&lt;&lt;indmin&lt;&lt;&quot; min=&quot;&lt;&lt;tmin&lt;&lt;&quot; res=&quot;&lt;&lt;res&lt;&lt;endl;</span></span><br><span class="line">			vis[indmin]=<span class="number">1</span>;</span><br><span class="line">			dic[indmin]=<span class="number">0</span>;</span><br><span class="line">			res+=tmin;</span><br><span class="line">			cont++; </span><br><span class="line">		<span class="comment">//修改  dic[min][j]  集合外到集合的距离 </span></span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;++j)&#123;</span><br><span class="line">				<span class="keyword">if</span>(!vis[j]&amp;&amp;map[indmin][j]&lt;dic[j])</span><br><span class="line">					dic[j]=map[indmin][j];</span><br><span class="line">			&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(tmin==INF)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">return</span> res; </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			map[i][j]=INF;</span><br><span class="line">		&#125;</span><br><span class="line">		map[i][i]=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	<span class="type">int</span> a,b,val,num;</span><br><span class="line">	<span class="type">int</span> T;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;T);</span><br><span class="line">	<span class="keyword">while</span>(T--)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;k);</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">				map[i][j]=INF;</span><br><span class="line">			&#125;</span><br><span class="line">			map[i][i]=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;a,&amp;b,&amp;val);</span><br><span class="line">			<span class="keyword">if</span>(map[a][b]&gt;val)&#123;</span><br><span class="line">				map[a][b]=map[b][a]=val;	</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;k;++i)&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;num);</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=num;++j)&#123;</span><br><span class="line">				<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;bs[j]);</span><br><span class="line">			</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> x=<span class="number">1</span>;x&lt;=num;++x)&#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="type">int</span> y=<span class="number">1</span>;y&lt;=num;++y)&#123;</span><br><span class="line">					map[bs[x]][bs[y]]=<span class="number">0</span>;<span class="comment">//该区域的花销为0 </span></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//int res=gets();</span></span><br><span class="line">		cout&lt;&lt;<span class="built_in">gets</span>()&lt;&lt;endl;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2020/12/12/Connect%20the%20Cities%EF%BC%88%E8%BF%9E%E6%8E%A5%E5%9F%8E%E5%B8%82%EF%BC%89/">https://blog.yefeng.love/2020/12/12/Connect%20the%20Cities%EF%BC%88%E8%BF%9E%E6%8E%A5%E5%9F%8E%E5%B8%82%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/"># 算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/12/12/7-23%20%E5%85%AC%E8%B7%AF%E6%9D%91%E6%9D%91%E9%80%9A%20(30%E5%88%86)/">7-23 公路村村通 (30分)</a>
+            
+            
+            <a class="next" rel="next" href="/2020/12/04/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/">最长回文子串</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

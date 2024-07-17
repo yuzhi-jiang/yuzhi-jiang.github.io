@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>Dijkstra算法各种实现 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Dijkstra算法各种实现</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 26, 2020&nbsp;&nbsp;20:57:15</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>首先了解下什么是最短路径算法—–Dijkstra算法详解<br>来一条传送门-&gt; <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35644234/article/details/60870719">最短路径问题—Dijkstra算法详解</a> </p>
+<p>看到这里相信你已经知道了Dijkstra算法的大致思路</p>
+<p>先直接上代码</p>
+<p>第一种实现，用队列实现，优化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">//start 起点，len点集个数，map 地图的二维数组，dis 起点到其的距离</span><br><span class="line">void dijkstra(int start,int len,int map[][N],int dis[])&#123;</span><br><span class="line">	int vis[len];</span><br><span class="line">	queue&lt;int&gt;q;//队列，存剩余的节点 </span><br><span class="line">	//初始化</span><br><span class="line">	for(int i=0;i&lt;len;i++)&#123;</span><br><span class="line">		dis[i]=INF;</span><br><span class="line">		vis[i]=false;</span><br><span class="line">	&#125;</span><br><span class="line">	//第一个点</span><br><span class="line">	dis[start]=0;</span><br><span class="line">	vis[start]=true;</span><br><span class="line">	q.push(start);</span><br><span class="line">	while(!q.empty())&#123;	</span><br><span class="line">		int MIN=INF;</span><br><span class="line">		int mindex;</span><br><span class="line">		int u=q.front();q.pop();//当前最小值</span><br><span class="line">		for(int i=0;i&lt;n;++i)&#123;//遍历，修改dis，同时找到修改后的最小值</span><br><span class="line">			if(map[u][i]!=INF&amp;&amp;vis[i]!=true)&#123;</span><br><span class="line">				int temp=map[u][i]+dis[u];</span><br><span class="line">				if(dis[i]&gt;temp)&#123;</span><br><span class="line">					dis[i]=temp;</span><br><span class="line">				&#125;</span><br><span class="line">				if(dis[i]&lt;MIN)&#123;</span><br><span class="line">					mindex=i;</span><br><span class="line">					MIN=dis[i];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if(MIN==INF)&#123;//没有找到最小值</span><br><span class="line">			break; </span><br><span class="line">		&#125;</span><br><span class="line">		q.push(mindex);//将最小值放入队列</span><br><span class="line">		vis[mindex]=true;//设为已经访问</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>第二种实现，再第一种的基础上，修改参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//start 起点，len点集个数，map 地图的二维数组，dis 起点到其的距离，vis，有没有被选择，用过，用过，说明就是知道起点到该点的最短路径</span><br><span class="line">void dijkstra(int start,int len,int map[][N],int dis[],int vis[])&#123;</span><br><span class="line">	queue&lt;int&gt;q;//队列，存剩余的节点 </span><br><span class="line">	for(int i=0;i&lt;len;i++)&#123;</span><br><span class="line">		dis[i]=INF;vis[i]=false;</span><br><span class="line">	&#125;</span><br><span class="line">	dis[start]=0;</span><br><span class="line">	vis[start]=true;</span><br><span class="line">	q.push(start);</span><br><span class="line">	while(!q.empty())&#123;	</span><br><span class="line">		int MIN=INF;</span><br><span class="line">		int mindex;</span><br><span class="line">		int u=q.front();q.pop();</span><br><span class="line">		for(int i=0;i&lt;n;++i)&#123;</span><br><span class="line">			if(map[u][i]!=INF&amp;&amp;vis[i]!=true)&#123;</span><br><span class="line">				int temp=map[u][i]+dis[u];</span><br><span class="line">				if(dis[i]&gt;temp)&#123;</span><br><span class="line">					dis[i]=temp;</span><br><span class="line">				&#125;</span><br><span class="line">				if(dis[i]&lt;MIN)&#123;</span><br><span class="line">					mindex=i;</span><br><span class="line">					MIN=dis[i];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if(MIN==INF)&#123;</span><br><span class="line">			break; </span><br><span class="line">		&#125;</span><br><span class="line">		q.push(mindex);</span><br><span class="line">		vis[mindex]=true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>第三种实现，只用数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//start 起点，len点集个数，map 地图的二维数组，dis 起点到其的距离，vis，有没有被选择，用过，用过，说明就是知道起点到该点的最短路径</span><br><span class="line">void dijkstra(int start,int len,int map[][N],int dis[],int vis[])&#123;</span><br><span class="line">	for (int i = 0; i &lt;len; ++i)</span><br><span class="line">		dis[i]=map[start][i];</span><br><span class="line">	vis[start]=1;</span><br><span class="line">	dis[start]=0;</span><br><span class="line">	for (int i =0; i&lt;len; ++i)&#123;</span><br><span class="line">		int mindex;</span><br><span class="line">		int MIN=INF;</span><br><span class="line">		for(int j=0;j&lt;len;j++)&#123;</span><br><span class="line">			if(vis[j]==0&amp;&amp;dis[j]&lt;MIN)&#123;</span><br><span class="line">				mindex=j;</span><br><span class="line">				MIN = dis[j];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if(MIN==INF)</span><br><span class="line">			break;			//如果是没有路径，他就不在返回了</span><br><span class="line">		vis[mindex]=1;</span><br><span class="line">		for(int j=0;j&lt;len;j++)&#123;</span><br><span class="line">			int temp=map[mindex][j]+dis[mindex];</span><br><span class="line">			if(vis[j]==0&amp;&amp;temp&lt;dis[j])&#123;</span><br><span class="line">				dis[j]=temp;	</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>来一个题：最短路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">描述</span><br><span class="line">万圣节的早上，小Hi和小Ho在经历了一个小时的争论后，终于决定了如何度过这样有意义的一天——他们决定去闯鬼屋！</span><br><span class="line"></span><br><span class="line">在鬼屋门口排上了若干小时的队伍之后，刚刚进入鬼屋的小Hi和小Ho都颇饥饿，于是他们决定利用进门前领到的地图，找到一条通往终点的最短路径。</span><br><span class="line"></span><br><span class="line">鬼屋中一共有N个地点，分别编号为1..N，这N个地点之间互相有一些道路连通，两个地点之间可能有多条道路连通，但是并不存在一条两端都是同一个地点的道路。那么小Hi和小Ho至少要走多少路程才能够走出鬼屋去吃东西呢？</span><br><span class="line"></span><br><span class="line">提示：顺序！顺序才是关键。</span><br><span class="line">×Close</span><br><span class="line">提示：顺序！顺序才是关键。</span><br><span class="line">小Ho想了想说道：“唔……我觉得动态规划可以做，但是我找不到计算的顺序，如果我用f[i]表示从S到达编号为i的节点的最短距离的话，我并不能够知道f[1]..f[N]的计算顺序。”</span><br><span class="line"></span><br><span class="line">“所以这个问题不需要那么复杂的算法啦，我就稍微讲讲你就知道了！”小Hi道：“路的长度不可能为负数对不对？”</span><br><span class="line"></span><br><span class="line">“那是自然，毕竟人类还没有发明时光机器……”小Ho点点头。</span><br><span class="line"></span><br><span class="line">于是小Hi问道：“那么如果就看与S相邻的所有节点中与S最近的那一个S&#x27;，并且从S到S&#x27;的距离为L，那么有可能存在另外的道路使得从S到S&#x27;的距离小于L么？”</span><br><span class="line"></span><br><span class="line">“不能，因为S&#x27;是与S相邻的所有节点中与S最近的节点，那么从S到其他相邻点的距离一定是不小于L的，也就是说无论接下来怎么走，回到L点时总距离一定大于L。”小Ho思考了一会，道。</span><br><span class="line"></span><br><span class="line">“也就是说你已经知道了从S到S&#x27;的最短路径了是么？”小Hi继续问道。</span><br><span class="line"></span><br><span class="line">“是的，这条最短路径的长度是L。”小Ho答道。</span><br><span class="line"></span><br><span class="line">小Hi继续道：“那么现在，我们不妨将S同S&#x27;看做一个新的节点？称作S1，然后我就计算与S相邻或者与S&#x27;相邻的所有节点中，与S最近的哪一个节点S&#x27;&#x27;。注意，在这个过程中，与S相邻的节点与S的距离在上一步就已经求出来了，那么我要求的只有与S&#x27;相邻的那些节点与S的距离——这个距离等于S与S&#x27;的距离加上S&#x27;与这些结点的距离，对于其中重复的节点——同时与S和S&#x27;相邻的节点，取两条路径中的较小值。”</span><br><span class="line"></span><br><span class="line">小Ho点了点头：“那么同之前一样，与S1（即S与S&#x27;节点）相邻的节点中与S&#x27;距离最近的节点如果是S&#x27;&#x27;的话，并且这个距离是L2，那么我们可以知道S到S&#x27;&#x27;的最短路径的长度便是L2，因为不可能存在另外的道路比这个更短了。”</span><br><span class="line"></span><br><span class="line">于是小Hi总结道：“接下来的问题不就很简单了么，只需要以此类推，每次将与当前集合相邻（即与当前集合中任意一个元素）的所有节点中离S最近的节点（这些距离可以通过上一次的计算结果推导而出）选出来添加到当前集合中，我就能够保证在每一个节点被添加到集合中时所计算的离S的距离是它与S之间的最短路径！”</span><br><span class="line"></span><br><span class="line">“原来是这样！但是我的肚子更饿了呢！”言罢，小Ho的肚子咕咕叫了起来。</span><br><span class="line"></span><br><span class="line">Close</span><br><span class="line">输入</span><br><span class="line">每个测试点（输入文件）有且仅有一组测试数据。</span><br><span class="line"></span><br><span class="line">在一组测试数据中：</span><br><span class="line"></span><br><span class="line">第1行为4个整数N、M、S、T，分别表示鬼屋中地点的个数和道路的条数，入口（也是一个地点）的编号，出口（同样也是一个地点）的编号。</span><br><span class="line"></span><br><span class="line">接下来的M行，每行描述一条道路：其中的第i行为三个整数u_i, v_i, length_i，表明在编号为u_i的地点和编号为v_i的地点之间有一条长度为length_i的道路。</span><br><span class="line"></span><br><span class="line">对于100%的数据，满足N&lt;=10^3，M&lt;=10^4, 1 &lt;= length_i &lt;= 10^3, 1 &lt;= S, T &lt;= N, 且S不等于T。</span><br><span class="line"></span><br><span class="line">对于100%的数据，满足小Hi和小Ho总是有办法从入口通过地图上标注出来的道路到达出口。</span><br><span class="line"></span><br><span class="line">输出</span><br><span class="line">对于每组测试数据，输出一个整数Ans，表示那么小Hi和小Ho为了走出鬼屋至少要走的路程。</span><br><span class="line"></span><br><span class="line">Sample Input</span><br><span class="line">5 23 5 4</span><br><span class="line">1 2 708</span><br><span class="line">2 3 112</span><br><span class="line">3 4 721</span><br><span class="line">4 5 339</span><br><span class="line">5 4 960</span><br><span class="line">1 5 849</span><br><span class="line">2 5 98</span><br><span class="line">1 4 99</span><br><span class="line">2 4 25</span><br><span class="line">2 1 200</span><br><span class="line">3 1 146</span><br><span class="line">3 2 106</span><br><span class="line">1 4 860</span><br><span class="line">4 1 795</span><br><span class="line">5 4 479</span><br><span class="line">5 4 280</span><br><span class="line">3 4 341</span><br><span class="line">1 4 622</span><br><span class="line">4 2 362</span><br><span class="line">2 3 415</span><br><span class="line">4 1 904</span><br><span class="line">2 1 716</span><br><span class="line">2 5 575</span><br><span class="line"></span><br><span class="line">Sample Output</span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+<p>AC代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">const int INF=0x3f3f3f3f;//无限大</span><br><span class="line">const int N=1005;</span><br><span class="line">int map[N][N];//地图 </span><br><span class="line">int dist[N];//最短距离</span><br><span class="line">int n,m;</span><br><span class="line">void dijkstra(int start,int len,int g[][N],int dis[])</span><br><span class="line">&#123;</span><br><span class="line">	int vis[len];</span><br><span class="line">	queue&lt;int&gt;q;//队列，存剩余的节点 </span><br><span class="line">	for(int i=0;i&lt;len;i++)&#123;</span><br><span class="line">		dis[i]=INF;</span><br><span class="line">		vis[i]=false;</span><br><span class="line">	&#125;</span><br><span class="line">	dis[start]=0;</span><br><span class="line">	vis[start]=true;</span><br><span class="line">	q.push(start);</span><br><span class="line">	while(!q.empty())&#123;	</span><br><span class="line">		int MIN=INF;</span><br><span class="line">		int mindex;</span><br><span class="line">		int u=q.front();q.pop();</span><br><span class="line">		for(int i=0;i&lt;n;++i)&#123;</span><br><span class="line">			if(map[u][i]!=INF&amp;&amp;vis[i]!=true)&#123;</span><br><span class="line">				int temp=map[u][i]+dis[u];</span><br><span class="line">				if(dis[i]&gt;temp)&#123;</span><br><span class="line">					dis[i]=temp;</span><br><span class="line">				&#125;</span><br><span class="line">				if(dis[i]&lt;MIN)&#123;</span><br><span class="line">					mindex=i;</span><br><span class="line">					MIN=dis[i];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if(MIN==INF)&#123;</span><br><span class="line">			break; </span><br><span class="line">		&#125;</span><br><span class="line">		q.push(mindex);</span><br><span class="line">		vis[mindex]=true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int s,t,a,b,c;</span><br><span class="line">	while(scanf(&quot;%d%d%d%d&quot;,&amp;n,&amp;m,&amp;s,&amp;t)==4&amp;&amp;n&amp;&amp;m)&#123;</span><br><span class="line">		memset(map,0x7f,sizeof(map));</span><br><span class="line">			for(int i=0;i&lt;m;++i)&#123;</span><br><span class="line">				scanf(&quot;%d %d %d&quot;,&amp;a,&amp;b,&amp;c);</span><br><span class="line">				a--;</span><br><span class="line">				b--;</span><br><span class="line">				map[a][b]=map[b][a]=min(map[a][b],c);</span><br><span class="line">			&#125;</span><br><span class="line">			dijkstra(--s,n,map,dist);</span><br><span class="line">			printf(&quot;%d\n&quot;,dist[--t]);</span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有其他实现，有待继续更新，以上是兼容性比较好的，拿来一个函数直接用，传入参数，不需要考虑太多</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2020/10/26/Dijkstra%E7%AE%97%E6%B3%95%E5%90%84%E7%A7%8D%E5%AE%9E%E7%8E%B0/">https://blog.yefeng.love/2020/10/26/Dijkstra%E7%AE%97%E6%B3%95%E5%90%84%E7%A7%8D%E5%AE%9E%E7%8E%B0/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/"># 算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/11/09/G%20-%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/">G - 编辑距离</a>
+            
+            
+            <a class="next" rel="next" href="/2020/09/27/%E8%87%AA%E6%9E%84%E5%BB%BA%E6%A0%88%E7%B1%BB%EF%BC%88%E6%95%B0%E7%BB%84%E5%92%8C%E9%93%BE%E8%A1%A8%E5%8F%8C%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%EF%BC%89/">自构建栈类（数组和链表双实现方式）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>Decrease the Sum of Digits | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Decrease the Sum of Digits</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 12, 2020&nbsp;&nbsp;17:50:59</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>You are given a positive integer n. In one move, you can increase n by one (i.e. make n:&#x3D;n+1). Your task is to find the minimum number of moves you need to perform in order to make the sum of digits of n be less than or equal to s.</p>
+<p>You have to answer t independent test cases.</p>
+<p>Input<br>The first line of the input contains one integer t (1≤t≤2⋅104) — the number of test cases. Then t test cases follow.</p>
+<p>The only line of the test case contains two integers n and s (1≤n≤1018; 1≤s≤162).</p>
+<p>Output<br>For each test case, print the answer: the minimum number of moves you need to perform in order to make the sum of digits of n be less than or equal to s.</p>
+<p>Example<br>Input<br>5<br>2 1<br>1 1<br>500 4<br>217871987498122 10<br>100000000000000001 1<br>Output<br>8<br>0<br>500<br>2128012501878<br>899999999999999999</p>
+<p>翻译：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">给你一个正整数n。一步，你可以把n增加<span class="number">1</span>（即使n：=n+<span class="number">1</span>）。您的任务是找出要使n的位数之和小于或等于s所需执行的最小移动次数。</span><br><span class="line">你必须回答t个独立的测试用例。</span><br><span class="line">输入</span><br><span class="line">输入的第一行包含一个整数t（<span class="number">1</span>≤t≤<span class="number">2</span>⋅<span class="number">104</span>）-测试用例的数量。接下来是t测试用例。</span><br><span class="line">测试用例的唯一一行包含两个整数n和s（<span class="number">1</span>≤n≤<span class="number">1018</span>；<span class="number">1</span>≤s≤<span class="number">162</span>）。</span><br><span class="line">输出</span><br><span class="line">对于每个测试用例，打印答案：为了使n的位数之和小于或等于s，您需要执行的最小移动次数。</span><br><span class="line">例子</span><br><span class="line">输入</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">2</span> <span class="number">1</span></span><br><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">500</span> <span class="number">4</span></span><br><span class="line"><span class="number">217871987498122</span> <span class="number">10</span></span><br><span class="line"><span class="number">1000000000000001</span> <span class="number">1</span></span><br><span class="line">输出</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">500</span></span><br><span class="line"><span class="number">2128012501878</span></span><br><span class="line"><span class="number">899999999999999999</span></span><br></pre></td></tr></table></figure>
+<p>第一次代码：ac但是改成cin,cout时间容易超时（1500ms）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line">ll str=<span class="number">0.</span>;</span><br><span class="line">ll len;</span><br><span class="line"><span class="type">char</span> ch[<span class="number">22</span>];</span><br><span class="line"><span class="type">int</span> s;</span><br><span class="line">ll pp;</span><br><span class="line"><span class="function">ll <span class="title">getsum</span><span class="params">(<span class="type">int</span> ln)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;ln;++i)&#123;</span><br><span class="line">			res+=(ch[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		cout&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">if</span>(res&lt;<span class="number">0</span>)res=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solv</span><span class="params">()</span></span>&#123;</span><br><span class="line">	str=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">memset</span>(ch,<span class="number">0</span>,<span class="built_in">sizeof</span>(ch));</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s %d&quot;</span>,&amp;ch,&amp;s);</span><br><span class="line">	len=<span class="built_in">strlen</span>(ch);</span><br><span class="line">	pp=<span class="number">1</span>;</span><br><span class="line">	<span class="type">int</span> t=<span class="built_in">getsum</span>(len);</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(t&lt;=s)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;0\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//字符串反转</span></span><br><span class="line">	<span class="type">char</span> cht;</span><br><span class="line">        <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;len/<span class="number">2</span>;++i)&#123;<span class="comment">//12345  54321   123456  654321</span></span><br><span class="line">		cht=ch[i];</span><br><span class="line">		ch[i]=ch[len-i<span class="number">-1</span>];</span><br><span class="line">		ch[len-i<span class="number">-1</span>]=cht;</span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;len;++i)&#123;</span><br><span class="line">		str+=((<span class="number">10</span>-(ch[i]-<span class="string">&#x27;0&#x27;</span>))*pp);</span><br><span class="line">		ch[i]=<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">		ch[i+<span class="number">1</span>]+=<span class="number">1</span>;</span><br><span class="line">		pp*=<span class="number">10</span>;</span><br><span class="line">		<span class="keyword">if</span>(i+<span class="number">1</span>&gt;=len)&#123;</span><br><span class="line">			len+=<span class="number">1</span>;</span><br><span class="line">			ch[i+<span class="number">1</span>]=<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		t=<span class="built_in">getsum</span>(len);</span><br><span class="line">		<span class="keyword">if</span>(t&lt;=s)&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,str);</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%ld&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">while</span>(n--)&#123;</span><br><span class="line">		<span class="built_in">solv</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>优化思路：每次判断<br><code>t=getsum(len);         if(t&lt;=s)&#123;             break;         &#125;</code><br>        可以在第一次的基础上进行<br>不需要每次调用函数</p>
+<p>第二次：ac,93ms</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line">ll str=<span class="number">0.</span>;</span><br><span class="line">ll len;</span><br><span class="line"><span class="type">char</span> ch[<span class="number">22</span>];</span><br><span class="line"><span class="type">int</span> s;</span><br><span class="line">ll pp;</span><br><span class="line"><span class="function">ll <span class="title">getsum</span><span class="params">(<span class="type">int</span> ln)</span></span>&#123;</span><br><span class="line"><span class="comment">//	cout&lt;&lt;&quot;ln=&quot;&lt;&lt;ln&lt;&lt;endl;</span></span><br><span class="line">	<span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;ln;++i)&#123;</span><br><span class="line">	<span class="comment">//		cout&lt;&lt;&quot;ch= &quot;&lt;&lt;ch[i]&lt;&lt;&quot; &quot;;</span></span><br><span class="line">			res+=(ch[i]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">if</span>(res&lt;<span class="number">0</span>)res=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">	str=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">memset</span>(ch,<span class="number">0</span>,<span class="built_in">sizeof</span>(ch));</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s %d&quot;</span>,&amp;ch,&amp;s);</span><br><span class="line">	len=<span class="built_in">strlen</span>(ch);</span><br><span class="line">	pp=<span class="number">1</span>;</span><br><span class="line">	<span class="type">int</span> t=<span class="built_in">getsum</span>(len);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//cout&lt;&lt;&quot;t=&quot;&lt;&lt;t&lt;&lt;endl;</span></span><br><span class="line">	<span class="keyword">if</span>(t&lt;=s)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;0\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//字符串反转  原因：因为要进为  如： 500 -&gt; 1000   反转后 005 -&gt; 0001 </span></span><br><span class="line">	<span class="type">char</span> cht;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len/<span class="number">2</span>;++i)&#123;<span class="comment">//123465</span></span><br><span class="line">		cht=ch[i];</span><br><span class="line">		ch[i]=ch[len-i<span class="number">-1</span>];</span><br><span class="line">		ch[len-i<span class="number">-1</span>]=cht;</span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;++i)&#123;</span><br><span class="line">		str+=((<span class="number">10</span>-(ch[i]-<span class="string">&#x27;0&#x27;</span>))*pp);</span><br><span class="line">		t=t-(ch[i]-<span class="string">&#x27;0&#x27;</span>)+<span class="number">1</span>; </span><br><span class="line">		ch[i]=<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">		ch[i+<span class="number">1</span>]+=<span class="number">1</span>;</span><br><span class="line">		pp*=<span class="number">10</span>;<span class="comment">//根据*10得到该位的十进制上的值 </span></span><br><span class="line">		<span class="keyword">if</span>(i+<span class="number">1</span>&gt;=len)&#123;<span class="comment">//进位  </span></span><br><span class="line">			len+=<span class="number">1</span>;</span><br><span class="line">			ch[i+<span class="number">1</span>]=<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//t=getsum(len);</span></span><br><span class="line">	<span class="comment">//	cout&lt;&lt;&quot;t=&quot;&lt;&lt;t&lt;&lt;endl;</span></span><br><span class="line">		<span class="comment">//t=t-(ch[i]-&#x27;0&#x27;)+1; </span></span><br><span class="line">		<span class="keyword">if</span>(t&lt;=s)&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,str);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n;</span><br><span class="line">	cin&gt;&gt;n;</span><br><span class="line">	<span class="keyword">while</span>(n--)&#123;</span><br><span class="line">		<span class="built_in">solve</span>();<span class="comment">//solve解决方案 </span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2020/12/12/Decrease%20the%20Sum%20of%20Digits/">https://blog.yefeng.love/2020/12/12/Decrease%20the%20Sum%20of%20Digits/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2-%E7%AE%97%E6%B3%95/"># 字符串 算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/01/24/A.%20Puzzle%20From%20the%20Future%EF%BC%88%E6%9C%AA%E6%9D%A5%E4%B9%8B%E8%B0%9C%EF%BC%89/">A. Puzzle From the Future（未来之谜）</a>
+            
+            
+            <a class="next" rel="next" href="/2020/12/12/Yet%20Another%20Array%20Restoration(%E5%8F%88%E4%B8%80%E4%B8%AA%E9%98%B5%E5%88%97%E6%81%A2%E5%A4%8D)/">Yet Another Array Restoration(又一个阵列恢复)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>java查找手机归属地信息 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">java查找手机归属地信息</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 6, 2020&nbsp;&nbsp;15:08:30</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <span id="more"></span>
+
+<p>有时候我们需要知道一个手机号码的信息，包括其归属地等等。</p>
+<p>方法一：当然可以网上搜，有很多网页可以实现如：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200306145353698.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzI3MjI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200306145402782.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzI3MjI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>但是如和用程序实现以上呢<br>方法二<br>用java的httpclient<br>以下是接受字符串电话号码，结果-》返回字符串数组，的方法</p>
+<p>首先如果要使用httpclient需要下载架包<br>使用maven项目<br>如何使项目转换为maven项目可以百度<br><a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/c1a3101e06c44fde656debcf.html">这里是我参考的一个链接</a></p>
+<p>需要配置pom.xml文件</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">               &lt;groupId&gt;org.jsoup&lt;/groupId&gt;</span><br><span class="line">               &lt;artifactId&gt;jsoup&lt;/artifactId&gt;</span><br><span class="line">               &lt;version&gt;<span class="number">1.11</span><span class="number">.3</span>&lt;/version&gt;</span><br><span class="line">           &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">           &lt;!-- https:<span class="comment">//mvnrepository.com/artifact/commons-httpclient/commons-httpclient --&gt;</span></span><br><span class="line">           &lt;dependency&gt;</span><br><span class="line">               &lt;groupId&gt;commons-httpclient&lt;/groupId&gt;</span><br><span class="line">               &lt;artifactId&gt;commons-httpclient&lt;/artifactId&gt;</span><br><span class="line">               &lt;version&gt;<span class="number">3.1</span>&lt;/version&gt;</span><br><span class="line">           &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+<p>以下是方法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">static</span> String [] <span class="built_in">test1</span>(String ipid) throws IOException &#123;</span><br><span class="line">        String []res=<span class="keyword">new</span> String[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1.打开浏览器</span></span><br><span class="line">        CloseableHttpClient httpClient = HttpClients.<span class="built_in">createDefault</span>();</span><br><span class="line">        <span class="comment">//2.声明get请求</span></span><br><span class="line">        HttpPost httpPost = <span class="keyword">new</span> <span class="built_in">HttpPost</span>(<span class="string">&quot;http://www.ip138.com:8080/search.asp&quot;</span>);</span><br><span class="line">        <span class="comment">//3.开源中国为了安全，防止恶意攻击，在post请求中都限制了浏览器才能访问</span></span><br><span class="line">        <span class="comment">//httpPost.addHeader(&quot;User-Agent&quot;,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36&quot;);</span></span><br><span class="line">        httpPost.<span class="built_in">addHeader</span>(<span class="string">&quot;User-Agent&quot;</span>,<span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36&quot;</span>);</span><br><span class="line">        <span class="comment">//4.判断状态码</span></span><br><span class="line">        <span class="comment">// User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3741.400 QQBrowser/10.5.3863.400</span></span><br><span class="line">        List&lt;NameValuePair&gt; parameters = <span class="keyword">new</span> <span class="built_in">ArrayList</span>&lt;NameValuePair&gt;(<span class="number">0</span>);</span><br><span class="line">        parameters.<span class="built_in">add</span>(<span class="keyword">new</span> <span class="built_in">BasicNameValuePair</span>(<span class="string">&quot;mobile&quot;</span>, ipid));</span><br><span class="line">        parameters.<span class="built_in">add</span>(<span class="keyword">new</span> <span class="built_in">BasicNameValuePair</span>(<span class="string">&quot;action&quot;</span>, <span class="string">&quot;mobile&quot;</span>));</span><br><span class="line"></span><br><span class="line">        UrlEncodedFormEntity formEntity = <span class="keyword">new</span> <span class="built_in">UrlEncodedFormEntity</span>(parameters,<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">        httpPost.<span class="built_in">setEntity</span>(formEntity);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//5.发送请求</span></span><br><span class="line">        CloseableHttpResponse response = httpClient.<span class="built_in">execute</span>(httpPost);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(response.<span class="built_in">getStatusLine</span>().<span class="built_in">getStatusCode</span>()==<span class="number">200</span>)&#123;</span><br><span class="line">            HttpEntity entity = response.<span class="built_in">getEntity</span>();</span><br><span class="line">            String string = EntityUtils.<span class="built_in">toString</span>(entity, <span class="string">&quot;gbk&quot;</span>);</span><br><span class="line">            <span class="type">int</span> start=string.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;&lt;TABLE&quot;</span>);</span><br><span class="line">            <span class="type">int</span> end=string.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;&lt;/TABLE&gt;&quot;</span>);</span><br><span class="line">            String a=string.<span class="built_in">substring</span>(start,end+<span class="number">9</span>);</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> l=a.<span class="built_in">indexOf</span>(<span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">&quot;市&quot;</span>));</span><br><span class="line">            String city=a.<span class="built_in">substring</span>(l<span class="number">-10</span>,l+<span class="number">1</span>);</span><br><span class="line">            String regEx=<span class="string">&quot;[&amp;nbsp]&quot;</span>;</span><br><span class="line">            city=city.<span class="built_in">replaceAll</span>(regEx,<span class="string">&quot;&quot;</span>);</span><br><span class="line">            regEx=<span class="string">&quot;[;]&quot;</span>;</span><br><span class="line">            city=city.<span class="built_in">replaceAll</span>(regEx,<span class="string">&quot;省 &quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> l2=a.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;邮 编&quot;</span>);</span><br><span class="line">            String youbian=a.<span class="built_in">substring</span>(l2+<span class="number">42</span>,l2+<span class="number">48</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> l3=a.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;区 号&quot;</span>);</span><br><span class="line">            <span class="type">int</span> l31=l2;</span><br><span class="line">            String quhao=a.<span class="built_in">substring</span>(l3+<span class="number">42</span>,l2);</span><br><span class="line">            regEx=<span class="string">&quot;[^(0-9)]&quot;</span>;</span><br><span class="line">            quhao= Pattern.<span class="built_in">compile</span>(regEx).<span class="built_in">matcher</span>(quhao).<span class="built_in">replaceAll</span>(<span class="string">&quot;&quot;</span>).<span class="built_in">trim</span>();</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> l4=a.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;卡&quot;</span>);</span><br><span class="line">            String klx=a.<span class="built_in">substring</span>(l4<span class="number">-5</span>,l4+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            res[<span class="number">0</span>]=<span class="string">&quot;查寻的手机号为：&quot;</span>+ipid;</span><br><span class="line">            res[<span class="number">1</span>]=<span class="string">&quot;号码归属第为： &quot;</span>+city;</span><br><span class="line">            res[<span class="number">2</span>]=<span class="string">&quot;卡  类  型：&quot;</span>+klx;</span><br><span class="line">            res[<span class="number">3</span>]=<span class="string">&quot;区      号：&quot;</span>+quhao;</span><br><span class="line">            res[<span class="number">4</span>]=<span class="string">&quot;邮      编：&quot;</span>+youbian;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6.关闭资源</span></span><br><span class="line">        response.<span class="built_in">close</span>();</span><br><span class="line">        httpClient.<span class="built_in">close</span>();</span><br><span class="line">        <span class="keyword">return</span>  res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下是源代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.codec.language.bm.Rule;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.NameValuePair;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.entity.UrlEncodedFormEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpPost;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.message.BasicNameValuePair;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">static</span> String [] <span class="built_in">test1</span>(String ipid) throws IOException &#123;</span><br><span class="line">        String []res=<span class="keyword">new</span> String[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1.打开浏览器</span></span><br><span class="line">        CloseableHttpClient httpClient = HttpClients.<span class="built_in">createDefault</span>();</span><br><span class="line">        <span class="comment">//2.声明get请求</span></span><br><span class="line">        HttpPost httpPost = <span class="keyword">new</span> <span class="built_in">HttpPost</span>(<span class="string">&quot;http://www.ip138.com:8080/search.asp&quot;</span>);</span><br><span class="line">        <span class="comment">//3.开源中国为了安全，防止恶意攻击，在post请求中都限制了浏览器才能访问</span></span><br><span class="line">        <span class="comment">//httpPost.addHeader(&quot;User-Agent&quot;,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36&quot;);</span></span><br><span class="line">        httpPost.<span class="built_in">addHeader</span>(<span class="string">&quot;User-Agent&quot;</span>,<span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36&quot;</span>);</span><br><span class="line">        <span class="comment">//4.判断状态码</span></span><br><span class="line">        <span class="comment">// User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3741.400 QQBrowser/10.5.3863.400</span></span><br><span class="line">        List&lt;NameValuePair&gt; parameters = <span class="keyword">new</span> <span class="built_in">ArrayList</span>&lt;NameValuePair&gt;(<span class="number">0</span>);</span><br><span class="line">        parameters.<span class="built_in">add</span>(<span class="keyword">new</span> <span class="built_in">BasicNameValuePair</span>(<span class="string">&quot;mobile&quot;</span>, ipid));</span><br><span class="line">        parameters.<span class="built_in">add</span>(<span class="keyword">new</span> <span class="built_in">BasicNameValuePair</span>(<span class="string">&quot;action&quot;</span>, <span class="string">&quot;mobile&quot;</span>));</span><br><span class="line"></span><br><span class="line">        UrlEncodedFormEntity formEntity = <span class="keyword">new</span> <span class="built_in">UrlEncodedFormEntity</span>(parameters,<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">        httpPost.<span class="built_in">setEntity</span>(formEntity);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//5.发送请求</span></span><br><span class="line">        CloseableHttpResponse response = httpClient.<span class="built_in">execute</span>(httpPost);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(response.<span class="built_in">getStatusLine</span>().<span class="built_in">getStatusCode</span>()==<span class="number">200</span>)&#123;</span><br><span class="line">            HttpEntity entity = response.<span class="built_in">getEntity</span>();</span><br><span class="line">            String string = EntityUtils.<span class="built_in">toString</span>(entity, <span class="string">&quot;gbk&quot;</span>);</span><br><span class="line">            <span class="type">int</span> start=string.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;&lt;TABLE&quot;</span>);</span><br><span class="line">            <span class="type">int</span> end=string.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;&lt;/TABLE&gt;&quot;</span>);</span><br><span class="line">            String a=string.<span class="built_in">substring</span>(start,end+<span class="number">9</span>);</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> l=a.<span class="built_in">indexOf</span>(<span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">&quot;市&quot;</span>));</span><br><span class="line">            String city=a.<span class="built_in">substring</span>(l<span class="number">-10</span>,l+<span class="number">1</span>);</span><br><span class="line">            String regEx=<span class="string">&quot;[&amp;nbsp]&quot;</span>;</span><br><span class="line">            city=city.<span class="built_in">replaceAll</span>(regEx,<span class="string">&quot;&quot;</span>);</span><br><span class="line">            regEx=<span class="string">&quot;[;]&quot;</span>;</span><br><span class="line">            city=city.<span class="built_in">replaceAll</span>(regEx,<span class="string">&quot;省 &quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> l2=a.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;邮 编&quot;</span>);</span><br><span class="line">            String youbian=a.<span class="built_in">substring</span>(l2+<span class="number">42</span>,l2+<span class="number">48</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> l3=a.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;区 号&quot;</span>);</span><br><span class="line">            <span class="type">int</span> l31=l2;</span><br><span class="line">            String quhao=a.<span class="built_in">substring</span>(l3+<span class="number">42</span>,l2);</span><br><span class="line">            regEx=<span class="string">&quot;[^(0-9)]&quot;</span>;</span><br><span class="line">            quhao= Pattern.<span class="built_in">compile</span>(regEx).<span class="built_in">matcher</span>(quhao).<span class="built_in">replaceAll</span>(<span class="string">&quot;&quot;</span>).<span class="built_in">trim</span>();</span><br><span class="line"></span><br><span class="line">            <span class="type">int</span> l4=a.<span class="built_in">lastIndexOf</span>(<span class="string">&quot;卡&quot;</span>);</span><br><span class="line">            String klx=a.<span class="built_in">substring</span>(l4<span class="number">-5</span>,l4+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            res[<span class="number">0</span>]=<span class="string">&quot;查寻的手机号为：&quot;</span>+ipid;</span><br><span class="line">            res[<span class="number">1</span>]=<span class="string">&quot;号码归属第为： &quot;</span>+city;</span><br><span class="line">            res[<span class="number">2</span>]=<span class="string">&quot;卡  类  型：&quot;</span>+klx;</span><br><span class="line">            res[<span class="number">3</span>]=<span class="string">&quot;区      号：&quot;</span>+quhao;</span><br><span class="line">            res[<span class="number">4</span>]=<span class="string">&quot;邮      编：&quot;</span>+youbian;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6.关闭资源</span></span><br><span class="line">        response.<span class="built_in">close</span>();</span><br><span class="line">        httpClient.<span class="built_in">close</span>();</span><br><span class="line">        <span class="keyword">return</span>  res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">static</span> <span class="type">void</span> <span class="title">main</span><span class="params">(String[] args)</span> throws IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        String ipid=<span class="string">&quot;&quot;</span>;</span><br><span class="line">        System.out.<span class="built_in">print</span>(<span class="string">&quot;请输入你要查找的手机号：&quot;</span>);</span><br><span class="line">          Scanner scanner=<span class="keyword">new</span> <span class="built_in">Scanner</span>(System.in);</span><br><span class="line">         ipid=scanner.<span class="built_in">nextLine</span>();</span><br><span class="line">        String []string=<span class="built_in">test1</span>(ipid);</span><br><span class="line">        <span class="type">int</span> len=string.length;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            System.out.<span class="built_in">println</span>(string[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>运行结果如下图：<br><img src="https://img-blog.csdnimg.cn/20200306150629520.jpg" alt="在这里插入图片描述"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2020/03/06/java%E6%9F%A5%E6%89%BE%E6%89%8B%E6%9C%BA%E5%BD%92%E5%B1%9E%E5%9C%B0%E4%BF%A1%E6%81%AF/">https://blog.yefeng.love/2020/03/06/java%E6%9F%A5%E6%89%BE%E6%89%8B%E6%9C%BA%E5%BD%92%E5%B1%9E%E5%9C%B0%E4%BF%A1%E6%81%AF/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/java/"># java</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/03/16/java%E6%96%87%E4%BB%B6%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8/">java文件选择器，使用本地文件管理器</a>
+            
+            
+            <a class="next" rel="next" href="/2020/03/05/%E8%BE%93%E5%85%A5%E5%B9%B4%E4%BB%BD%EF%BC%8C%E8%87%AA%E5%8A%A8%E6%A0%B9%E6%8D%AE%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%EF%BC%8C%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E5%AD%A6%E7%94%9F%E6%98%AF%E5%A4%A7%E5%87%A0%EF%BC%8C%E6%98%AF%E5%90%A6%E6%AF%95%E4%B8%9A/">输入年份，自动根据当前日期，返回当前学生是大几，是否毕业</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

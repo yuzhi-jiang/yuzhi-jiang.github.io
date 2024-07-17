@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>输入年份，自动根据当前日期，返回当前学生是大几，是否毕业 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">输入年份，自动根据当前日期，返回当前学生是大几，是否毕业</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 5, 2020&nbsp;&nbsp;19:36:45</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <span id="more"></span>
+
+<p>东软学习小组成员：夜枫<br>入参：年份<br>返回：字符串<br>如：2019<br>返回：你现在是大一下学期<br>如：2018<br>返回：你现在是大二下学期</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">static String a(int year) &#123;</span><br><span class="line">        String res = null;</span><br><span class="line">        int time_year;</span><br><span class="line">        int time_month;</span><br><span class="line">        Date time = new Date();  //2016 2017 2018 2019 2020</span><br><span class="line">        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;yyy-MM-dd&quot;);</span><br><span class="line">        res = simpleDateFormat.format(time);</span><br><span class="line">        time_year=Integer.parseInt(res.substring(0,4));</span><br><span class="line">      //  time_year=2019;</span><br><span class="line">       // time_month=10;</span><br><span class="line">        time_month=Integer.parseInt(res.substring(5,7));</span><br><span class="line"></span><br><span class="line">        //处理时间超时</span><br><span class="line">       if(year&gt;time_year)&#123;</span><br><span class="line">           res=&quot;时间太后了，你还没到那个时候入学&quot;;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       if(year==time_year)&#123;//相同年，但是月份还不到9月</span><br><span class="line">           if(time_month&lt;9)&#123;</span><br><span class="line">               res=&quot;你还不到入学时间,等九月份你就是大一啦&quot;;</span><br><span class="line">           &#125;</span><br><span class="line">           else if(time_month&gt;=9)&#123;</span><br><span class="line">               res=&quot;你现在是大一上学期&quot;;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">//2020 3   2019 6</span><br><span class="line">       if(time_year&gt;year)&#123;</span><br><span class="line">           int temp=time_year-year;//时差</span><br><span class="line">           if(temp&lt;=3)&#123;</span><br><span class="line">               String []Class=&#123;&quot;大一&quot;,&quot;大二&quot;,&quot;大三&quot;,&quot;大四&quot;&#125;;</span><br><span class="line">               res=&quot;你现在是&quot;+Class[temp-1];</span><br><span class="line">               if(time_month&lt;9)&#123;</span><br><span class="line">                   res+=&quot;下学期&quot;;</span><br><span class="line">               &#125;else &#123;</span><br><span class="line">                   if(temp&lt;3)&#123;//不是大四</span><br><span class="line">                       res=Class[temp]+&quot;上学期&quot;;</span><br><span class="line">                   &#125;else if(temp==3)&#123;//大四</span><br><span class="line">                       res=&quot;上半年是大四下学期啦，现在已经你毕业几个月了&quot;;</span><br><span class="line"></span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           else if(temp&gt;3)&#123;//2020 2019 2018 2017 2016</span><br><span class="line"></span><br><span class="line">               int year1=temp-3;//毕业多少年</span><br><span class="line">               int momth1=time_month;//毕业多少月</span><br><span class="line">               if(time_month&lt;6)&#123;</span><br><span class="line">                   year1-=1;</span><br><span class="line">                   momth1=time_month+12-6;</span><br><span class="line"></span><br><span class="line">               &#125;</span><br><span class="line">               res=&quot;你已经毕业&quot;+String.valueOf(year1)+&quot;年&quot;+String.valueOf(momth1)+&quot;月了&quot;;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>java源代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">import java.text.SimpleDateFormat;</span><br><span class="line">import java.util.Date;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Scanner sc = new Scanner(System.in);</span><br><span class="line">      //  int year = sc.nextInt();</span><br><span class="line">        for(int i=2010;i&lt;2022;i++)&#123;</span><br><span class="line">            String t=a(i);</span><br><span class="line">            System.out.println(i+&quot;的结果：--&gt;&quot;+t);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //System.out.println(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   static String a(int year) &#123;</span><br><span class="line">        String res = null;</span><br><span class="line">        int time_year;</span><br><span class="line">        int time_month;</span><br><span class="line">        Date time = new Date();  //2016 2017 2018 2019 2020</span><br><span class="line">        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;yyy-MM-dd&quot;);</span><br><span class="line">        res = simpleDateFormat.format(time);</span><br><span class="line">        time_year=Integer.parseInt(res.substring(0,4));</span><br><span class="line">      //  time_year=2019;</span><br><span class="line">       // time_month=10;</span><br><span class="line">        time_month=Integer.parseInt(res.substring(5,7));</span><br><span class="line"></span><br><span class="line">        //处理时间超时</span><br><span class="line">       if(year&gt;time_year)&#123;</span><br><span class="line">           res=&quot;时间太后了，你还没到那个时候入学&quot;;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       if(year==time_year)&#123;//相同年，但是月份还不到9月</span><br><span class="line">           if(time_month&lt;9)&#123;</span><br><span class="line">               res=&quot;你还不到入学时间,等九月份你就是大一啦&quot;;</span><br><span class="line">           &#125;</span><br><span class="line">           else if(time_month&gt;=9)&#123;</span><br><span class="line">               res=&quot;你现在是大一上学期&quot;;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">//2020 3   2019 6</span><br><span class="line">       if(time_year&gt;year)&#123;</span><br><span class="line">           int temp=time_year-year;//时差</span><br><span class="line">           if(temp&lt;=3)&#123;</span><br><span class="line">               String []Class=&#123;&quot;大一&quot;,&quot;大二&quot;,&quot;大三&quot;,&quot;大四&quot;&#125;;</span><br><span class="line">               res=&quot;你现在是&quot;+Class[temp-1];</span><br><span class="line">               if(time_month&lt;9)&#123;</span><br><span class="line">                   res+=&quot;下学期&quot;;</span><br><span class="line">               &#125;else &#123;</span><br><span class="line">                   if(temp&lt;3)&#123;//不是大四</span><br><span class="line">                       res=Class[temp]+&quot;上学期&quot;;</span><br><span class="line">                   &#125;else if(temp==3)&#123;//大四</span><br><span class="line">                       res=&quot;上半年是大四下学期啦，现在已经你毕业几个月了&quot;;</span><br><span class="line"></span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           else if(temp&gt;3)&#123;//2020 2019 2018 2017 2016</span><br><span class="line"></span><br><span class="line">               int year1=temp-3;//毕业多少年</span><br><span class="line">               int momth1=time_month;//毕业多少月</span><br><span class="line">               if(time_month&lt;6)&#123;</span><br><span class="line">                   year1-=1;</span><br><span class="line">                   momth1=time_month+12-6;</span><br><span class="line"></span><br><span class="line">               &#125;</span><br><span class="line">               res=&quot;你已经毕业&quot;+String.valueOf(year1)+&quot;年&quot;+String.valueOf(momth1)+&quot;月了&quot;;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2020/03/05/%E8%BE%93%E5%85%A5%E5%B9%B4%E4%BB%BD%EF%BC%8C%E8%87%AA%E5%8A%A8%E6%A0%B9%E6%8D%AE%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%EF%BC%8C%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E5%AD%A6%E7%94%9F%E6%98%AF%E5%A4%A7%E5%87%A0%EF%BC%8C%E6%98%AF%E5%90%A6%E6%AF%95%E4%B8%9A/">https://blog.yefeng.love/2020/03/05/%E8%BE%93%E5%85%A5%E5%B9%B4%E4%BB%BD%EF%BC%8C%E8%87%AA%E5%8A%A8%E6%A0%B9%E6%8D%AE%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%EF%BC%8C%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E5%AD%A6%E7%94%9F%E6%98%AF%E5%A4%A7%E5%87%A0%EF%BC%8C%E6%98%AF%E5%90%A6%E6%AF%95%E4%B8%9A/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/java/"># java</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/03/06/java%E6%9F%A5%E6%89%BE%E6%89%8B%E6%9C%BA%E5%BD%92%E5%B1%9E%E5%9C%B0%E4%BF%A1%E6%81%AF/">java查找手机归属地信息</a>
+            
+            
+            <a class="next" rel="next" href="/2020/03/04/7-6%20%E7%BB%9F%E8%AE%A1%E4%B8%80%E8%A1%8C%E6%96%87%E6%9C%AC%E7%9A%84%E5%8D%95%E8%AF%8D%E4%B8%AA%E6%95%B0%20(15%E5%88%86)/">7-6 统计一行文本的单词个数 (15分)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>A. Puzzle From the Future（未来之谜） | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">A. Puzzle From the Future（未来之谜）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 24, 2021&nbsp;&nbsp;13:34:07</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <span id="more"></span>
+
+<p>每次测试的时限<br>1秒<br>每次测试的内存限制<br>256兆字节<br>输入<br>标准输入<br>输出<br>标准输出</p>
+<h2 id="原题：原题链接"><a href="#原题：原题链接" class="headerlink" title="原题：原题链接"></a>原题：<a target="_blank" rel="noopener" href="https://codeforces.com/contest/1474/problem/A">原题链接</a></h2><p>In the 2022 year, Mike found two binary integers a and b of length n (both of them are written only by digits 0 and 1) that can have leading zeroes. In order not to forget them, he wanted to construct integer d</p>
+<p>in the following way:</p>
+<pre><code>he creates an integer c
+</code></pre>
+<p>as a result of bitwise summing of a and b without transferring carry, so c may have one or more 2-s. For example, the result of bitwise summing of 0110 and 1101 is 1211 or the sum of 011000 and 011000 is 022000<br>;<br>after that Mike replaces equal consecutive digits in c<br>by one digit, thus getting d. In the cases above after this operation, 1211 becomes 121 and 022000 becomes 020 (so, d</p>
+<pre><code>won&#39;t have equal consecutive digits). 
+</code></pre>
+<p>Unfortunately, Mike lost integer a<br>before he could calculate d himself. Now, to cheer him up, you want to find any binary integer a of length n such that d</p>
+<p>will be maximum possible as integer.</p>
+<p>Maximum possible as integer means that 102&gt;21<br>, 012&lt;101, 021&#x3D;21</p>
+<p>and so on.<br>Input</p>
+<p>The first line contains a single integer t<br>(1≤t≤1000</p>
+<p>) — the number of test cases.</p>
+<p>The first line of each test case contains the integer n<br>(1≤n≤105) — the length of a and b</p>
+<p>.</p>
+<p>The second line of each test case contains binary integer b<br>of length n. The integer b consists only of digits 0 and 1</p>
+<p>.</p>
+<p>It is guaranteed that the total sum of n<br>over all t test cases doesn’t exceed 105</p>
+<p>.<br>Output</p>
+<p>For each test case output one binary integer a<br>of length n. Note, that a or b may have leading zeroes but must have the same length n</p>
+<p>.<br>Example<br>Input<br>Copy</p>
+<p>5<br>1<br>0<br>3<br>011<br>3<br>110<br>6<br>111000<br>6<br>001011</p>
+<p>Output<br>Copy</p>
+<p>1<br>110<br>100<br>101101<br>101110</p>
+<p>Note</p>
+<p>In the first test case, b&#x3D;0<br>and choosing a&#x3D;1 gives d&#x3D;1</p>
+<p>as a result.</p>
+<p>In the second test case, b&#x3D;011</p>
+<p>so:</p>
+<pre><code>if you choose a=000
+</code></pre>
+<p>, c will be equal to 011, so d&#x3D;01<br>;<br>if you choose a&#x3D;111<br>, c will be equal to 122, so d&#x3D;12<br>;<br>if you choose a&#x3D;010<br>, you’ll get d&#x3D;021<br>.<br>If you select a&#x3D;110<br>, you’ll get d&#x3D;121</p>
+<pre><code>. 
+</code></pre>
+<p>We can show that answer a&#x3D;110 is optimal and d&#x3D;121 is maximum possible.</p>
+<p>In the third test case, b&#x3D;110<br>. If you choose a&#x3D;100, you’ll get d&#x3D;210 and it’s the maximum possible d</p>
+<p>.</p>
+<p>In the fourth test case, b&#x3D;111000<br>. If you choose a&#x3D;101101, you’ll get d&#x3D;212101 and it’s maximum possible d</p>
+<p>.</p>
+<p>In the fifth test case, b&#x3D;001011<br>. If you choose a&#x3D;101110, you’ll get d&#x3D;102121 and it’s maximum possible d.</p>
+<h2 id="翻译题目："><a href="#翻译题目：" class="headerlink" title="翻译题目："></a>翻译题目：</h2><p>在里面 2022<br>年，麦克发现了两个二进制整数 一种 和 b 长度 ñ （它们都只用数字写 0 和 1）可以包含前导零。为了不忘记他们，他想构造整数d</p>
+<p>通过以下方式：<br> 他创建一个整数 C</p>
+<p>作为按位求和的结果 一种 和 b 不转移进位，所以C 可能有一个或多个 2-s。例如，按位求和的结果0110 和 1101 是 1211 或 011000 和 011000 是 022000<br>;<br>之后，麦克替换了相等的连续数字 C<br>一位数 d。在上述情况下，执行此操作后，1211 变成 121 和 022000 变成 020 （所以， d不会有相等的连续数字）。 </p>
+<p>不幸的是，迈克失去了整数 一种<br>在他计算之前 d他自己。现在，要振作起来，您想找到任何二进制整数一种 长度 ñ 这样 d</p>
+<p>将最大可能为integer。</p>
+<p>最大值（可能为整数）表示 102 &gt; 21<br>, 012 &lt; 101, 021&#x3D;21</p>
+<p>等等。<br>输入值</p>
+<p>第一行包含一个整数 Ť<br>(1≤t≤1000</p>
+<p>）-测试用例的数量。</p>
+<p>每个测试用例的第一行包含整数 ñ<br>(1≤n≤105）—的长度 一种 和 b</p>
+<p>.</p>
+<p>每个测试用例的第二行包含二进制整数 b<br>长度 ñ。整数b 仅由数字组成 0 和 1</p>
+<p>.</p>
+<p>保证总和为 ñ<br>总体 Ť 测试用例不超过 105</p>
+<p>.<br>输出量</p>
+<p>对于每个测试用例，输出一个二进制整数一种<br>长度 ñ。注意一种 要么 b 可能有前导零，但长度必须相同 ñ</p>
+<p>.<br>例<br>输入值<br>复制</p>
+<p>5<br>1<br>0<br>3<br>011<br>3<br>110<br>6<br>111000<br>6<br>001011</p>
+<p>输出量<br>复制</p>
+<p>1<br>110<br>100<br>101101<br>101110</p>
+<p>注意</p>
+<p>在第一个测试案例中， b &#x3D; 0<br>然后选择 a &#x3D; 1 给 d&#x3D;1</p>
+<p>结果是。</p>
+<p>在第二个测试用例中， b &#x3D; 011</p>
+<p>所以：如果你选择 a &#x3D; 000</p>
+<p>, C 将等于 011，所以 d&#x3D;01<br>;<br>如果你选择 a &#x3D; 111<br>, C 将等于 122，所以 d&#x3D;12<br>;<br>如果你选择 a &#x3D; 010<br>， 你会得到 d&#x3D;021<br>.<br>如果选择 a &#x3D; 110<br>， 你会得到 d&#x3D;121</p>
+<p>我们可以显示答案 a &#x3D; 110 是最优的 d&#x3D;121 是最大可能的。</p>
+<p>在第三个测试用例中， b &#x3D; 110<br>。如果你选择a &#x3D; 100， 你会得到 d&#x3D;210 这是最大可能的 d</p>
+<p>.</p>
+<p>在第四个测试用例中， b &#x3D; 111000<br>。如果你选择a &#x3D; 101101， 你会得到 d&#x3D;212101 这是最大可能的 d</p>
+<p>.</p>
+<p>在第五个测试案例中， b &#x3D; 001011<br>。如果你选择a &#x3D; 101110， 你会得到 d&#x3D;102121 这是最大可能的 d.</p>
+<h2 id="本题思路"><a href="#本题思路" class="headerlink" title="本题思路"></a>本题思路</h2><p>：根据b来确定最大值d，d-b就是a的结果<br>d最大值确定思路：<br><img src="https://img-blog.csdnimg.cn/20210124132216653.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzI3MjI1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>第一个a[0],肯定是1,即 d[0]&#x3D;b[0]+a[0];<br>经过手动模拟发现，d[j]的取值跟d[j-1]和b[j]有关，如果b[j]&gt;&#x3D;d[j-1],根据最大原则且max(b[j])&#x3D;&#x3D;1，则a[j]&#x3D;1;d[j]&#x3D;b[j]+a[j];<br>如果b[j]&lt;d[j-1],<del>(1&lt;2  0&lt;1  0&lt;2)</del> ,则根据最大原则，如果(b[j]+1)&lt;d[j-1]  即d[j-1]和b[j]的差值大于1 ,则d[j]+&#x3D;1；a[j]&#x3D;1;</p>
+<p>本题坑点：输入b的时候，题目没有说明取值范围，如果定义为int乃至long long等都是会超的（9999999….?），所以要定义为字符串类型，再存到b[j]数组中（也可以直接操作字符串，不一点需要存）</p>
+<h2 id="ac代码："><a href="#ac代码：" class="headerlink" title="ac代码："></a>ac代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> d[<span class="number">100005</span>];</span><br><span class="line"><span class="type">int</span> a[<span class="number">100005</span>];</span><br><span class="line"><span class="type">int</span> b[<span class="number">100005</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> t,nt;</span><br><span class="line">	cin&gt;&gt;t;</span><br><span class="line">	string str;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;t;++i)&#123;</span><br><span class="line">		cin&gt;&gt;n;</span><br><span class="line">		nt=n;</span><br><span class="line">		cin&gt;&gt;str;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;++j)&#123;</span><br><span class="line">			b[j]=(str[j]-<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		d[<span class="number">0</span>]=b[<span class="number">0</span>]+<span class="number">1</span>;</span><br><span class="line">		a[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;n;++j)&#123;</span><br><span class="line">			<span class="keyword">if</span>(b[j]&gt;=d[j<span class="number">-1</span>])&#123;   <span class="comment">//1&gt;0  1==1 0==0</span></span><br><span class="line">				d[j]=b[j]+<span class="number">1</span>;</span><br><span class="line">				a[j]=<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span>&#123;<span class="comment">//  1&lt;2  0&lt;1  0&lt;2</span></span><br><span class="line">				a[j]=<span class="number">0</span>;</span><br><span class="line">				d[j]=b[j];</span><br><span class="line">				<span class="keyword">if</span>(d[j<span class="number">-1</span>]-d[j]&gt;<span class="number">1</span>)&#123;</span><br><span class="line">					d[j]+=<span class="number">1</span>;</span><br><span class="line">					a[j]=<span class="number">1</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;++j)&#123;</span><br><span class="line">			cout&lt;&lt;a[j]; </span><br><span class="line">		&#125;</span><br><span class="line">		cout&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2021/01/24/A.%20Puzzle%20From%20the%20Future%EF%BC%88%E6%9C%AA%E6%9D%A5%E4%B9%8B%E8%B0%9C%EF%BC%89/">https://blog.yefeng.love/2021/01/24/A.%20Puzzle%20From%20the%20Future%EF%BC%88%E6%9C%AA%E6%9D%A5%E4%B9%8B%E8%B0%9C%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2-%E7%AE%97%E6%B3%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"># 字符串 算法 数据结构</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/10/17/%E5%AE%9E%E7%8E%B0%E6%89%8B%E6%9C%BA%E5%AE%89%E8%A3%85%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E7%B3%BB%E7%BB%9F%E8%AF%81%E4%B9%A6%EF%BC%89%E5%92%8C%E4%BD%BF%E7%94%A8drony%20%E8%A7%A3%E5%86%B3%E6%99%AE%E9%80%9A%E4%BB%A3%E7%90%86%E9%83%A8%E5%88%86%E5%BA%94%E7%94%A8%E4%B8%8D%E8%83%BD%E6%8A%93%E5%8C%85%E7%9A%84%E9%97%AE%E9%A2%98/">实现手机安装根证书（系统证书）和使用drony 解决普通代理部分应用不能抓包的问题</a>
+            
+            
+            <a class="next" rel="next" href="/2020/12/12/Decrease%20the%20Sum%20of%20Digits/">Decrease the Sum of Digits</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

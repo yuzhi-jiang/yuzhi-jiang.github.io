@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title"></h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 21, 2020&nbsp;&nbsp;12:09:07</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>题目：<br>Given a satellite image of some sea region, your task is to count:</p>
+<ol>
+<li><p>The number of islands in this region</p>
+</li>
+<li><p>The number of islands having different area in this region</p>
+</li>
+<li><p>The number of islands having different shape in this region</p>
+</li>
+</ol>
+<p>The image is illustrated as below. Sea is represented by “.” and land is represented by ‘#’. An island consists of all connected land in 4 (up, down, left and right) directions.</p>
+<p>.####..<br>…..#.<br>####.#.<br>…..#.<br>..##.#.<br>There are 4 islands in the image above. Three of them have an area of 4 and one has an area of 2, so the number of islands having different area is 2. Two of them share the same shape “####” so the number of islands having different shape is 3.</p>
+<p>Input<br>The first line contains 2 integers N and M (1 ≤ N, M ≤ 50).</p>
+<p>Then follows an N * M matrix which is the image of the sea region.</p>
+<p>Output<br>Output 3 numbers which are the number of islands, the number of islands having different area and the number of islands having different shape in this region.</p>
+<p>翻译：</p>
+<p>描述<br>给你一张某一海域卫星照片，你需要统计：</p>
+<ol>
+<li><p>照片中海岛的数目</p>
+</li>
+<li><p>照片中面积不同的海岛数目</p>
+</li>
+<li><p>照片中形状不同的海岛数目</p>
+</li>
+</ol>
+<p>其中海域的照片如下，”.”表示海洋，”#”表示陆地。在”上下左右”四个方向上连在一起的一片陆地组成一座岛屿。</p>
+<p>.####..<br>…..#.<br>####.#.<br>…..#.<br>..##.#.<br>上图所示的照片中一共有4座岛屿；其中3座面积为4，一座面积为2，所以不同面积的岛屿数目是2；有两座形状都是”####”，所以形状不同的岛屿数目为3。</p>
+<p>输入<br>第一行包含两个整数：N 和 M，(1 ≤ N, M ≤ 50)，表示照片的行数和列数。</p>
+<p>以下一个 N * M 的矩阵，表示表示海域的照片。</p>
+<p>输出<br>输出3个整数，依次是照片中海岛的数目、面积不同的海岛数目和形状不同的海岛数目。</p>
+<p>样例输入<br>5 7<br>.####..<br>…..#.<br>####.#.<br>…..#.<br>..##.#.<br>样例输出<br>4 2 3</p>
+<p>计算岛屿的面积和个数都是比较容易的，利用bfs或者dfs就可以，<br>例如：dfs(x,y) 如果坐标在地图中，且不为海水，则返回周边的面积和自己的面积，并且让该坐标变为海水标签（这个步骤是为了其他dfs不需要重复dfs）<br>只需要按照地图顺序，把map[i][j]是陆地的（陆地的第一个坐标），对其dfs(x0,y0)，就可以得到该岛屿的面积，个数+1即可。</p>
+<p>本题难点：计算岛屿的形状，根据测试发现，这个形状的意思，不包括旋转，不包括缩放，也就是从地图上，需要完全一致才算</p>
+<p>思路1：从第一个坐标开始，dfs的时候保存其运动的轨迹（岛屿的其他像素点），比如向左走是陆地，则路径+&#x3D;“左’，其他方向同理。</p>
+<p>最初的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX 55</span></span><br><span class="line"><span class="type">int</span> map[MAX][MAX];</span><br><span class="line"><span class="type">int</span> cont=<span class="number">0</span>;</span><br><span class="line"><span class="comment">//string lu[MAX];</span></span><br><span class="line">string lu;</span><br><span class="line">set&lt;<span class="type">int</span>&gt; ss;</span><br><span class="line">set&lt;string&gt; strs;</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(x&lt;<span class="number">0</span>||y&lt;<span class="number">0</span>||x&gt;=n||y&gt;=m||map[x][y]==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	map[x][y]=<span class="number">0</span>;<span class="comment">//避免重复</span></span><br><span class="line">	<span class="type">int</span> a=<span class="built_in">dfs</span>(x<span class="number">-1</span>,y);</span><br><span class="line">	<span class="keyword">if</span>(a)&#123;</span><br><span class="line">		lu+=<span class="string">&quot;S&quot;</span>;<span class="comment">//上下左右的缩写</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> b=<span class="built_in">dfs</span>(x+<span class="number">1</span>,y);</span><br><span class="line">	<span class="keyword">if</span>(b)&#123;</span><br><span class="line">		lu+=<span class="string">&quot;X&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> c=<span class="built_in">dfs</span>(x,y<span class="number">-1</span>);</span><br><span class="line">	<span class="keyword">if</span>(c)&#123;</span><br><span class="line">		lu+=<span class="string">&quot;z&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> d=<span class="built_in">dfs</span>(x,y+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">if</span>(d)&#123;</span><br><span class="line">		lu+=<span class="string">&quot;y&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> a+b+c+d+<span class="number">1</span>;<span class="comment">//返回面积</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	lu=<span class="string">&quot;&quot;</span>;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	<span class="type">char</span> c;</span><br><span class="line">	<span class="type">int</span>  mian;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;m;++j)&#123;</span><br><span class="line">			cin&gt;&gt;c;</span><br><span class="line">			<span class="keyword">if</span>(c==<span class="string">&#x27;.&#x27;</span>)&#123;</span><br><span class="line">				map[i][j]=<span class="number">0</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">&#x27;#&#x27;</span>)&#123;</span><br><span class="line">				map[i][j]=<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;m;++j)&#123;</span><br><span class="line">			<span class="keyword">if</span>(map[i][j]==<span class="number">1</span>)&#123;</span><br><span class="line">				mian=<span class="built_in">dfs</span>(i,j);<span class="comment">//面积</span></span><br><span class="line">				strs.<span class="built_in">insert</span>(lu);<span class="comment">//路径，set容器自动去重</span></span><br><span class="line">				lu=<span class="string">&quot;&quot;</span>;	<span class="comment">//清空</span></span><br><span class="line">				cont++;<span class="comment">//岛屿个数</span></span><br><span class="line">				ss.<span class="built_in">insert</span>(mian);<span class="comment">//面积 set容器自动去重</span></span><br><span class="line">			&#125; </span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	cout&lt;&lt;cont&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;ss.<span class="built_in">size</span>()&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;strs.<span class="built_in">size</span>()&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">7 7 </span></span><br><span class="line"><span class="comment">#######</span></span><br><span class="line"><span class="comment">#.....#</span></span><br><span class="line"><span class="comment">#.###.#</span></span><br><span class="line"><span class="comment">#.#.#.#</span></span><br><span class="line"><span class="comment">#.###.#</span></span><br><span class="line"><span class="comment">#.....#</span></span><br><span class="line"><span class="comment">#######  </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">3 7</span></span><br><span class="line"><span class="comment">###.###</span></span><br><span class="line"><span class="comment">#.#.#.#</span></span><br><span class="line"><span class="comment">###.###</span></span><br><span class="line"><span class="comment">*/</span> </span><br></pre></td></tr></table></figure>
+
+
+
+<p>但是 提交后答案错误，自己手动测试了很多样例都是正确的结果。<br>很无语只能重新思考其他出路了</p>
+<p>于是在度娘找到该题中文版：<br><a target="_blank" rel="noopener" href="https://hihocoder.com/problemset/problem/1310?sid=1595333">链接在这里</a></p>
+<p>又在讨论处看到，形状的第二种思路：<a target="_blank" rel="noopener" href="https://hihocoder.com/discuss/question/4580">hiho一下第156周《岛屿》题目分析</a><br>思路2：以样例数据为例，第一行的”####”对应的坐标(行从上到下，列从左到右)依次是(0, 1)(0, 2)(0, 3)(0, 4)。如果我们以其先最上其次最左的点，也就是(0, 1)为基准的话，相对位置序列是(0, 0)(0, 1)(0, 2)(0, 3)。</p>
+<p>同理第三行的”####”的坐标依次是(2, 0)(2, 1)(2, 2)(2, 3)，其相对位置也是(0, 0)(0, 1)(0, 2)(0, 3)。两个岛屿形状相同，当且仅当它们的相对位置序列完全相同。</p>
+<p>所以我们需要在dfs&#x2F;bfs找岛屿的过程中把陆地的位置都保存下来。</p>
+<p>值得一提的是如果我们按照确定的顺序搜索陆地，（例如以上代码中先行后列扫描第一块陆地，同时在dfs中保持按上下左右的顺序扩展陆地）那么对于两个形状相同的岛屿，我们求出的坐标序列恰好就是一一对应的。</p>
+<p>其实就是保存每个陆地像素跟第一个像素的相对位置，差值 x-x0,y-y0</p>
+<p>只要两个岛屿的所有相对位置都相同就是形状相同的岛屿，否则不是；</p>
+<p>根据这思路可以有下面代码<br>ac代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX 55</span></span><br><span class="line"><span class="type">int</span> map[MAX][MAX];</span><br><span class="line"><span class="type">int</span> cont=<span class="number">0</span>;<span class="comment">//岛屿个数 </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;PA;<span class="comment">//构造键值对 </span></span><br><span class="line">vector&lt;PA&gt;st;<span class="comment">//记录每个岛屿的每个像素，与第一个像素的，坐标差值，存放在动态数组中， </span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">comp</span><span class="params">(<span class="type">const</span> PA&amp;a ,<span class="type">const</span> PA&amp;b )</span></span>&#123;<span class="comment">//自定义比较 </span></span><br><span class="line">	<span class="keyword">if</span>(a.first==b.first) <span class="keyword">return</span> a.second&lt;b.second;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> a.first&lt;b.first;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">set&lt;<span class="type">int</span>&gt; ss;<span class="comment">//岛屿的面积，去重原理计算，多少个岛屿的面积不同 </span></span><br><span class="line">set&lt;vector&lt;PA&gt;&gt; strs;<span class="comment">//形状   存放每个不同形状的岛屿,：利用set集合的去重原理，把每个 vector&lt;PA&gt;st 放进去去重，最后 strs.size()就是形状的个数 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> xx=<span class="number">0</span>;<span class="comment">//作为岛屿的第一个像素坐标，不知道为啥，x0,y0这样子老是报错，所以改了名字，xx,yx就通过了 </span></span><br><span class="line"><span class="type">int</span> yx=<span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> n,m;<span class="comment">//n*m的地图， 0到n-1 </span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123; </span><br><span class="line">	<span class="keyword">if</span>(x&lt;<span class="number">0</span>||y&lt;<span class="number">0</span>||x&gt;=n||y&gt;=m||map[x][y]==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	map[x][y]=<span class="number">0</span>;<span class="comment">//避免重复，提高效率 </span></span><br><span class="line">	st.<span class="built_in">push_back</span>(<span class="built_in">PA</span>(x-xx,y-yx));</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">dfs</span>(x<span class="number">-1</span>,y)+<span class="built_in">dfs</span>(x+<span class="number">1</span>,y)+<span class="built_in">dfs</span>(x,y<span class="number">-1</span>)+<span class="built_in">dfs</span>(x,y+<span class="number">1</span>)+<span class="number">1</span>;<span class="comment">//自己和周边的面积 </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	<span class="type">char</span> c;</span><br><span class="line">	<span class="type">int</span>  mian;</span><br><span class="line">	<span class="built_in">memset</span>(map,<span class="number">0</span>,<span class="built_in">sizeof</span>(map)); <span class="comment">//初始化地图 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;m;++j)&#123;</span><br><span class="line">			cin&gt;&gt;c;</span><br><span class="line">			<span class="keyword">if</span>(c==<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">				map[i][j]=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">&#x27;#&#x27;</span>)</span><br><span class="line">				map[i][j]=<span class="number">1</span>;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;m;++j)&#123;</span><br><span class="line">			<span class="keyword">if</span>(map[i][j]==<span class="number">1</span>)&#123;</span><br><span class="line">				xx=i;yx=j;<span class="comment">//岛屿的第一个像素 </span></span><br><span class="line">				mian=<span class="built_in">dfs</span>(i,j);<span class="comment">//返回面积 </span></span><br><span class="line">				<span class="built_in">sort</span>(st.<span class="built_in">begin</span>(),st.<span class="built_in">end</span>(),comp);<span class="comment">//根据每个像素与第一个像素的坐标差值排序 </span></span><br><span class="line">				strs.<span class="built_in">insert</span>(st);<span class="comment">//把得到st（形状）放入set容器 </span></span><br><span class="line">				cont++;<span class="comment">//岛屿数量+1 </span></span><br><span class="line">				ss.<span class="built_in">insert</span>(mian);<span class="comment">//面积放入容器去重 </span></span><br><span class="line">				st.<span class="built_in">clear</span>();<span class="comment">//清空形状 </span></span><br><span class="line">			&#125; </span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	cout&lt;&lt;cont&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;ss.<span class="built_in">size</span>()&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;strs.<span class="built_in">size</span>()&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">7 7 </span></span><br><span class="line"><span class="comment">#######</span></span><br><span class="line"><span class="comment">#.....#</span></span><br><span class="line"><span class="comment">#.###.#</span></span><br><span class="line"><span class="comment">#.#.#.#</span></span><br><span class="line"><span class="comment">#.###.#</span></span><br><span class="line"><span class="comment">#.....#</span></span><br><span class="line"><span class="comment">#######  </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">3 7</span></span><br><span class="line"><span class="comment">###.###</span></span><br><span class="line"><span class="comment">#.#.#.#</span></span><br><span class="line"><span class="comment">###.###</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">6 6</span></span><br><span class="line"><span class="comment">......</span></span><br><span class="line"><span class="comment">.##...</span></span><br><span class="line"><span class="comment">..#...</span></span><br><span class="line"><span class="comment">....#.</span></span><br><span class="line"><span class="comment">....##</span></span><br><span class="line"><span class="comment">......</span></span><br><span class="line"><span class="comment">*/</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20201121120745454.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzI3MjI1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2020/11/21/#1310%20!%20%E5%B2%9B%E5%B1%BF%20!%20VJ%20%E6%90%9C%E7%B4%A2/">https://blog.yefeng.love/2020/11/21/#1310%20!%20%E5%B2%9B%E5%B1%BF%20!%20VJ%20%E6%90%9C%E7%B4%A2/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-dfs/"># 算法 数据结构 dfs</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/12/04/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/">最长回文子串</a>
+            
+            
+            <a class="next" rel="next" href="/2020/11/21/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8/"></a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

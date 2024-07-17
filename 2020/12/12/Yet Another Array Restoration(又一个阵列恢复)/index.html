@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>Yet Another Array Restoration(又一个阵列恢复) | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Yet Another Array Restoration(又一个阵列恢复)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 12, 2020&nbsp;&nbsp;17:36:35</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>We have a secret array. You don’t know this array and you have to restore it. However, you know some facts about this array:</p>
+<p>The array consists of n distinct positive (greater than 0) integers.<br>The array contains two elements x and y (these elements are known for you) such that x&lt;y.<br>If you sort the array in increasing order (such that a1&lt;a2&lt;…&lt;an), differences between all adjacent (consecutive) elements are equal (i.e. a2−a1&#x3D;a3−a2&#x3D;…&#x3D;an−an−1).<br>It can be proven that such an array always exists under the constraints given below.</p>
+<p>Among all possible arrays that satisfy the given conditions, we ask you to restore one which has the minimum possible maximum element. In other words, you have to minimize max(a1,a2,…,an).</p>
+<p>You have to answer t independent test cases.</p>
+<p>Input<br>The first line of the input contains one integer t (1≤t≤100) — the number of test cases. Then t test cases follow.</p>
+<p>The only line of the test case contains three integers n, x and y (2≤n≤50; 1≤x&lt;y≤50) — the length of the array and two elements that are present in the array, respectively.</p>
+<p>Output<br>For each test case, print the answer: n integers a1,a2,…,an (1≤ai≤109), where ai is the i-th element of the required array. If there are several answers, you can print any (it also means that the order of elements doesn’t matter).</p>
+<p>It can be proven that such an array always exists under the given constraints.</p>
+<p>Example<br>Input<br>5<br>2 1 49<br>5 20 50<br>6 20 50<br>5 3 8<br>9 13 22<br>Output<br>1 49<br>20 40 30 50 10<br>26 32 20 38 44 50<br>8 23 18 13 3<br>1 10 13 4 19 22 25 16 7 </p>
+<p>翻译：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">我们有一个秘密的阵法。你不知道这个数组，你必须恢复它。但是，您知道有关此阵列的一些事实：</span><br><span class="line">数组由n个不同的正整数（大于<span class="number">0</span>）组成。</span><br><span class="line">数组包含两个元素x和y（这些元素对您来说是已知的），因此x&lt;y。</span><br><span class="line">如果按递增顺序对数组排序（例如a1&lt;a2&lt;…&lt;an），则所有相邻（连续）元素之间的差异相等（即a2−a1=a3−a2=…=an−<span class="number">1</span>）。</span><br><span class="line">可以证明，这样的数组总是存在于下面给出的约束条件下。</span><br><span class="line">在满足给定条件的所有可能的数组中，我们要求您恢复一个具有最小可能最大元素的数组。换句话说，你必须最小化max（a1，a2，…，an）。</span><br><span class="line">你必须回答t个独立的测试用例。</span><br><span class="line">输入</span><br><span class="line">输入的第一行包含一个整数t（<span class="number">1</span>≤t≤<span class="number">100</span>）——测试用例的数量。接下来是t测试用例。</span><br><span class="line">测试用例的唯一一行包含三个整数n，x和y（<span class="number">2</span>≤n≤<span class="number">50</span>；<span class="number">1</span>≤x&lt;y≤<span class="number">50</span>）-数组的长度和数组中存在的两个元素。</span><br><span class="line">输出</span><br><span class="line">对于每个测试用例，打印答案：n个整数a1，a2，…，an（<span class="number">1</span>≤ai≤<span class="number">109</span>），其中ai是所需数组的第i个元素。如果有几个答案，您可以打印任何答案（这也意味着元素的顺序无关紧要）。</span><br><span class="line">可以证明，在给定的约束条件下，这样的数组总是存在的。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>第一次：按照问题顺序模拟：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> n,a,b,len;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;n);</span><br><span class="line">	vector&lt;<span class="type">long</span> <span class="type">long</span>&gt; v;</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> shu,tlen;</span><br><span class="line">	<span class="keyword">while</span>(n--)&#123;</span><br><span class="line">		v.<span class="built_in">clear</span>();</span><br><span class="line">		shu=<span class="number">-1</span>;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%lld %lld %lld&quot;</span>,&amp;len,&amp;a,&amp;b);</span><br><span class="line">		len-=<span class="number">2</span>;</span><br><span class="line">		tlen=len;</span><br><span class="line">		v.<span class="built_in">push_back</span>(a);</span><br><span class="line">		v.<span class="built_in">push_back</span>(b);</span><br><span class="line">	<span class="comment">//	if((b-a)%2==0)&#123;//奇数，中间放不下 </span></span><br><span class="line">			<span class="keyword">while</span>((b-a<span class="number">-1</span>-len)%(len+<span class="number">1</span>)!=<span class="number">0</span>)&#123;<span class="comment">// b-a-(1+len)</span></span><br><span class="line">				--len;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//中间用了len 个</span></span><br><span class="line">			shu=(b-a)/(len+<span class="number">1</span>);</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">1</span>;i&lt;=len;++i)&#123;</span><br><span class="line">				v.<span class="built_in">push_back</span>(a+shu*i);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">	<span class="comment">//	&#125;</span></span><br><span class="line">		<span class="keyword">if</span>(shu==<span class="number">-1</span>)&#123;</span><br><span class="line">			len=<span class="number">0</span>;</span><br><span class="line">			shu=b-a;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// ,开始左边</span></span><br><span class="line">		</span><br><span class="line">		len=tlen-len;</span><br><span class="line">		tlen=len;</span><br><span class="line">	<span class="comment">//	cout&lt;&lt;&quot;len zuo=&quot;&lt;&lt;len&lt;&lt;endl;</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">1</span>;i&lt;=tlen;++i)&#123;</span><br><span class="line">			<span class="keyword">if</span>((a-shu*i)&lt;<span class="number">0</span>)&#123;</span><br><span class="line">			<span class="comment">//	len-=i;//又用掉了 i个，剩下 len-i个 </span></span><br><span class="line">			<span class="comment">//	cout&lt;&lt;&quot;len zuo 完了&quot;&lt;&lt;i&lt;&lt;endl;</span></span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			len--;</span><br><span class="line">			v.<span class="built_in">push_back</span>(a-shu*i);</span><br><span class="line">		&#125; </span><br><span class="line">	<span class="comment">//	cout&lt;&lt;&quot;len you=&quot;&lt;&lt;len&lt;&lt;endl;</span></span><br><span class="line">		<span class="comment">//右边</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">1</span>;i&lt;=len;++i)&#123;</span><br><span class="line">			v.<span class="built_in">push_back</span>(b+shu*i);</span><br><span class="line">		&#125; </span><br><span class="line">		<span class="type">long</span> <span class="type">long</span> size=v.<span class="built_in">size</span>();</span><br><span class="line"><span class="comment">//		sort(v,v+size);</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>,v[<span class="number">0</span>]);</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">1</span>;i&lt;size;++i)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot; %lld&quot;</span>,v[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：案例手动都过，测试案例1超时，案例2错误</p>
+<p>修改思路：因为每两个之间是等差，所以不需要存起来，只需要直到公差即可，因为题目不要求答案呢顺序，所有每次输出当前值+公差。那么问题就只有哪个是第一个了。因为最小值必须大于0，而且要包含给出的两个值(a,b,a&lt;b)，所以，最小值要么是给出值的第一个a（a&lt;b）,要么小于a,所以根据公差一将a一直减去公差（直到满足个数，或者&lt;0）</p>
+<p>所以改良ac代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;t);</span><br><span class="line">	<span class="type">int</span> n,x,y;</span><br><span class="line">	<span class="type">int</span> d,k;<span class="comment">//d为公差 </span></span><br><span class="line">	<span class="type">int</span> s;<span class="comment">//初始值 </span></span><br><span class="line">	<span class="keyword">while</span>(t--)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;x,&amp;y);</span><br><span class="line">		d=y-x;<span class="comment">//初始公差为两个数的差值,这个公差是目前最小，也是最合理的 </span></span><br><span class="line">		</span><br><span class="line">		k=n<span class="number">-1</span>;<span class="comment">//假设最大为y，需要计算前 n-1个    </span></span><br><span class="line">		<span class="comment">// 5 3 8  d=5 </span></span><br><span class="line">		<span class="comment">//如果两个里面可以继续放</span></span><br><span class="line">		<span class="keyword">while</span>(d%k!=<span class="number">0</span>)&#123;<span class="comment">//如果放不下，则k为1 </span></span><br><span class="line">			k--;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//修改公差 此时 k==1|k&gt;1</span></span><br><span class="line">		d/=k;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//前面真的能放下n-1个？  // y - (n-1)*d&gt;0?</span></span><br><span class="line">		<span class="keyword">if</span>(d*(n<span class="number">-1</span>)&lt;y)&#123; </span><br><span class="line">			s=y-(n<span class="number">-1</span>)*d;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="comment">//an=a1+d*(n-1)  -&gt; a1为 an/d的余数 </span></span><br><span class="line">			s=y%d;</span><br><span class="line">			<span class="keyword">if</span>(s==<span class="number">0</span>)s+=d;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//a1找到，公差找到，，输出 a1后面 n-1个</span></span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;++i)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,s+i*d);</span><br><span class="line">		&#125; </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,s+n*d-d);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2020/12/12/Yet%20Another%20Array%20Restoration(%E5%8F%88%E4%B8%80%E4%B8%AA%E9%98%B5%E5%88%97%E6%81%A2%E5%A4%8D)/">https://blog.yefeng.love/2020/12/12/Yet%20Another%20Array%20Restoration(%E5%8F%88%E4%B8%80%E4%B8%AA%E9%98%B5%E5%88%97%E6%81%A2%E5%A4%8D)/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/"># 数据结构 算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/12/12/Decrease%20the%20Sum%20of%20Digits/">Decrease the Sum of Digits</a>
+            
+            
+            <a class="next" rel="next" href="/2020/12/12/7-23%20%E5%85%AC%E8%B7%AF%E6%9D%91%E6%9D%91%E9%80%9A%20(30%E5%88%86)/">7-23 公路村村通 (30分)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

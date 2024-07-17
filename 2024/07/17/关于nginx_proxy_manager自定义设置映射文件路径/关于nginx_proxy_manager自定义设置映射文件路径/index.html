@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>关于nginx_proxy_manager自定义设置映射文件路径 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">关于nginx_proxy_manager自定义设置映射文件路径</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 17, 2024&nbsp;&nbsp;12:57:06</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%85%B3%E4%BA%8Enginx-proxy-manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">关于nginx_proxy_manager自定义设置映射文件路径</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p>因为域名更换，在迁移服务的时候发现，链接在微信上无法打开，报错是</p>
+<p><code>网页包含诱导分享、关注等诱导行为内容，被多人投诉，为维护绿色上网环境，已停止访问。</code></p>
+<p>而我这个域名是新买的，所以很大可能是因为域名之前被滥用过，导致被多人投诉，所以被微信平台加入了黑名单。<br><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/34617d5bc168681e38be7a4dbb6da6f7.png" alt="1"></p>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p>根据微信提示申诉，做3到测评，有一部是需要站长进行认证</p>
+<p>认证方法是，在服务根目录创建一个微信指定的文件，并放入指定的内容</p>
+<p>如下图：</p>
+<p><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/2ea586b2e352638bddeca4a2439d9685.png" alt="2"></p>
+<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>如果是使用的tomcat等可以直接在跟目录部署文件，自然按照提示做就好，但是，题主使用的是nginx，如果到这里使用ng做一下配置也算可以的，但是我同时是用docker安装的nginx_proxy_manager，所以不出意外，我的服务也是通过ng代理的到端口的。</p>
+<h4 id="尝试度娘google和gpt与最终解决"><a href="#尝试度娘google和gpt与最终解决" class="headerlink" title="尝试度娘google和gpt与最终解决"></a>尝试度娘google和gpt与最终解决</h4><p>在经过一番的搜索后，没找到符合需求的答案，最后换了好几个gpt的提问姿势最后得到如下答案</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /aa.txt &#123;</span><br><span class="line">alias /b.txt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当用户访问&#x2F;aa.txt时，实际上会返回&#x2F;b.txt的内容</p>
+<p>所以基于这个代码，是非常符合我们的需求的</p>
+<p><strong>坑，这里题主当时b.txt后面;没加分号导致失效，看了好几遍，哭死</strong></p>
+<h4 id="最后贴几个图："><a href="#最后贴几个图：" class="headerlink" title="最后贴几个图："></a>最后贴几个图：</h4><h6 id="代理服务"><a href="#代理服务" class="headerlink" title="代理服务"></a>代理服务</h6><p><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/6225e5b17604fdf93ce51d721a8bf8ab.png" alt="3"></p>
+<h6 id="高级配置"><a href="#高级配置" class="headerlink" title="高级配置"></a>高级配置</h6><p><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/e029ee28679c235fe89abe8f19c69be1.png" alt="4"></p>
+<h6 id="访问成功"><a href="#访问成功" class="headerlink" title="访问成功"></a>访问成功</h6><p><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/222f234b69110a650dcedb4d3c79d82f.png"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">https://blog.yefeng.love/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/nginx%E9%85%8D%E7%BD%AE/"># nginx配置</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/07/17/%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/%E9%80%9A%E8%BF%87%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/">责任链默认实现可拔插式也校验</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

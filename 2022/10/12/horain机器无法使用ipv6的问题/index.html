@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>horain机器无法使用ipv6的问题 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">horain机器无法使用ipv6的问题</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 12, 2022&nbsp;&nbsp;23:31:22</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>手上有一台horain的机器，有次有个需求需要用到ipv6，提交工单分配ipv6后却无法ping 通外网（ipv6）同时外网也ping不通主机，后来找到一遍文章解决了，不过后来又一次遇到问题，却记不得细节，找了很久才重新找到该文章，所以这里记录以下，以便以后再次遇到</p>
+</blockquote>
+<p>如图：</p>
+<p><img src="https://raw.githubusercontent.com/yuzhi-jiang/imgbed/main/img/image-20221012233816828.png" alt="image-20221012233816828"></p>
+<h2 id="尝试一"><a href="#尝试一" class="headerlink" title="尝试一"></a>尝试一</h2><blockquote>
+<p>根据ipw.cn 的做法尝试开启ipv6</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-eth0</span><br></pre></td></tr></table></figure>
+
+<p>新增一行配置 <code>DHCPV6C=yes</code>, 可以自动获取 IPv6 地址。</p>
+<p><img src="https://raw.githubusercontent.com/yuzhi-jiang/imgbed/main/img/image-20221012234210471.png" alt="image-20221012234210471"></p>
+<p>接下来，增加默认 IPv6 静态路由</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/route6-eth0</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>新增一行配置 <code>default dev eth0 via fe80::feee:ffff:feff:ffff</code></p>
+</blockquote>
+<p>以上为 为以后方便不用跳来跳去直接复制，以下贴出原地址和截图</p>
+<p><a target="_blank" rel="noopener" href="https://ipw.cn/doc/ipv6/server/tencent_cloud_cvm_ipv6.html">腾讯云 cvm 开启 IPv6</a></p>
+<p><img src="https://raw.githubusercontent.com/yuzhi-jiang/imgbed/main/img/image-20221012234540393.png" alt="image-20221012234540393"></p>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p><img src="https://raw.githubusercontent.com/yuzhi-jiang/imgbed/main/img/image-20221012235524436.png" alt="image-20221012235524436"></p>
+<blockquote>
+<p>结果能查询到ipv6说明，说明dns应该是没问题的，但是卡在那里动不了</p>
+</blockquote>
+<h2 id="尝试二"><a href="#尝试二" class="headerlink" title="尝试二"></a>尝试二</h2><p>期间也尝试过其他办法，都没有管用，最后在一篇文章《 <a target="_blank" rel="noopener" href="https://www.polarxiong.com/archives/%E8%A7%A3%E5%86%B3ubuntu%E4%B8%8Bipv6%E8%BF%9E%E6%8E%A5%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E5%90%8E%E5%B0%B1network-is-unreachable.html">解决ubuntu下ipv6连接一段时间后就network is unreachable</a>》找到大佬的分析和解决方案</p>
+<blockquote>
+<p>其实应该就是ipv6的架构问题</p>
+</blockquote>
+<p>大佬的排错步骤如下:</p>
+<p>考虑到底是哪个地方网络断了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">traceroute ipv6.google.com</span><br></pre></td></tr></table></figure>
+
+<p>显示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">network is unreachable</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>分析为不可达网关</p>
+</blockquote>
+<p>尝试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip -6 route show</span><br></pre></td></tr></table></figure>
+
+<p>在IPv6可用时显示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2001:250:5002:8100::/64 dev eth0  proto kernel  metric 256</span><br><span class="line">fe80::/64 dev eth0  proto kernel  metric 256</span><br><span class="line">default via fe80::ae85:3dff:feb2:c0b4 dev eth0  proto ra  metric 1024  expires 821sec</span><br></pre></td></tr></table></figure>
+
+<p>然后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route -6</span><br></pre></td></tr></table></figure>
+
+<p>显示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Kernel IPv6 routing table</span><br><span class="line">Destination                    Next Hop                   Flag Met Ref Use If</span><br><span class="line">2001:250:5002:8100::/64        ::                         U    256 0     0 eth0</span><br><span class="line">fe80::/64                      ::                         U    256 0     0 eth0</span><br><span class="line">::/0                           fe80::ae85:3dff:feb2:c0b4  UGDAe 1024 0     0 eth0</span><br><span class="line">::/0                           ::                         !n   -1  1    19 lo</span><br><span class="line">::1/128                        ::                         Un   0   1     5 lo</span><br><span class="line">2001:250:5002:8100::/128       ::                         Un   0   1     0 lo</span><br><span class="line">2001:250:5002:8100::3cee/128   ::                         Un   0   1    13 lo</span><br><span class="line">fe80::/128                     ::                         Un   0   1     0 lo</span><br><span class="line">fe80::ba27:ebff:fe10:41e4/128  ::                         Un   0   1    23 lo</span><br><span class="line">ff00::/8                       ::                         U    256 1     0 eth0</span><br><span class="line">::/0                           ::                         !n   -1  1    19 lo</span><br></pre></td></tr></table></figure>
+
+<p>那个<code>fe80::ae85:3dff:feb2:c0b4</code>就是默认网关了。</p>
+<p><strong>然后等到IPv6不可用时再尝试上述命令，就再也找不到<code>fe80::ae85:3dff:feb2:c0b4</code>了，意味着默认网关消失了。</strong></p>
+<p><strong>注意到<code>ip -6 route show</code>中默认网关后有<code>expires 821sec</code>，以及<code>route -6</code>中默认网关后的<code>UGDAe</code>，感觉找到问题在哪了。</strong></p>
+<p><code>Flag</code>中各个字母代表的意思：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">UP U</span><br><span class="line">GATEWAY G</span><br><span class="line">REJECT !</span><br><span class="line">HOST H</span><br><span class="line">REINSTATE R</span><br><span class="line">DYNAMIC D</span><br><span class="line">MODIFIED M</span><br><span class="line">DEFAULT d</span><br><span class="line">ALLONLINK a</span><br><span class="line">ADDRCONF c</span><br><span class="line">NONEXTHOP o</span><br><span class="line">EXPIRES e</span><br><span class="line">CACHE c</span><br><span class="line">FLOW f</span><br><span class="line">POLICY p</span><br><span class="line">LOCAL l</span><br><span class="line">MTU u</span><br><span class="line">WINDOW w</span><br><span class="line">IRTT i</span><br><span class="line">NOTCACHED n</span><br></pre></td></tr></table></figure>
+
+<p><code>D</code>代表<code>DYNAMIC</code>，<code>e</code>代表<code>EXPIRES</code>。有些疑惑网关是固定地址，为啥连接时采用的有效时间为30分钟的动态形式</p>
+<h2 id="分析问题所在"><a href="#分析问题所在" class="headerlink" title="分析问题所在"></a>分析问题所在</h2><p><code>**既然是有时间限制，那就一定有更新时间的方法，而网关消失就应该是时间没有更新，症结就应该在如何让有效时间自动更新了**</code></p>
+<h2 id="前面的情况和我基本一直，但作者后面的分析我确实不太懂，所以就原封贴下了（如果有大佬知道还请指点下）"><a href="#前面的情况和我基本一直，但作者后面的分析我确实不太懂，所以就原封贴下了（如果有大佬知道还请指点下）" class="headerlink" title="前面的情况和我基本一直，但作者后面的分析我确实不太懂，所以就原封贴下了（如果有大佬知道还请指点下）"></a>前面的情况和我基本一直，但作者后面的分析我确实不太懂，所以就原封贴下了（如果有大佬知道还请指点下）</h2><blockquote>
+<p>直接上tcpdump抓包</p>
+<p>抓包就不说了，东西太杂，不过关于IPv6的，倒是有<code>Route Advertize</code>和<code>ICMPv6</code>一直出现，根据之前折腾openwrt的ipv6的经验，应该就是这两个报文的问题了。</p>
+<p>接下来就像是碰运气了，因为没有系统学习IPv6的细节，只能靠感觉找了。不过也算是我脑洞大开，直接往路由器方向找，毕竟那边折腾协议这种经验多些，很快找到了我感兴趣的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net.ipv6.conf.all.forwarding</span><br><span class="line">net.ipv6.conf.default.accept_ra</span><br></pre></td></tr></table></figure>
+
+<p>然后找到了这两个参数的详细介绍：</p>
+<p>forwarding</p>
+<p>Type: BOOLEAN</p>
+<p>Default: FALSE if global forwarding is disabled (default), otherwise TRUE</p>
+<p>Configure interface-specific Host&#x2F;Router behaviour.</p>
+<p>Note: It is recommended to have the same setting on all interfaces; mixed router&#x2F;host scenarios are rather uncommon.</p>
+<p>Value FALSE: By default, Host behaviour is assumed. This means:</p>
+<p>IsRouter flag is not set in Neighbour Advertisements.<br>Router Solicitations are being sent when necessary.<br>If accept_ra is TRUE (default), accept Router Advertisements (and do autoconfiguration).<br>If accept_redirects is TRUE (default), accept Redirects.<br>Value TRUE: If local forwarding is enabled, Router behaviour is assumed. This means exactly the reverse from the above:</p>
+<p>IsRouter flag is set in Neighbour Advertisements.<br>Router Solicitations are not sent.<br>Router Advertisements are ignored.<br>Redirects are ignored.</p>
+<hr>
+<p>accept_ra</p>
+<p>Type: BOOLEAN</p>
+<p>Accept Router Advertisements; autoconfigure using them.</p>
+<p>Possible values are:</p>
+<p>0: Do not accept Router Advertisements.<br>1: Accept Router Advertisements if forwarding is disabled.<br>2: Overrule forwarding behaviour. Accept Router Advertisements even if forwarding is enabled.</p>
+<p>解决方法就出来啦！</p>
+</blockquote>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>编辑sysctl.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
+
+<p>将   <code>#net.ipv6.conf.all.forwarding=1</code>   注释去掉并添加 <code>net.ipv6.conf.eth0.accept_ra=2</code>  </p>
+<p>文件如下：(如原本没有 <code>#net.ipv6.conf.all.forwarding=1</code> 不要死板，没有就自己加上)</p>
+<p><img src="/2022/10/12/horain%E6%9C%BA%E5%99%A8%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8ipv6%E7%9A%84%E9%97%AE%E9%A2%98/image-20221013001639954-1665592928766-1.png" alt="image-20221013001639954"></p>
+<p>然后重启，就解决问题了</p>
+<p><img src="https://raw.githubusercontent.com/yuzhi-jiang/imgbed/main/img/image-20221013001533514.png" alt="image-20221013001533514"></p>
+<h2 id="参考文章下："><a href="#参考文章下：" class="headerlink" title="参考文章下："></a>参考文章下：</h2><p><a target="_blank" rel="noopener" href="https://ipw.cn/doc/ipv6/server/tencent_cloud_cvm_ipv6.html">腾讯云 cvm 开启 IPv6</a></p>
+<p> <a target="_blank" rel="noopener" href="https://www.polarxiong.com/archives/%E8%A7%A3%E5%86%B3ubuntu%E4%B8%8Bipv6%E8%BF%9E%E6%8E%A5%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E5%90%8E%E5%B0%B1network-is-unreachable.html">解决ubuntu下ipv6连接一段时间后就network is unreachable</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2022/10/12/horain%E6%9C%BA%E5%99%A8%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8ipv6%E7%9A%84%E9%97%AE%E9%A2%98/">https://blog.yefeng.love/2022/10/12/horain%E6%9C%BA%E5%99%A8%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8ipv6%E7%9A%84%E9%97%AE%E9%A2%98/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/linux/"># linux</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/07/21/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/">使用jstack分析cpu问题笔记</a>
+            
+            
+            <a class="next" rel="next" href="/2021/10/17/%E5%AE%9E%E7%8E%B0%E6%89%8B%E6%9C%BA%E5%AE%89%E8%A3%85%E6%A0%B9%E8%AF%81%E4%B9%A6%EF%BC%88%E7%B3%BB%E7%BB%9F%E8%AF%81%E4%B9%A6%EF%BC%89%E5%92%8C%E4%BD%BF%E7%94%A8drony%20%E8%A7%A3%E5%86%B3%E6%99%AE%E9%80%9A%E4%BB%A3%E7%90%86%E9%83%A8%E5%88%86%E5%BA%94%E7%94%A8%E4%B8%8D%E8%83%BD%E6%8A%93%E5%8C%85%E7%9A%84%E9%97%AE%E9%A2%98/">实现手机安装根证书（系统证书）和使用drony 解决普通代理部分应用不能抓包的问题</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

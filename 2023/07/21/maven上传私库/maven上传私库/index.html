@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>maven上传私库 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./about">About</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">maven上传私库</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 21, 2023&nbsp;&nbsp;12:09:07</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/">maven上传私库</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hebian1994/article/details/126084836">maven&#x3D;&#x3D;docker搭建私有maven仓库，编写starter并发布到私有maven仓库，在项目中使用私有仓库中的starter</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/johnhum123/article/details/118880781?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-2-118880781-blog-93760751.pc_relevant_vip_default&spm=1001.2101.3001.4242.2&utm_relevant_index=5">如何自定义一个springboot starter（超详细）</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wohaqiyi/article/details/116521311?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-1-116521311-blog-104807110.pc_relevant_vip_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-1-116521311-blog-104807110.pc_relevant_vip_default&utm_relevant_index=2">maven打包上传到私有仓库的步骤_茁壮成长的凌大大的博客-CSDN博客_maven发布到私有仓库</a></p>
+<ol>
+<li>背景<br>  最近有些自己制作的工具包，需要单独抽取出来之后，在打包的时候，同时上传到自己的maven私服仓库，供别人引用，并且还能够引用的时候看到源码。但是，在上传的过程中总是失败不成功，特别上火。最后总算成功，记录下步骤，希望能够帮助到需要的人。</li>
+</ol>
+<br/>
+
+<ol start="2">
+<li>步骤<br>  先说下我的要求：</li>
+</ol>
+<p>本地打包能够自动上传maven私服仓库。<br>别人引用后，能够看到源码及注释。</p>
+<br/>
+
+<p>2.1 修改pom.xml<br>2.1.1 指定上传仓库地址<br>  首先需要到自己项目里的pom.xml里添加下边一段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;distributionManagement&gt;</span><br><span class="line">&lt;!--稳定版本的仓库地址,必须是允许上传的私服地址--&gt;</span><br><span class="line">      &lt;repository&gt;</span><br><span class="line">          &lt;id&gt;releases&lt;/id&gt;</span><br><span class="line">          &lt;url&gt;http:<span class="comment">//maven.aaaaaa.com/nexus/content/repositories/thirdparty&lt;/url&gt;</span></span><br><span class="line">      &lt;/repository&gt;</span><br><span class="line">      &lt;!--开发版本的仓库地址,必须是允许上传的私服地址--&gt;</span><br><span class="line">      &lt;snapshotRepository&gt;</span><br><span class="line">          &lt;id&gt;nexus-snapshots&lt;/id&gt;</span><br><span class="line">          &lt;url&gt;http:<span class="comment">//maven.aaaaaa.com/nexus/content/repositories/snapshots&lt;/url&gt;</span></span><br><span class="line">      &lt;/snapshotRepository&gt;</span><br><span class="line">  &lt;/distributionManagement&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<p>  对于我们平时的项目版本号是类似XX-SNAPSHOT这种的，这类就是数据开发版本，这种上传私服后会以版本号+时间戳的形式递增，它上传必须要指定<snapshotRepository>地址,。<br>  上图中，id后边会说，这里的url的地址，是对应你仓库地址，你可以在浏览器里访问下类似<a target="_blank" rel="noopener" href="http://maven.aaaaaa.com/nexus%E7%9A%84%E5%9C%B0%E5%9D%80%EF%BC%8C%E8%BE%93%E5%85%A5%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%EF%BC%8C%E7%99%BB%E5%BD%95%E5%90%8E%EF%BC%8C%E5%A6%82%E4%B8%8B%E5%9B%BE4%E5%AF%B9%E5%BA%94%E7%9A%84%E5%9C%B0%E5%9D%80%EF%BC%8C%E5%B0%B1%E6%98%AF%EF%BC%9A">http://maven.aaaaaa.com/nexus的地址，输入账号密码，登录后，如下图4对应的地址，就是：</a></p>
+<br/>
+
+<br/>
+
+<p><img src="/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/7addcd443621b3f45a04b39984c27288.png" alt="截图"></p>
+<br/>
+
+<p>需要注意的是，因为上图中，我们仓库有好几个，我是上传到了3对应的仓库，你可以根据你们实际的仓库地址来就行。<br>  另外id对应的releases其实是与指定的maven配置文件conf&#x2F;setttings.xml中对应，如下图所示：</p>
+<br/>
+
+<p><img src="/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/4d80825744ab7433181459f4d8374464.png" alt="截图"></p>
+<p>  如果对应的settings.xml里没有配置<servers>对应的标签，那也需要添加一下。如下示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;servers&gt;</span><br><span class="line">  &lt;server&gt;</span><br><span class="line">  	&lt;!--与2.1.1中的id值对应--&gt;</span><br><span class="line">      &lt;id&gt;releases&lt;/id&gt;</span><br><span class="line">      &lt;!--账号密码需要与私服登录账号密码一致--&gt;</span><br><span class="line">      &lt;username&gt;admin&lt;/username&gt;</span><br><span class="line">      &lt;password&gt;znxd&lt;/password&gt;</span><br><span class="line">  &lt;/server&gt;</span><br><span class="line">&lt;/servers&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<p>2.1.2 添加源码插件<br>   上边的配置仅仅是指定仓库的地址，因为还需要让下载依赖的人，能够看到源码，因此还需要有一个插件，maven-source-plugin。再找到项目的pom.xml，添加如下插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 上传源码 --&gt;</span><br><span class="line">   &lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.0.1&lt;/version&gt;</span><br><span class="line">        &lt;configuration&gt;</span><br><span class="line">            &lt;attach&gt;true&lt;/attach&gt;</span><br><span class="line">        &lt;/configuration&gt;</span><br><span class="line">        &lt;executions&gt;</span><br><span class="line">            &lt;execution&gt;</span><br><span class="line">                &lt;phase&gt;compile&lt;/phase&gt;</span><br><span class="line">                &lt;goals&gt;</span><br><span class="line">                    &lt;goal&gt;jar&lt;/goal&gt;</span><br><span class="line">                &lt;/goals&gt;</span><br><span class="line">            &lt;/execution&gt;</span><br><span class="line">        &lt;/executions&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后，总结一下现在pom.xml新增的这俩东西的位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;project&gt;</span><br><span class="line">	&lt;!-----------省略多余的依赖----------&gt;</span><br><span class="line">	&lt;build&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">         &lt;!-----------省略多余的plugin----------&gt;</span><br><span class="line">         &lt;!-- 上传源码 --&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;3.0.1&lt;/version&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;attach&gt;true&lt;/attach&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">                &lt;executions&gt;</span><br><span class="line">                    &lt;execution&gt;</span><br><span class="line">                        &lt;phase&gt;compile&lt;/phase&gt;</span><br><span class="line">                        &lt;goals&gt;</span><br><span class="line">                            &lt;goal&gt;jar&lt;/goal&gt;</span><br><span class="line">                        &lt;/goals&gt;</span><br><span class="line">                    &lt;/execution&gt;</span><br><span class="line">                &lt;/executions&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line">    &lt;distributionManagement&gt;</span><br><span class="line">        &lt;repository&gt;</span><br><span class="line">            &lt;id&gt;releases&lt;/id&gt;</span><br><span class="line">            &lt;url&gt;http://maven.aaaaa.com/nexus/content/repositories/thirdparty&lt;/url&gt;</span><br><span class="line">        &lt;/repository&gt;</span><br><span class="line">    &lt;/distributionManagement&gt;</span><br><span class="line">&lt;/project&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>**  注意：不能引用spring-boot-maven-plugin插件，这个插件一旦引入生效，就表示你当前做的jar包是一个可运行的包，而不是我们往私服上传的工具包了**</p>
+<br/>
+
+<p>2.3 成功后的依赖<br>   上传成功后，可以通过地址找一下，如下图即表示成功：</p>
+<p><img src="/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/422f18d7bcb66b0b8c12bc338275d598.png" alt="截图"></p>
+<ol start="3">
+<li>扩展<br>   比如你做这个依赖包，可能后边还会有更新的时候，但是如果以前的依赖包已经被别人使用，那不可能一个个的通知使用者，maven本身提供这种自动下载高版本的功能，只需要对version标签的值改一下。如下：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;com.agri&lt;/groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;znxd-framework&lt;/artifactId&gt;</span><br><span class="line">     &lt;version&gt;[1.0,)&lt;/version&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.yefeng.love/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/">https://blog.yefeng.love/2023/07/21/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/maven-%E7%AC%94%E8%AE%B0-%E7%A7%81%E5%BA%93/"># maven,笔记,私库</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/">sqlserver连接问题</a>
+            
+            
+            <a class="next" rel="next" href="/2023/07/21/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/">使用jstack分析cpu问题笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
