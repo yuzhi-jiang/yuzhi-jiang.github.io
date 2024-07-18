@@ -14,7 +14,7 @@
 
 
 
-<title>关于nginx_proxy_manager自定义设置映射文件路径 | yuzhi</title>
+<title>yuzhi</title>
 
 
 
@@ -201,7 +201,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">关于nginx_proxy_manager自定义设置映射文件路径</h1>
+            <h1 class="post-title"></h1>
             
                 <div class="post-meta">
                     
@@ -210,39 +210,54 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">July 17, 2024&nbsp;&nbsp;15:02:31</a>
+                        Date: <a href="#">July 18, 2024&nbsp;&nbsp;1:00:02</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/%E5%85%B3%E4%BA%8Enginx-proxy-manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">关于nginx_proxy_manager自定义设置映射文件路径</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p>因为域名更换，在迁移服务的时候发现，链接在微信上无法打开，报错是</p>
-<p><code>网页包含诱导分享、关注等诱导行为内容，被多人投诉，为维护绿色上网环境，已停止访问。</code></p>
-<p>而我这个域名是新买的，所以很大可能是因为域名之前被滥用过，导致被多人投诉，所以被微信平台加入了黑名单。<br><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/34617d5bc168681e38be7a4dbb6da6f7.png" alt="1"></p>
-<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p>根据微信提示申诉，做3到测评，有一部是需要站长进行认证</p>
-<p>认证方法是，在服务根目录创建一个微信指定的文件，并放入指定的内容</p>
-<p>如下图：</p>
-<p><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/2ea586b2e352638bddeca4a2439d9685.png" alt="2"></p>
-<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>如果是使用的tomcat等可以直接在跟目录部署文件，自然按照提示做就好，但是，题主使用的是nginx，如果到这里使用ng做一下配置也算可以的，但是我同时是用docker安装的nginx_proxy_manager，所以不出意外，我的服务也是通过ng代理的到端口的。</p>
-<h4 id="尝试度娘google和gpt与最终解决"><a href="#尝试度娘google和gpt与最终解决" class="headerlink" title="尝试度娘google和gpt与最终解决"></a>尝试度娘google和gpt与最终解决</h4><p>在经过一番的搜索后，没找到符合需求的答案，最后换了好几个gpt的提问姿势最后得到如下答案</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /aa.txt &#123;</span><br><span class="line">alias /b.txt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h3 id="移除现存snaps"><a href="#移除现存snaps" class="headerlink" title="移除现存snaps"></a>移除现存snaps</h3><p>在新安装的Ubuntu中，已经默认安装了部分snaps，可以通过以下命令查看:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snap list</span><br></pre></td></tr></table></figure>
 
-<p>当用户访问&#x2F;aa.txt时，实际上会返回&#x2F;b.txt的内容</p>
-<p>所以基于这个代码，是非常符合我们的需求的</p>
-<p><strong>坑，这里题主当时b.txt后面;没加分号导致失效，看了好几遍，哭死</strong></p>
-<h4 id="最后贴几个图："><a href="#最后贴几个图：" class="headerlink" title="最后贴几个图："></a>最后贴几个图：</h4><h6 id="代理服务"><a href="#代理服务" class="headerlink" title="代理服务"></a>代理服务</h6><p><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/6225e5b17604fdf93ce51d721a8bf8ab.png" alt="3"></p>
-<h6 id="高级配置"><a href="#高级配置" class="headerlink" title="高级配置"></a>高级配置</h6><p><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/e029ee28679c235fe89abe8f19c69be1.png" alt="4"></p>
-<h6 id="访问成功"><a href="#访问成功" class="headerlink" title="访问成功"></a>访问成功</h6><p><img src="/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/222f234b69110a650dcedb4d3c79d82f.png"></p>
+<p>例如，Raspberry Pi 4的Ubuntu Server 64位版本，输出显示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Name    Version   Rev    Tracking       Publisher   Notes</span><br><span class="line">core18  20200707  1883   latest/stable  canonical✓  base</span><br><span class="line">lxd     4.0.2     16103  4.0/stable/…   canonical✓  -</span><br><span class="line">snapd   2.45.2    8543   latest/stable  canonical✓  snapd</span><br></pre></td></tr></table></figure>
+
+<p>并且，如果你执行 df -h 命令可以看到已经挂载了snap的服务:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/dev/loop0       49M   49M     0 100% /snap/core18/1883</span><br><span class="line">/dev/loop1       64M   64M     0 100% /snap/lxd/16103</span><br><span class="line">/dev/loop2       26M   26M     0 100% /snap/snapd/8543</span><br><span class="line">/dev/loop3       49M   49M     0 100% /snap/core18/1888</span><br></pre></td></tr></table></figure>
+
+<h5 id="注意-删除snap之前要先删除-包"><a href="#注意-删除snap之前要先删除-包" class="headerlink" title="注意 删除snap之前要先删除 包"></a>注意 删除snap之前要先删除 包</h5><p>使用 sudo snap remove <package> 命令移除:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove lxd</span><br></pre></td></tr></table></figure>
+
+<p>但是不能先移除 snapd ，如果你执行 sudo snap remove snapd 会提示错误:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: cannot remove &quot;snapd&quot;: snap &quot;snapd&quot; is not removable: remove all other snaps first</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>所以先移除 core18</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove core18</span><br></pre></td></tr></table></figure>
+
+<p>最后移除 snapd</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove snapd</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<p>此时 snapd 服务依然在运行，需要卸载 snapd 软件包来清理</p>
+<p>检查文件系统挂载 df -h 可以看到所有snaps相关挂载都已经消除:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            876M     0  876M   0% /dev</span><br><span class="line">tmpfs           185M  2.7M  183M   2% /run</span><br><span class="line">/dev/mmcblk0p2  117G  5.0G  108G   5% /</span><br><span class="line">tmpfs           925M     0  925M   0% /dev/shm</span><br><span class="line">tmpfs           5.0M     0  5.0M   0% /run/lock</span><br><span class="line">tmpfs           925M     0  925M   0% /sys/fs/cgroup</span><br><span class="line">/dev/mmcblk0p1  253M   97M  156M  39% /boot/firmware</span><br><span class="line">tmpfs           185M     0  185M   0% /run/user/1000</span><br></pre></td></tr></table></figure>
+
+<p>删除和清理snapd软件包:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt purge snapd</span><br></pre></td></tr></table></figure>
+
+<p>执行 apt autoremove 清理所有无用软件包:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt autoremove</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<p>删除snap目录:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~/snap</span><br><span class="line">sudo rm -rf /snap</span><br><span class="line">sudo rm -rf /var/snap</span><br><span class="line">sudo rm -rf /var/lib/snapd</span><br></pre></td></tr></table></figure>
+
+<p>现在，所有snaps已经清理干净，</p>
 
         </div>
 
@@ -257,7 +272,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://blog.yefeng.love/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">https://blog.yefeng.love/2024/07/17/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/</a></span>
+                        <span><a href="https://blog.yefeng.love/2024/07/18/ubuntu20%E7%A7%BB%E9%99%A4snaps/">https://blog.yefeng.love/2024/07/18/ubuntu20%E7%A7%BB%E9%99%A4snaps/</a></span>
                     </p>
                 
                 
@@ -270,10 +285,6 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/nginx%E9%85%8D%E7%BD%AE/"># nginx配置</a>
-                    
-                        
                 </span>
             </div>
             <div>
@@ -284,8 +295,10 @@
         </section>
         <section class="post-nav">
             
+                <a class="prev" rel="prev" href="/2024/07/18/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">关于nginx_proxy_manager自定义设置映射文件路径</a>
             
-            <a class="next" rel="next" href="/2024/07/17/%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/%E9%80%9A%E8%BF%87%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/">责任链默认实现校验</a>
+            
+            <a class="next" rel="next" href="/2024/07/17/github%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%E9%80%9A%E8%BF%87action%E9%83%A8%E7%BD%B2hexo%E5%88%B0%E5%85%AC%E5%BC%80%E4%BB%93%E5%BA%93/">titlegithub私有仓库通过action部署hexo到公开仓库</a>
             
         </section>
 
