@@ -19,8 +19,8 @@ https://blog.anml.cn/2020/03/05/%E8%BE%93%E5%85%A5%E5%B9%B4%E4%BB%BD%EF%BC%8C%E8
 https://blog.anml.cn/2019/11/22/%E8%BE%93%E5%87%BA%E4%B8%80%E4%B8%AA%E2%80%9D%E4%BB%BB%E6%84%8F%E2%80%9C%E6%95%B4%E6%95%B0%E7%9A%84%E9%80%86%E5%BA%8F%E6%95%B0%20(15%20%E5%88%86)/
 https://blog.anml.cn/2019/11/06/%E9%80%89%E5%81%9A1%20%E8%AE%A1%E7%AE%97%E7%81%AB%E8%BD%A6%E8%BF%90%E8%A1%8C%E6%97%B6%E9%97%B4%20(15%20%E5%88%86)/
 https://blog.anml.cn/2019/12/28/%E9%80%89%E5%81%9A4%20%E6%97%A5K%E8%9C%A1%E7%83%9B%E5%9B%BE/
-https://blog.anml.cn/2024/07/26/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/
-https://blog.anml.cn/2024/07/26/ubuntu20%E7%A7%BB%E9%99%A4snaps/
+https://blog.anml.cn/2024/08/04/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/
+https://blog.anml.cn/2024/08/04/ubuntu20%E7%A7%BB%E9%99%A4snaps/
 https://blog.anml.cn/2023/07/21/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/%E4%BD%BF%E7%94%A8jstack%E5%88%86%E6%9E%90cpu%E9%97%AE%E9%A2%98/
 https://blog.anml.cn/2020/05/27/pta7-21%20%E6%B1%82%E5%89%8D%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC/
 https://blog.anml.cn/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/
@@ -80,13 +80,14 @@ https://blog.anml.cn/2024/07/19/DataTable%E8%AE%BE%E7%BD%AE%E5%88%86%E9%A1%B5/
 https://blog.anml.cn/2020/12/12/Decrease%20the%20Sum%20of%20Digits/
 https://blog.anml.cn/2020/10/26/Dijkstra%E7%AE%97%E6%B3%95%E5%90%84%E7%A7%8D%E5%AE%9E%E7%8E%B0/
 https://blog.anml.cn/2020/11/09/G%20-%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/
+https://blog.anml.cn/2024/08/04/NginxProxyManager%E5%92%8Cdocker%E6%90%AD%E9%85%8D%E9%85%8D%E7%BD%AE%E6%A0%87%E5%A4%B4%E7%9C%9F%E5%AE%9Eip/
 https://blog.anml.cn/2020/06/04/PTA%207-18%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86%20(10%E5%88%86)/
 https://blog.anml.cn/2019/10/13/PTA%E9%A2%98%E7%9B%AE%EF%BC%9A%E8%AF%B4%E5%87%BA%E8%BF%99%E4%B8%AA%E6%95%B0/
 https://blog.anml.cn/2020/12/12/Yet%20Another%20Array%20Restoration(%E5%8F%88%E4%B8%80%E4%B8%AA%E9%98%B5%E5%88%97%E6%81%A2%E5%A4%8D)/
 https://blog.anml.cn/2020/03/22/c,window%E5%87%BD%E6%95%B0%E8%AE%B0%E5%BD%95/
 https://blog.anml.cn/2024/07/17/github%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%E9%80%9A%E8%BF%87action%E9%83%A8%E7%BD%B2hexo%E5%88%B0%E5%85%AC%E5%BC%80%E4%BB%93%E5%BA%93/
 https://blog.anml.cn/2022/10/12/horain%E6%9C%BA%E5%99%A8%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8ipv6%E7%9A%84%E9%97%AE%E9%A2%98/
-https://blog.anml.cn/2024/07/26/%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/%E9%80%9A%E8%BF%87%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/
+https://blog.anml.cn/2024/08/04/%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/%E9%80%9A%E8%BF%87%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/
 https://blog.anml.cn/2024/07/17/MySQL%E7%9F%A5%E8%AF%86%E7%82%B9/
 https://blog.anml.cn/
 https://blog.anml.cn/tags/%E7%AE%97%E6%B3%95-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-dfs/
@@ -101,6 +102,9 @@ https://blog.anml.cn/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2-%E7%AE%97%E6%B3%95/
 https://blog.anml.cn/tags/%E9%9D%A2%E8%AF%95/
 https://blog.anml.cn/tags/%E7%9F%A5%E8%AF%86/
 https://blog.anml.cn/tags/%E7%AC%94%E8%AE%B0/
+https://blog.anml.cn/tags/nginx/
+https://blog.anml.cn/tags/docker/
+https://blog.anml.cn/tags/%E9%85%8D%E7%BD%AE/
 https://blog.anml.cn/tags/pta/
 https://blog.anml.cn/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/
 https://blog.anml.cn/tags/linux/
@@ -116,6 +120,7 @@ https://blog.anml.cn/tags/%E6%8E%92%E6%9F%A5/
 https://blog.anml.cn/tags/nginx%E9%85%8D%E7%BD%AE/
 https://blog.anml.cn/categories/%E5%89%8D%E7%AB%AF/
 https://blog.anml.cn/categories/%E9%9D%A2%E8%AF%95/
+https://blog.anml.cn/categories/nginx/
 https://blog.anml.cn/categories/mysql/
 https://blog.anml.cn/categories/listToTree%E6%B3%A8%E8%A7%A3/
 https://blog.anml.cn/categories/maven%E4%B8%8A%E4%BC%A0%E7%A7%81%E5%BA%93/

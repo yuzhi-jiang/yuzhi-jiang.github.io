@@ -210,7 +210,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">July 26, 2024&nbsp;&nbsp;9:22:22</a>
+                        Date: <a href="#">August 4, 2024&nbsp;&nbsp;8:09:36</a>
                         </span>
                     
                     
@@ -228,11 +228,11 @@
         <div class="post-content">
             <h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p>因为域名更换，在迁移服务的时候发现，链接在微信上无法打开，报错是</p>
 <p><code>网页包含诱导分享、关注等诱导行为内容，被多人投诉，为维护绿色上网环境，已停止访问。</code></p>
-<p>而我这个域名是新买的，所以很大可能是因为域名之前被滥用过，导致被多人投诉，所以被微信平台加入了黑名单。<br><img src="/2024/07/26/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/34617d5bc168681e38be7a4dbb6da6f7.png" alt="1"></p>
+<p>而我这个域名是新买的，所以很大可能是因为域名之前被滥用过，导致被多人投诉，所以被微信平台加入了黑名单。<br><img src="/2024/08/04/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/34617d5bc168681e38be7a4dbb6da6f7.png" alt="1"></p>
 <h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p>根据微信提示申诉，做3到测评，有一部是需要站长进行认证</p>
 <p>认证方法是，在服务根目录创建一个微信指定的文件，并放入指定的内容</p>
 <p>如下图：</p>
-<p><img src="/2024/07/26/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/2ea586b2e352638bddeca4a2439d9685.png" alt="2"></p>
+<p><img src="/2024/08/04/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/2ea586b2e352638bddeca4a2439d9685.png" alt="2"></p>
 <h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>如果是使用的tomcat等可以直接在跟目录部署文件，自然按照提示做就好，但是，题主使用的是nginx，如果到这里使用ng做一下配置也算可以的，但是我同时是用docker安装的nginx_proxy_manager，所以不出意外，我的服务也是通过ng代理的到端口的。</p>
 <h4 id="尝试度娘google和gpt与最终解决"><a href="#尝试度娘google和gpt与最终解决" class="headerlink" title="尝试度娘google和gpt与最终解决"></a>尝试度娘google和gpt与最终解决</h4><p>在经过一番的搜索后，没找到符合需求的答案，最后换了好几个gpt的提问姿势最后得到如下答案</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /aa.txt &#123;</span><br><span class="line">alias /b.txt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -240,9 +240,9 @@
 <p>当用户访问&#x2F;aa.txt时，实际上会返回&#x2F;b.txt的内容</p>
 <p>所以基于这个代码，是非常符合我们的需求的</p>
 <p><strong>坑，这里题主当时b.txt后面;没加分号导致失效，看了好几遍，哭死</strong></p>
-<h4 id="最后贴几个图："><a href="#最后贴几个图：" class="headerlink" title="最后贴几个图："></a>最后贴几个图：</h4><h6 id="代理服务"><a href="#代理服务" class="headerlink" title="代理服务"></a>代理服务</h6><p><img src="/2024/07/26/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/6225e5b17604fdf93ce51d721a8bf8ab.png" alt="3"></p>
-<h6 id="高级配置"><a href="#高级配置" class="headerlink" title="高级配置"></a>高级配置</h6><p><img src="/2024/07/26/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/e029ee28679c235fe89abe8f19c69be1.png" alt="4"></p>
-<h6 id="访问成功"><a href="#访问成功" class="headerlink" title="访问成功"></a>访问成功</h6><p><img src="/2024/07/26/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/222f234b69110a650dcedb4d3c79d82f.png"></p>
+<h4 id="最后贴几个图："><a href="#最后贴几个图：" class="headerlink" title="最后贴几个图："></a>最后贴几个图：</h4><h6 id="代理服务"><a href="#代理服务" class="headerlink" title="代理服务"></a>代理服务</h6><p><img src="/2024/08/04/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/6225e5b17604fdf93ce51d721a8bf8ab.png" alt="3"></p>
+<h6 id="高级配置"><a href="#高级配置" class="headerlink" title="高级配置"></a>高级配置</h6><p><img src="/2024/08/04/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/e029ee28679c235fe89abe8f19c69be1.png" alt="4"></p>
+<h6 id="访问成功"><a href="#访问成功" class="headerlink" title="访问成功"></a>访问成功</h6><p><img src="/2024/08/04/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/222f234b69110a650dcedb4d3c79d82f.png"></p>
 
         </div>
 
@@ -257,7 +257,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://blog.anml.cn/2024/07/26/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">https://blog.anml.cn/2024/07/26/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/</a></span>
+                        <span><a href="https://blog.anml.cn/2024/08/04/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">https://blog.anml.cn/2024/08/04/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/</a></span>
                     </p>
                 
                 
@@ -285,7 +285,7 @@
         <section class="post-nav">
             
             
-            <a class="next" rel="next" href="/2024/07/26/%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/%E9%80%9A%E8%BF%87%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/">责任链默认实现校验</a>
+            <a class="next" rel="next" href="/2024/08/04/%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/%E9%80%9A%E8%BF%87%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/">责任链默认实现校验</a>
             
         </section>
 
