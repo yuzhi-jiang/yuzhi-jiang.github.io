@@ -14,7 +14,7 @@
 
 
 
-<title>NginxProxyManager和docker搭配配置标头真实ip | yuzhi</title>
+<title>java的validate工具方法 | yuzhi</title>
 
 
 
@@ -201,7 +201,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">NginxProxyManager和docker搭配配置标头真实ip</h1>
+            <h1 class="post-title">java的validate工具方法</h1>
             
                 <div class="post-meta">
                     
@@ -210,40 +210,16 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">August 4, 2024&nbsp;&nbsp;7:45:33</a>
+                        Date: <a href="#">August 8, 2024&nbsp;&nbsp;8:45:16</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/nginx/">nginx</a>
-                            
-                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>目前很多时候，部署一些服务或者工具，大多都采用docker部署，而为了更好的管理服务，我们会按照Nginx-Proxy-Manager(NPM)</p>
-<p>一般情况下，都是没有问题的，一套Dockerfile,docker-compose.yml配置，然后 docker-compose up -d就完事了。但是如果在一些场景，我们可能需统计请求用户的ip地址。</p>
-<p>我们一般可以使用remote_addr的请求头拿到客户的ip,但是如果请求经过了服务代理(比如我们服务器的ng代理，apache代理)，我们可能拿到的就不是客户端的ip了，而是代理的ip。</p>
-<p>代理服务器会将 X-Forwarded-For或者X-Real-Ip或者Proxy-Client-Ip 替换为代理服务器的ip（可能是服务器的局域网ip）</p>
-<p>既然知道了问题，那么我们只需要把这些请求头改为真是的用户ip即可，比如用的nginx代理服务器，就可以添加如下配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_set_header X-Real-IP $remote_addr;</span><br></pre></td></tr></table></figure>
-
-<p>然后在代码中获取这个请求头即可</p>
-<p>如 go代码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func GetRemoteIp(r *http.Request) string &#123;</span><br><span class="line">	ip := r.Header.Get(&quot;X-Forwarded-For&quot;)</span><br><span class="line">	return ip</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以上一般来说已经解决问题了，但是我用的是NPM(docker部署)，可以用webUI管理，那我要如何在webUI中添加请求头呢</p>
-<p>试错1：在Advanced内容中添加，但是下面提示这样是不会生效的</p>
-<p><img src="https://github.com/yuzhi-jiang/imgbed/raw/main/Qexo/24/8/image_d47e89c402054234d6fe581d677e463d.png" alt="https://github.com/yuzhi-jiang/imgbed/raw/main/Qexo/24/8/image_d47e89c402054234d6fe581d677e463d.png"></p>
-<p>试错2：按照提示，加上了location，对接口添加 header，但是，这样是会覆盖原有的配置，会导致接口或者页面无法访问(404)</p>
-<p><img src="https://github.com/yuzhi-jiang/imgbed/raw/main/Qexo/24/8/image_9d270bd77dc85faece5b5cf66e92b15f.png" alt="https://github.com/yuzhi-jiang/imgbed/raw/main/Qexo/24/8/image_9d270bd77dc85faece5b5cf66e92b15f.png"></p>
-<p>解决方法：我门可以添加Custom Location(配置和Details中一样),并且在下面添加标头，这样是不会覆盖的</p>
-<p><img src="https://github.com/yuzhi-jiang/imgbed/raw/main/Qexo/24/8/image_6b0302df2739e50e3d67b6173770d725.png" alt="https://github.com/yuzhi-jiang/imgbed/raw/main/Qexo/24/8/image_6b0302df2739e50e3d67b6173770d725.png"></p>
+            <h3 id="java的validate工具方法"><a href="#java的validate工具方法" class="headerlink" title="java的validate工具方法"></a>java的validate工具方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public static &lt;T&gt; String validBean(T bean,Class&lt;?&gt;... groupClassz)&#123;</span><br><span class="line">    Validator validator;</span><br><span class="line">    try(ValidatorFacotry vf=Validation.buildDefaultValidatorFactory())&#123;</span><br><span class="line">         validator = vf.getValidator();</span><br><span class="line">         Set&lt;ConstraintViolation&lt;T&gt;&gt; valid=validator.validate(bean,groupClassz);</span><br><span class="line">         String errMsg=null;</span><br><span class="line">         if(valid!=null)&#123;</span><br><span class="line">           errMsg=valid.stream().map(ConstraintViolaation::getMessage).collect(Collectors.joining(&quot;,&quot;));</span><br><span class="line">         &#125;</span><br><span class="line">         return errMsg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
         </div>
 
@@ -258,7 +234,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://blog.anml.cn/2024/08/04/NginxProxyManager%E5%92%8Cdocker%E6%90%AD%E9%85%8D%E9%85%8D%E7%BD%AE%E6%A0%87%E5%A4%B4%E7%9C%9F%E5%AE%9Eip/">https://blog.anml.cn/2024/08/04/NginxProxyManager%E5%92%8Cdocker%E6%90%AD%E9%85%8D%E9%85%8D%E7%BD%AE%E6%A0%87%E5%A4%B4%E7%9C%9F%E5%AE%9Eip/</a></span>
+                        <span><a href="https://blog.anml.cn/2024/08/08/java%E7%9A%84validate%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/">https://blog.anml.cn/2024/08/08/java%E7%9A%84validate%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/</a></span>
                     </p>
                 
                 
@@ -271,14 +247,6 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/nginx/"># nginx</a>
-                    
-                        <a href="/tags/docker/"># docker</a>
-                    
-                        <a href="/tags/%E9%85%8D%E7%BD%AE/"># 配置</a>
-                    
-                        
                 </span>
             </div>
             <div>
@@ -289,10 +257,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/08/08/java%E7%9A%84validate%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/">java的validate工具方法</a>
+                <a class="prev" rel="prev" href="/2024/08/08/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
             
             
-            <a class="next" rel="next" href="/2024/07/19/DataTable%E8%AE%BE%E7%BD%AE%E5%88%86%E9%A1%B5/">DataTable设置分页</a>
+            <a class="next" rel="next" href="/2024/08/04/NginxProxyManager%E5%92%8Cdocker%E6%90%AD%E9%85%8D%E9%85%8D%E7%BD%AE%E6%A0%87%E5%A4%B4%E7%9C%9F%E5%AE%9Eip/">NginxProxyManager和docker搭配配置标头真实ip</a>
             
         </section>
 
