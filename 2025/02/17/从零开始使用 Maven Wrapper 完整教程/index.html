@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>从零开始使用 Maven Wrapper 完整教程 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./resume">resume</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./resume">resume</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">从零开始使用 Maven Wrapper 完整教程</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">February 17, 2025&nbsp;&nbsp;7:48:06</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="从零开始使用-Maven-Wrapper-完整教程"><a href="#从零开始使用-Maven-Wrapper-完整教程" class="headerlink" title="从零开始使用 Maven Wrapper 完整教程"></a>从零开始使用 Maven Wrapper 完整教程</h1><h2 id="1-背景与原理"><a href="#1-背景与原理" class="headerlink" title="1. 背景与原理"></a>1. 背景与原理</h2><h3 id="为什么需要-Maven-Wrapper"><a href="#为什么需要-Maven-Wrapper" class="headerlink" title="为什么需要 Maven Wrapper?"></a>为什么需要 Maven Wrapper?</h3><ul>
+<li><strong>环境一致性</strong>：传统 Maven 要求全局安装且版本固定，而 Maven Wrapper 将 Maven 与项目绑定，确保所有协作者使用<strong>相同版本</strong>。</li>
+<li><strong>零配置上手</strong>：无需手动安装 Maven，执行 <code>mvnw</code> 脚本自动下载并缓存所需版本。</li>
+<li><strong>隔离性</strong>：避免全局 Maven 配置污染，项目依赖完全独立。</li>
+</ul>
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><ul>
+<li>项目根目录生成 <code>mvnw</code>（Unix）和 <code>mvnw.cmd</code>（Windows）脚本。</li>
+<li><code>.mvn/wrapper/</code> 目录包含配置文件：<ul>
+<li><code>maven-wrapper.properties</code>：定义 Maven 版本和下载地址。</li>
+<li><code>maven-wrapper.jar</code>：处理 Maven 分发的逻辑。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-安装与配置"><a href="#2-安装与配置" class="headerlink" title="2. 安装与配置"></a>2. 安装与配置</h2><h3 id="方式一：命令生成（推荐新项目）"><a href="#方式一：命令生成（推荐新项目）" class="headerlink" title="方式一：命令生成（推荐新项目）"></a>方式一：命令生成（推荐新项目）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入项目根目录</span></span><br><span class="line">mvn -N io.takari:maven:wrapper -Dmaven=3.8.6</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-N</code> 表示非递归执行</li>
+<li><code>-Dmaven=3.8.6</code> 指定 Maven 版本</li>
+</ul>
+<h3 id="方式二：POM-插件配置（适合长期维护）"><a href="#方式二：POM-插件配置（适合长期维护）" class="headerlink" title="方式二：POM 插件配置（适合长期维护）"></a>方式二：POM 插件配置（适合长期维护）</h3><p>在 <code>pom.xml</code> 中添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.takari.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-wrapper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">mavenVersion</span>&gt;</span>3.8.6<span class="tag">&lt;/<span class="name">mavenVersion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>mvn wrapper:wrapper</code> 生成文件。</p>
+<h3 id="版本管理技巧"><a href="#版本管理技巧" class="headerlink" title="版本管理技巧"></a>版本管理技巧</h3><p>修改 <code>.mvn/wrapper/maven-wrapper.properties</code>：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">distributionUrl</span>=<span class="string">https://repo1.maven.org/maven2/org/apache/maven/apache-maven/3.8.6/apache-maven-3.8.6-bin.zip</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-私服环境实战"><a href="#3-私服环境实战" class="headerlink" title="3. 私服环境实战"></a>3. 私服环境实战</h2><h3 id="场景：内网无法访问中央仓库"><a href="#场景：内网无法访问中央仓库" class="headerlink" title="场景：内网无法访问中央仓库"></a>场景：内网无法访问中央仓库</h3><h4 id="步骤-1-配置-Maven-分发源"><a href="#步骤-1-配置-Maven-分发源" class="headerlink" title="步骤 1 - 配置 Maven 分发源"></a>步骤 1 - 配置 Maven 分发源</h4><p>修改 <code>maven-wrapper.properties</code> 使用内网镜像：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">distributionUrl</span>=<span class="string">http://internal-repo/maven-releases/org/apache/maven/apache-maven/3.8.6/apache-maven-3.8.6-bin.zip</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤-2-创建定制-settings-xml"><a href="#步骤-2-创建定制-settings-xml" class="headerlink" title="步骤 2 - 创建定制 settings.xml"></a>步骤 2 - 创建定制 settings.xml</h4><p>在项目根目录新建 <code>config/settings.xml</code>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>internal-mirror<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://internal-repo/maven-public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤-3-指定自定义配置"><a href="#步骤-3-指定自定义配置" class="headerlink" title="步骤 3 - 指定自定义配置"></a>步骤 3 - 指定自定义配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mvnw clean install -s config/settings.xml</span><br></pre></td></tr></table></figure>
+
+<h3 id="完整案例演示"><a href="#完整案例演示" class="headerlink" title="完整案例演示"></a>完整案例演示</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化项目</span></span><br><span class="line">mvn archetype:generate -DgroupId=com.example -DartifactId=my-app</span><br><span class="line"><span class="built_in">cd</span> my-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 Wrapper</span></span><br><span class="line">mvn wrapper:wrapper -DmavenVersion=3.8.6</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置私服地址</span></span><br><span class="line">sed -i <span class="string">&#x27;s/repo1.maven.org/internal-repo/g&#x27;</span> .mvn/wrapper/maven-wrapper.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行构建</span></span><br><span class="line">./mvnw package -s config/settings.xml</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-常见问题解决"><a href="#4-常见问题解决" class="headerlink" title="4. 常见问题解决"></a>4. 常见问题解决</h2><h3 id="问题-1：JAVA-HOME-未设置"><a href="#问题-1：JAVA-HOME-未设置" class="headerlink" title="问题 1：JAVA_HOME 未设置"></a>问题 1：JAVA_HOME 未设置</h3><p><strong>解决方案：</strong></p>
+<ul>
+<li><strong>临时方案</strong>（当前终端有效）：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/path/to/jdk8  <span class="comment"># Unix</span></span><br><span class="line"><span class="built_in">set</span> JAVA_HOME=C:\Program Files\Java\jdk8  <span class="comment"># Windows</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>永久方案</strong>：<ul>
+<li>Unix：添加到 <code>~/.bashrc</code> 或 <code>~/.zshrc</code></li>
+<li>Windows：通过系统属性设置环境变量</li>
+</ul>
+</li>
+<li><strong>智能检测</strong>：修改 <code>mvnw</code> 脚本添加检测逻辑（示例片段）：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if [ -z &quot;$JAVA_HOME&quot; ]; then</span><br><span class="line">  echo &quot;ERROR: JAVA_HOME not set!&quot;</span><br><span class="line">  exit 1</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="问题-2：依赖下载失败"><a href="#问题-2：依赖下载失败" class="headerlink" title="问题 2：依赖下载失败"></a>问题 2：依赖下载失败</h3><p><strong>诊断步骤：</strong></p>
+<ol>
+<li>检查 <code>-s</code> 参数路径是否正确</li>
+<li>验证 settings.xml 中的仓库地址可访问</li>
+<li>添加 <code>-X</code> 参数查看详细日志：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mvnw compile -X -s config/settings.xml</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="5-最佳实践总结"><a href="#5-最佳实践总结" class="headerlink" title="5. 最佳实践总结"></a>5. 最佳实践总结</h2><ol>
+<li><strong>统一管理</strong>：始终通过 Wrapper 执行构建，禁止使用全局 mvn</li>
+<li><strong>版本控制</strong>：将 <code>.mvn/</code> 目录提交到 Git</li>
+<li><strong>安全配置</strong>：私服凭证加密存储，使用 <code>maven-settings-encryption</code></li>
+<li><strong>跨平台注意</strong>：为 Windows 用户保留 <code>mvnw.cmd</code></li>
+</ol>
+<p>通过以上方法，您可以在任何环境（包括严格的内网限制）中实现可靠的可重复构建。Maven Wrapper 不仅解决了环境差异问题，更是现代 DevOps 实践中的重要基础设施。</p>
+<hr>
+<p><strong>附：常用命令速查</strong></p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始化</td>
+<td><code>mvn wrapper:wrapper</code></td>
+</tr>
+<tr>
+<td>指定版本</td>
+<td><code>./mvnw -v</code></td>
+</tr>
+<tr>
+<td>清理缓存</td>
+<td><code>rm -rf ~/.m2/wrapper/</code></td>
+</tr>
+<tr>
+<td>离线模式</td>
+<td><code>./mvnw -o package</code></td>
+</tr>
+</tbody></table>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.anml.cn/2025/02/17/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8%20Maven%20Wrapper%20%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/">https://blog.anml.cn/2025/02/17/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8%20Maven%20Wrapper%20%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/java/"># java</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/02/17/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
+            
+            
+            <a class="next" rel="next" href="/2024/10/18/%E6%9E%9A%E4%B8%BE%E5%BA%8F%E5%88%97%E5%8C%96%E5%90%8C%E6%97%B6%E6%98%BE%E7%A4%BA%E6%9E%9A%E4%B8%BE%E6%95%B0%E5%80%BC%E5%92%8C%E6%9E%9A%E4%B8%BE%E6%8F%8F%E8%BF%B0/">枚举序列化同时显示枚举数值和枚举描述</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
