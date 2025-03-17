@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>教你配置Nginx强制协商缓存 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./resume">resume</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./resume">resume</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">教你配置Nginx强制协商缓存</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">March 17, 2025&nbsp;&nbsp;7:38:04</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/nginx/">nginx</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="手把手教你配置Nginx强制协商缓存：让网站速度飞起来"><a href="#手把手教你配置Nginx强制协商缓存：让网站速度飞起来" class="headerlink" title="手把手教你配置Nginx强制协商缓存：让网站速度飞起来"></a>手把手教你配置Nginx强制协商缓存：让网站速度飞起来</h1><h2 id="为什么网站缓存如此重要？"><a href="#为什么网站缓存如此重要？" class="headerlink" title="为什么网站缓存如此重要？"></a>为什么网站缓存如此重要？</h2><p>在这个追求”秒开”网页的时代，网站加载速度直接影响用户体验和商业成败。当用户首次访问你的网站时，浏览器需要下载所有资源（HTML&#x2F;CSS&#x2F;JS&#x2F;图片等）。而巧妙利用缓存机制，可以让回访用户直接使用本地缓存的资源，实现”瞬间加载”的爽快体验。</p>
+<p>缓存技术主要分为两大流派：</p>
+<ol>
+<li><strong>霸道总裁型 - 强缓存</strong><br>直接使用本地缓存，连招呼都不和服务器打。通过<code>Cache-Control</code>和<code>Expires</code>头控制缓存有效期。</li>
+<li><strong>温柔确认型 - 协商缓存</strong><br>每次都要和服务器确认：”亲，我的缓存还能用吗？”。通过<code>ETag</code>和<code>Last-Modified</code>机制实现。</li>
+</ol>
+<p>今天我们要重点介绍的，就是这位”温柔确认型”的缓存高手——协商缓存的配置秘籍。</p>
+<h2 id="缓存机制深度解析"><a href="#缓存机制深度解析" class="headerlink" title="缓存机制深度解析"></a>缓存机制深度解析</h2><h3 id="强缓存工作流程"><a href="#强缓存工作流程" class="headerlink" title="强缓存工作流程"></a>强缓存工作流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">浏览器 → 检查缓存 → 未过期 → 直接使用本地资源</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="协商缓存工作流程"><a href="#协商缓存工作流程" class="headerlink" title="协商缓存工作流程"></a>协商缓存工作流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">浏览器 → 缓存过期 → 带验证信息请求 → 服务器检查 → </span><br><span class="line">   │                          ↑               │</span><br><span class="line">   └───── 304 Not Modified ←─┘               ↓ 200 OK + 新资源</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="核心验证机制对比"><a href="#核心验证机制对比" class="headerlink" title="核心验证机制对比"></a>核心验证机制对比</h3><table>
+<thead>
+<tr>
+<th>验证方式</th>
+<th>请求头</th>
+<th>响应头</th>
+<th>优势</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ETag验证</td>
+<td>If-None-Match</td>
+<td>ETag</td>
+<td>精准到内容变化</td>
+</tr>
+<tr>
+<td>时间戳验证</td>
+<td>If-Modified-Since</td>
+<td>Last-Modified</td>
+<td>计算成本低</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Nginx配置实战手册"><a href="#Nginx配置实战手册" class="headerlink" title="Nginx配置实战手册"></a>Nginx配置实战手册</h2><h3 id="基础配置三步走"><a href="#基础配置三步走" class="headerlink" title="基础配置三步走"></a>基础配置三步走</h3><ol>
+<li><strong>启用ETag验证</strong></li>
+</ol>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在http块或server块添加</span></span><br><span class="line"><span class="attribute">etag</span> <span class="literal">on</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>开启时间戳验证</strong></li>
+</ol>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">if_modified_since</span> before;</span><br><span class="line">    <span class="attribute">add_header</span> Last-Modified <span class="variable">$date_gmt</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>设置缓存策略</strong></li>
+</ol>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 静态资源强缓存30天</span></span><br><span class="line"><span class="section">location</span> <span class="regexp">~* \.(js|css|png|jpe?g|gif|ico)$</span> &#123;</span><br><span class="line">    <span class="attribute">expires</span> <span class="number">30d</span>;</span><br><span class="line">    <span class="attribute">add_header</span> Cache-Control <span class="string">&quot;public, no-transform&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="高级配置技巧"><a href="#高级配置技巧" class="headerlink" title="高级配置技巧"></a>高级配置技巧</h3><p><strong>动态内容协商缓存配置</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> /api/ &#123;</span><br><span class="line">    <span class="comment"># 禁用强缓存，强制每次验证</span></span><br><span class="line">    <span class="attribute">add_header</span> Cache-Control <span class="string">&quot;no-cache&quot;</span>;</span><br><span class="line">    <span class="attribute">etag</span> <span class="literal">on</span>;</span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 自定义ETag生成规则（示例）</span></span><br><span class="line">    <span class="attribute">etag</span> <span class="variable">$request_uri</span><span class="variable">$sent_http_content_type</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>CDN友好型配置</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> <span class="regexp">~* \.(webp|avif)$</span> &#123;</span><br><span class="line">    <span class="comment"># 设置长期缓存+版本化文件名</span></span><br><span class="line">    <span class="attribute">expires</span> <span class="number">1y</span>;</span><br><span class="line">    <span class="attribute">add_header</span> Cache-Control <span class="string">&quot;public, immutable&quot;</span>;</span><br><span class="line">  </span><br><span class="line">    <span class="comment"># 增强验证机制</span></span><br><span class="line">    <span class="attribute">etag</span> <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">if_modified_since</span> exact;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="避坑指南-性能优化"><a href="#避坑指南-性能优化" class="headerlink" title="避坑指南 &amp; 性能优化"></a>避坑指南 &amp; 性能优化</h2><h3 id="常见问题排查表"><a href="#常见问题排查表" class="headerlink" title="常见问题排查表"></a>常见问题排查表</h3><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>可能原因</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>304响应但加载时间久</td>
+<td>网络延迟大</td>
+<td>启用HTTP&#x2F;2 + 资源压缩</td>
+</tr>
+<tr>
+<td>缓存频繁失效</td>
+<td>ETag生成算法不稳定</td>
+<td>使用文件内容哈希生成ETag</td>
+</tr>
+<tr>
+<td>修改后不更新</td>
+<td>强缓存时间设置过长</td>
+<td>添加版本号到资源文件名</td>
+</tr>
+</tbody></table>
+<h3 id="性能优化四重奏"><a href="#性能优化四重奏" class="headerlink" title="性能优化四重奏"></a>性能优化四重奏</h3><ol>
+<li><strong>动静分离</strong>：将静态资源托管到独立域名&#x2F;路径</li>
+<li><strong>版本控制</strong>：<code>style.v2.css</code>式文件名管理</li>
+<li><strong>分级缓存</strong>：根据内容类型设置不同缓存策略</li>
+<li><strong>监控分析</strong>：使用Chrome DevTools定期审计缓存命中率</li>
+</ol>
+<hr>
+<h2 id="最佳实践总结"><a href="#最佳实践总结" class="headerlink" title="最佳实践总结"></a>最佳实践总结</h2><ol>
+<li><strong>黄金搭配</strong>：<code>ETag</code> + <code>Last-Modified</code>双验证机制</li>
+<li><strong>缓存分层</strong>：<ul>
+<li>永久不变资源：<code>immutable</code>指令</li>
+<li>偶尔更新资源：长<code>max-age</code>+版本号</li>
+<li>动态内容：<code>no-cache</code>+短<code>max-age</code></li>
+</ul>
+</li>
+<li><strong>更新策略</strong>：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[资源变更] --&gt; B&#123;文件名是否变化?&#125;</span><br><span class="line">B --&gt;|是| C[直接更新]</span><br><span class="line">B --&gt;|否| D[修改版本号/查询参数]</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>通过合理配置Nginx的协商缓存机制，可以使网站：<br>✅ 减少50%以上的重复请求<br>✅ 降低服务器70%的负载压力<br>✅ 提升页面加载速度300%</p>
+<p>现在就开始优化你的Nginx配置，让你的网站体验如丝般顺滑吧！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.anml.cn/2025/03/17/%E6%95%99%E4%BD%A0%E9%85%8D%E7%BD%AENginx%E5%BC%BA%E5%88%B6%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/">https://blog.anml.cn/2025/03/17/%E6%95%99%E4%BD%A0%E9%85%8D%E7%BD%AENginx%E5%BC%BA%E5%88%B6%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/nginx/"># nginx</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/03/17/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
+            
+            
+            <a class="next" rel="next" href="/2025/02/17/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8%20Maven%20Wrapper%20%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B/">从零开始使用 Maven Wrapper 完整教程</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
