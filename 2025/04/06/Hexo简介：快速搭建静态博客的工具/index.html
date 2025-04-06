@@ -14,7 +14,7 @@
 
 
 
-<title>test44 | yuzhi</title>
+<title>Hexo简介：快速搭建静态博客的工具 | yuzhi</title>
 
 
 
@@ -132,11 +132,76 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">test44</h1>
+            <h1 class="post-title">Hexo简介：快速搭建静态博客的工具</h1>
             
                 <div class="post-meta">
                     
@@ -145,7 +210,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">April 6, 2025&nbsp;&nbsp;15:14:30</a>
+                        Date: <a href="#">April 6, 2025&nbsp;&nbsp;15:41:20</a>
                         </span>
                     
                     
@@ -154,7 +219,25 @@
         </header>
 
         <div class="post-content">
-            <p>hello mcp</p>
+            <p>Hexo简介：快速搭建静态博客的工具</p>
+<p>Hexo 是一个快速、简洁且高效的静态博客框架，基于 Node.js 开发。它允许用户使用 Markdown（或其他标记语言）编写文章，并生成静态网页文件。Hexo 以其轻量级和高度可定制的特性，成为许多开发者和博客作者的首选工具。</p>
+<h3 id="Hexo-的核心特点"><a href="#Hexo-的核心特点" class="headerlink" title="Hexo 的核心特点"></a>Hexo 的核心特点</h3><ol>
+<li><strong>快速生成</strong>：Hexo 可以快速将 Markdown 文件转换为静态网页，支持多线程渲染，生成速度极快。</li>
+<li><strong>简洁高效</strong>：Hexo 的设计理念是简洁高效，用户只需专注于写作，无需关心复杂的后端逻辑。</li>
+<li><strong>丰富的主题和插件</strong>：Hexo 社区提供了大量主题和插件，用户可以根据自己的需求轻松定制博客的外观和功能。</li>
+<li><strong>支持多平台部署</strong>：Hexo 生成的静态文件可以轻松部署到 GitHub Pages、Netlify、Vercel 等平台。</li>
+<li><strong>命令行工具</strong>：Hexo 提供了强大的命令行工具，便于用户管理博客内容。</li>
+</ol>
+<h3 id="如何开始使用-Hexo？"><a href="#如何开始使用-Hexo？" class="headerlink" title="如何开始使用 Hexo？"></a>如何开始使用 Hexo？</h3><ol>
+<li><strong>安装 Node.js</strong>：Hexo 基于 Node.js，因此需要先安装 Node.js 环境。</li>
+<li><strong>安装 Hexo</strong>：通过 npm 安装 Hexo 命令行工具：<code>npm install -g hexo-cli</code>。</li>
+<li><strong>初始化博客</strong>：运行 <code>hexo init &lt;folder&gt;</code> 初始化一个博客项目。</li>
+<li><strong>编写文章</strong>：在 <code>source/_posts</code> 目录下创建 Markdown 文件编写文章。</li>
+<li><strong>生成静态文件</strong>：运行 <code>hexo generate</code> 生成静态文件。</li>
+<li><strong>本地预览</strong>：运行 <code>hexo server</code> 启动本地服务器预览博客。</li>
+<li><strong>部署</strong>：将生成的 <code>public</code> 文件夹部署到目标平台。</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Hexo 是一个非常适合技术博客和个人博客的工具，它不仅易于上手，还能通过丰富的主题和插件满足个性化需求。如果你正在寻找一个轻量级且高效的博客框架，Hexo 绝对值得一试！</p>
 
         </div>
 
@@ -169,7 +252,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://blog.anml.cn/2025/04/06/test44/">https://blog.anml.cn/2025/04/06/test44/</a></span>
+                        <span><a href="https://blog.anml.cn/2025/04/06/Hexo%E7%AE%80%E4%BB%8B%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%B7%A5%E5%85%B7/">https://blog.anml.cn/2025/04/06/Hexo%E7%AE%80%E4%BB%8B%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%B7%A5%E5%85%B7/</a></span>
                     </p>
                 
                 
@@ -182,6 +265,10 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
+                    
+                        <a href="/tags/hexo/"># hexo</a>
+                    
+                        
                 </span>
             </div>
             <div>
@@ -192,10 +279,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2025/04/06/Hexo%E7%AE%80%E4%BB%8B%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%B7%A5%E5%85%B7/">Hexo简介：快速搭建静态博客的工具</a>
             
-            
-            <a class="next" rel="next" href="/2025/04/06/%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/%E9%80%9A%E8%BF%87%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/">责任链默认实现校验</a>
+            <a class="next" rel="next" href="/2025/04/06/test44/">test44</a>
             
         </section>
 
