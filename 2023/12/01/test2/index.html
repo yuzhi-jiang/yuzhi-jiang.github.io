@@ -14,7 +14,7 @@
 
 
 
-<title>yuzhi</title>
+<title>test2 | yuzhi</title>
 
 
 
@@ -132,76 +132,11 @@
                 <div class="container">
     
     
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Back to top</a>
-        <a onclick="go_bottom()">Go to bottom</a>
-    </div>
-</div>
-
-<script>
-    var tocbot_timer;
-    var DEPTH_MAX = 6; // 为 6 时展开所有
-    var tocbot_default_config = {
-        tocSelector: '.tocbot-list',
-        contentSelector: '.post-content',
-        headingSelector: 'h1, h2, h3, h4, h5',
-        orderedList: false,
-        scrollSmooth: true,
-        onClick: extend_click,
-    };
-
-    function extend_click() {
-        clearTimeout(tocbot_timer);
-        tocbot_timer = setTimeout(function() {
-            tocbot.refresh(obj_merge(tocbot_default_config, {
-                hasInnerContainers: true
-            }));
-        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
-    }
-
-    document.ready(function() {
-        tocbot.init(obj_merge(tocbot_default_config, {
-            collapseDepth: 1
-        }));
-    });
-
-    function expand_toc() {
-        var b = document.querySelector('.tocbot-toc-expand');
-        var expanded = b.getAttribute('data-expanded');
-        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
-        tocbot.refresh(obj_merge(tocbot_default_config, {
-            collapseDepth: expanded ? 1 : DEPTH_MAX
-        }));
-        b.innerText = expanded ? 'Expand all' : 'Collapse all';
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    function obj_merge(target, source) {
-        for (var item in source) {
-            if (source.hasOwnProperty(item)) {
-                target[item] = source[item];
-            }
-        }
-        return target;
-    }
-</script>
-    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title"></h1>
+            <h1 class="post-title">test2</h1>
             
                 <div class="post-meta">
                     
@@ -210,14 +145,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">April 6, 2025&nbsp;&nbsp;6:55:09</a>
+                        Date: <a href="#">December 1, 2023&nbsp;&nbsp;13:14:56</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/test1/">test1</a>
+                                <a href="/categories/test2/">test2</a>
                             
                         </span>
                     
@@ -226,8 +161,7 @@
         </header>
 
         <div class="post-content">
-            <hr>
-<h2 id="title-test2-categories-test-date-2025-04-06-14-39-11-tags-test"><a href="#title-test2-categories-test-date-2025-04-06-14-39-11-tags-test" class="headerlink" title="title: test2    categories:      - test    date: 2025-04-06 14:39:11    tags: test"></a>title: test2<br>    categories:<br>      - test<br>    date: 2025-04-06 14:39:11<br>    tags: test</h2><p>hello mcp</p>
+            <p>hello mcp</p>
 
         </div>
 
@@ -242,7 +176,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://blog.anml.cn/2025/04/06/test2/">https://blog.anml.cn/2025/04/06/test2/</a></span>
+                        <span><a href="https://blog.anml.cn/2023/12/01/test2/">https://blog.anml.cn/2023/12/01/test2/</a></span>
                     </p>
                 
                 
@@ -256,7 +190,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/test1/"># test1</a>
+                        <a href="/tags/test2/"># test2</a>
                     
                         
                 </span>
@@ -269,10 +203,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2025/04/06/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">关于nginx_proxy_manager自定义设置映射文件路径</a>
+                <a class="prev" rel="prev" href="/2024/07/07/listToTree%E6%B3%A8%E8%A7%A3/listToTree%E6%B3%A8%E8%A7%A3/">利用注解生成树结构</a>
             
             
-            <a class="next" rel="next" href="/2025/04/06/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
+            <a class="next" rel="next" href="/2023/12/01/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/sqlserver%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98/">sqlserver连接问题</a>
             
         </section>
 
