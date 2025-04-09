@@ -14,7 +14,7 @@
 
 
 
-<title>yuzhi</title>
+<title>Huggingface使用镜像站 | yuzhi</title>
 
 
 
@@ -201,7 +201,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title"></h1>
+            <h1 class="post-title">Huggingface使用镜像站</h1>
             
                 <div class="post-meta">
                     
@@ -210,7 +210,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">April 6, 2025&nbsp;&nbsp;11:59:38</a>
+                        Date: <a href="#">April 9, 2025&nbsp;&nbsp;12:36:49</a>
                         </span>
                     
                     
@@ -219,45 +219,25 @@
         </header>
 
         <div class="post-content">
-            <h3 id="移除现存snaps"><a href="#移除现存snaps" class="headerlink" title="移除现存snaps"></a>移除现存snaps</h3><p>在新安装的Ubuntu中，已经默认安装了部分snaps，可以通过以下命令查看:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snap list</span><br></pre></td></tr></table></figure>
-
-<p>例如，Raspberry Pi 4的Ubuntu Server 64位版本，输出显示:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Name    Version   Rev    Tracking       Publisher   Notes</span><br><span class="line">core18  20200707  1883   latest/stable  canonical✓  base</span><br><span class="line">lxd     4.0.2     16103  4.0/stable/…   canonical✓  -</span><br><span class="line">snapd   2.45.2    8543   latest/stable  canonical✓  snapd</span><br></pre></td></tr></table></figure>
-
-<p>并且，如果你执行 df -h 命令可以看到已经挂载了snap的服务:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/dev/loop0       49M   49M     0 100% /snap/core18/1883</span><br><span class="line">/dev/loop1       64M   64M     0 100% /snap/lxd/16103</span><br><span class="line">/dev/loop2       26M   26M     0 100% /snap/snapd/8543</span><br><span class="line">/dev/loop3       49M   49M     0 100% /snap/core18/1888</span><br></pre></td></tr></table></figure>
-
-<h5 id="注意-删除snap之前要先删除-包"><a href="#注意-删除snap之前要先删除-包" class="headerlink" title="注意 删除snap之前要先删除 包"></a>注意 删除snap之前要先删除 包</h5><p>使用 sudo snap remove <package> 命令移除:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove lxd</span><br></pre></td></tr></table></figure>
-
-<p>但是不能先移除 snapd ，如果你执行 sudo snap remove snapd 会提示错误:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: cannot remove &quot;snapd&quot;: snap &quot;snapd&quot; is not removable: remove all other snaps first</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>所以先移除 core18</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove core18</span><br></pre></td></tr></table></figure>
-
-<p>最后移除 snapd</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove snapd</span><br></pre></td></tr></table></figure>
-
-<br/>
-
-<p>此时 snapd 服务依然在运行，需要卸载 snapd 软件包来清理</p>
-<p>检查文件系统挂载 df -h 可以看到所有snaps相关挂载都已经消除:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            876M     0  876M   0% /dev</span><br><span class="line">tmpfs           185M  2.7M  183M   2% /run</span><br><span class="line">/dev/mmcblk0p2  117G  5.0G  108G   5% /</span><br><span class="line">tmpfs           925M     0  925M   0% /dev/shm</span><br><span class="line">tmpfs           5.0M     0  5.0M   0% /run/lock</span><br><span class="line">tmpfs           925M     0  925M   0% /sys/fs/cgroup</span><br><span class="line">/dev/mmcblk0p1  253M   97M  156M  39% /boot/firmware</span><br><span class="line">tmpfs           185M     0  185M   0% /run/user/1000</span><br></pre></td></tr></table></figure>
-
-<p>删除和清理snapd软件包:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt purge snapd</span><br></pre></td></tr></table></figure>
-
-<p>执行 apt autoremove 清理所有无用软件包:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt autoremove</span><br></pre></td></tr></table></figure>
-
-<br/>
-
-<p>删除snap目录:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~/snap</span><br><span class="line">sudo rm -rf /snap</span><br><span class="line">sudo rm -rf /var/snap</span><br><span class="line">sudo rm -rf /var/lib/snapd</span><br></pre></td></tr></table></figure>
-
-<p>现在，所有snaps已经清理干净，</p>
+            <h1 id="使用Huggingface镜像站hf-mirror-com下载资源"><a href="#使用Huggingface镜像站hf-mirror-com下载资源" class="headerlink" title="使用Huggingface镜像站hf-mirror.com下载资源"></a>使用Huggingface镜像站hf-mirror.com下载资源</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在使用Huggingface的过程中，有时我们可能会遇到无法访问官方网站huggingface.co的情况，这可能是由于网络监管或者网络连接问题所致。然而，幸运的是，我们可以通过hf-mirror.com这个Huggingface镜像站来解决这个问题。本篇博客将详细介绍hf-mirror.com网站的内容和使用方法。</p>
+<h2 id="hf-mirror-com是什么"><a href="#hf-mirror-com是什么" class="headerlink" title="hf-mirror.com是什么?"></a>hf-mirror.com是什么?</h2><p>hf-mirror.com是Huggingface的镜像网站，它提供了一个备用的域名来访问Huggingface的资源和功能。它的作用类似于一个代理服务器，可以帮助我们绕过无法访问huggingface.co的限制，正常地获取所需的模型和数据集。</p>
+<h2 id="hf-mirror-com的特点和优势"><a href="#hf-mirror-com的特点和优势" class="headerlink" title="hf-mirror.com的特点和优势"></a>hf-mirror.com的特点和优势</h2><ul>
+<li>支持断点续传:使用hf-mirror.com下载模型时，如果网络中断，我们可以通过断点续传功能避免文件损坏，从而节省时间和流量。</li>
+<li>多文件并行下载:hf-mirror.com默认支持多文件并行下载，这意味着我们可以更快地下载所需的模型和数据集。</li>
+<li>支持Gated Model下载:对于需要登录的模型(Gated Model)，我们可以通过添加–token hf_***参数来进行下载，其中hf_***是访问令牌，可以在huggingface官网获取。</li>
+</ul>
+<h2 id="使用hf-mirror-com下载模型的步骤"><a href="#使用hf-mirror-com下载模型的步骤" class="headerlink" title="使用hf-mirror.com下载模型的步骤"></a>使用hf-mirror.com下载模型的步骤</h2><ul>
+<li>安装依赖:首先，我们需要安装huggingface-cli命令行工具，可以使用以下命令进行安装:pip install -U huggingface_hub。</li>
+<li>设置镜像endpoint:在下载模型之前，我们需要设置镜像endpoint，可以使用以下命令进行设置:export HF_ENDPOINT&#x3D;<a target="_blank" rel="noopener" href="https://hf-mirror.com./">https://hf-mirror.com。</a></li>
+<li>下载模型:使用huggingface-cli的download命令可以下载模型，例如:huggingface-cli download –resume-download –local-dir-use-symlinks False bigscience&#x2F;bloom-560m –local-dir bloom-560m。</li>
+</ul>
+<h2 id="其他使用方式"><a href="#其他使用方式" class="headerlink" title="其他使用方式"></a>其他使用方式</h2><ol>
+<li>下载需要登录的模型以及使用脚本下载等方法详见参考链接[2]。</li>
+<li>根目录.cache空间不足时使用–cache-dir传参更改下载缓存路径。</li>
+<li>使用Python脚本下载时，在import huggingface库相关语句之前执行环境设置。</li>
+<li>更多功能支持可查阅 huggingface-cli download –help</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>hf-mirror.com是Huggingface的镜像网站，为用户提供了一个备用的访问通道，解决了无法访问huggingface.co的问题。通过hf-mirror.com，我们可以正常地下载所需的模型和数据集，享受Huggingface提供的强大功能。</p>
 
         </div>
 
@@ -272,7 +252,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://blog.anml.cn/2025/04/06/ubuntu20%E7%A7%BB%E9%99%A4snaps/">https://blog.anml.cn/2025/04/06/ubuntu20%E7%A7%BB%E9%99%A4snaps/</a></span>
+                        <span><a href="https://blog.anml.cn/2025/04/09/Huggingface%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F%E7%AB%99/">https://blog.anml.cn/2025/04/09/Huggingface%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F%E7%AB%99/</a></span>
                     </p>
                 
                 
@@ -285,6 +265,10 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
+                    
+                        <a href="/tags/mcp/"># mcp</a>
+                    
+                        
                 </span>
             </div>
             <div>
@@ -295,10 +279,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2025/04/06/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">关于nginx_proxy_manager自定义设置映射文件路径</a>
             
-            
-            <a class="next" rel="next" href="/2025/03/17/%E5%BD%BB%E5%BA%95%E8%A7%A3%E5%86%B3%E5%89%8D%E7%AB%AF%E8%B5%84%E6%BA%90%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/">彻底解决前端资源缓存失效问题</a>
+            <a class="next" rel="next" href="/2025/04/09/%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/%E9%80%9A%E8%BF%87%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/">责任链默认实现校验</a>
             
         </section>
 

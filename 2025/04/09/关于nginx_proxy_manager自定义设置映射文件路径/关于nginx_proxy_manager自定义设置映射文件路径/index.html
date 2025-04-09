@@ -14,7 +14,7 @@
 
 
 
-<title>Hexo简介：快速搭建静态博客的工具 | yuzhi</title>
+<title>关于nginx_proxy_manager自定义设置映射文件路径 | yuzhi</title>
 
 
 
@@ -201,7 +201,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Hexo简介：快速搭建静态博客的工具</h1>
+            <h1 class="post-title">关于nginx_proxy_manager自定义设置映射文件路径</h1>
             
                 <div class="post-meta">
                     
@@ -210,34 +210,39 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">April 6, 2025&nbsp;&nbsp;15:41:20</a>
+                        Date: <a href="#">April 9, 2025&nbsp;&nbsp;4:37:08</a>
                         </span>
                     
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%85%B3%E4%BA%8Enginx-proxy-manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">关于nginx_proxy_manager自定义设置映射文件路径</a>
+                            
+                        </span>
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <p>Hexo简介：快速搭建静态博客的工具</p>
-<p>Hexo 是一个快速、简洁且高效的静态博客框架，基于 Node.js 开发。它允许用户使用 Markdown（或其他标记语言）编写文章，并生成静态网页文件。Hexo 以其轻量级和高度可定制的特性，成为许多开发者和博客作者的首选工具。</p>
-<h3 id="Hexo-的核心特点"><a href="#Hexo-的核心特点" class="headerlink" title="Hexo 的核心特点"></a>Hexo 的核心特点</h3><ol>
-<li><strong>快速生成</strong>：Hexo 可以快速将 Markdown 文件转换为静态网页，支持多线程渲染，生成速度极快。</li>
-<li><strong>简洁高效</strong>：Hexo 的设计理念是简洁高效，用户只需专注于写作，无需关心复杂的后端逻辑。</li>
-<li><strong>丰富的主题和插件</strong>：Hexo 社区提供了大量主题和插件，用户可以根据自己的需求轻松定制博客的外观和功能。</li>
-<li><strong>支持多平台部署</strong>：Hexo 生成的静态文件可以轻松部署到 GitHub Pages、Netlify、Vercel 等平台。</li>
-<li><strong>命令行工具</strong>：Hexo 提供了强大的命令行工具，便于用户管理博客内容。</li>
-</ol>
-<h3 id="如何开始使用-Hexo？"><a href="#如何开始使用-Hexo？" class="headerlink" title="如何开始使用 Hexo？"></a>如何开始使用 Hexo？</h3><ol>
-<li><strong>安装 Node.js</strong>：Hexo 基于 Node.js，因此需要先安装 Node.js 环境。</li>
-<li><strong>安装 Hexo</strong>：通过 npm 安装 Hexo 命令行工具：<code>npm install -g hexo-cli</code>。</li>
-<li><strong>初始化博客</strong>：运行 <code>hexo init &lt;folder&gt;</code> 初始化一个博客项目。</li>
-<li><strong>编写文章</strong>：在 <code>source/_posts</code> 目录下创建 Markdown 文件编写文章。</li>
-<li><strong>生成静态文件</strong>：运行 <code>hexo generate</code> 生成静态文件。</li>
-<li><strong>本地预览</strong>：运行 <code>hexo server</code> 启动本地服务器预览博客。</li>
-<li><strong>部署</strong>：将生成的 <code>public</code> 文件夹部署到目标平台。</li>
-</ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Hexo 是一个非常适合技术博客和个人博客的工具，它不仅易于上手，还能通过丰富的主题和插件满足个性化需求。如果你正在寻找一个轻量级且高效的博客框架，Hexo 绝对值得一试！</p>
+            <h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p>因为域名更换，在迁移服务的时候发现，链接在微信上无法打开，报错是</p>
+<p><code>网页包含诱导分享、关注等诱导行为内容，被多人投诉，为维护绿色上网环境，已停止访问。</code></p>
+<p>而我这个域名是新买的，所以很大可能是因为域名之前被滥用过，导致被多人投诉，所以被微信平台加入了黑名单。<br><img src="/2025/04/09/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/34617d5bc168681e38be7a4dbb6da6f7.png" alt="1"></p>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p>根据微信提示申诉，做3到测评，有一部是需要站长进行认证</p>
+<p>认证方法是，在服务根目录创建一个微信指定的文件，并放入指定的内容</p>
+<p>如下图：</p>
+<p><img src="/2025/04/09/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/2ea586b2e352638bddeca4a2439d9685.png" alt="2"></p>
+<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>如果是使用的tomcat等可以直接在跟目录部署文件，自然按照提示做就好，但是，题主使用的是nginx，如果到这里使用ng做一下配置也算可以的，但是我同时是用docker安装的nginx_proxy_manager，所以不出意外，我的服务也是通过ng代理的到端口的。</p>
+<h4 id="尝试度娘google和gpt与最终解决"><a href="#尝试度娘google和gpt与最终解决" class="headerlink" title="尝试度娘google和gpt与最终解决"></a>尝试度娘google和gpt与最终解决</h4><p>在经过一番的搜索后，没找到符合需求的答案，最后换了好几个gpt的提问姿势最后得到如下答案</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /aa.txt &#123;</span><br><span class="line">alias /b.txt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当用户访问&#x2F;aa.txt时，实际上会返回&#x2F;b.txt的内容</p>
+<p>所以基于这个代码，是非常符合我们的需求的</p>
+<p><strong>坑，这里题主当时b.txt后面;没加分号导致失效，看了好几遍，哭死</strong></p>
+<h4 id="最后贴几个图："><a href="#最后贴几个图：" class="headerlink" title="最后贴几个图："></a>最后贴几个图：</h4><h6 id="代理服务"><a href="#代理服务" class="headerlink" title="代理服务"></a>代理服务</h6><p><img src="/2025/04/09/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/6225e5b17604fdf93ce51d721a8bf8ab.png" alt="3"></p>
+<h6 id="高级配置"><a href="#高级配置" class="headerlink" title="高级配置"></a>高级配置</h6><p><img src="/2025/04/09/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/e029ee28679c235fe89abe8f19c69be1.png" alt="4"></p>
+<h6 id="访问成功"><a href="#访问成功" class="headerlink" title="访问成功"></a>访问成功</h6><p><img src="/2025/04/09/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/222f234b69110a650dcedb4d3c79d82f.png"></p>
 
         </div>
 
@@ -252,7 +257,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://blog.anml.cn/2025/04/06/Hexo%E7%AE%80%E4%BB%8B%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%B7%A5%E5%85%B7/">https://blog.anml.cn/2025/04/06/Hexo%E7%AE%80%E4%BB%8B%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%B7%A5%E5%85%B7/</a></span>
+                        <span><a href="https://blog.anml.cn/2025/04/09/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/">https://blog.anml.cn/2025/04/09/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/%E5%85%B3%E4%BA%8Enginx_proxy_manager%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84/</a></span>
                     </p>
                 
                 
@@ -266,7 +271,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/hexo/"># hexo</a>
+                        <a href="/tags/nginx%E9%85%8D%E7%BD%AE/"># nginx配置</a>
                     
                         
                 </span>
@@ -279,10 +284,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2025/04/09/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
+                <a class="prev" rel="prev" href="/2025/04/09/%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/%E9%80%9A%E8%BF%87%E9%93%BE%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E5%8F%AF%E6%8B%94%E6%8F%92%E5%BC%8F%E7%9A%84%E4%B8%9A%E5%8A%A1%E6%A0%A1%E9%AA%8C/">责任链默认实现校验</a>
             
             
-            <a class="next" rel="next" href="/2025/03/17/%E5%BD%BB%E5%BA%95%E8%A7%A3%E5%86%B3%E5%89%8D%E7%AB%AF%E8%B5%84%E6%BA%90%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E9%97%AE%E9%A2%98/">彻底解决前端资源缓存失效问题</a>
+            <a class="next" rel="next" href="/2025/04/09/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
             
         </section>
 
