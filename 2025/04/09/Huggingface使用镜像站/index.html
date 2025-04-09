@@ -210,7 +210,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">April 9, 2025&nbsp;&nbsp;12:36:49</a>
+                        Date: <a href="#">April 9, 2025&nbsp;&nbsp;12:42:45</a>
                         </span>
                     
                     
@@ -219,25 +219,18 @@
         </header>
 
         <div class="post-content">
-            <h1 id="使用Huggingface镜像站hf-mirror-com下载资源"><a href="#使用Huggingface镜像站hf-mirror-com下载资源" class="headerlink" title="使用Huggingface镜像站hf-mirror.com下载资源"></a>使用Huggingface镜像站hf-mirror.com下载资源</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在使用Huggingface的过程中，有时我们可能会遇到无法访问官方网站huggingface.co的情况，这可能是由于网络监管或者网络连接问题所致。然而，幸运的是，我们可以通过hf-mirror.com这个Huggingface镜像站来解决这个问题。本篇博客将详细介绍hf-mirror.com网站的内容和使用方法。</p>
-<h2 id="hf-mirror-com是什么"><a href="#hf-mirror-com是什么" class="headerlink" title="hf-mirror.com是什么?"></a>hf-mirror.com是什么?</h2><p>hf-mirror.com是Huggingface的镜像网站，它提供了一个备用的域名来访问Huggingface的资源和功能。它的作用类似于一个代理服务器，可以帮助我们绕过无法访问huggingface.co的限制，正常地获取所需的模型和数据集。</p>
-<h2 id="hf-mirror-com的特点和优势"><a href="#hf-mirror-com的特点和优势" class="headerlink" title="hf-mirror.com的特点和优势"></a>hf-mirror.com的特点和优势</h2><ul>
-<li>支持断点续传:使用hf-mirror.com下载模型时，如果网络中断，我们可以通过断点续传功能避免文件损坏，从而节省时间和流量。</li>
-<li>多文件并行下载:hf-mirror.com默认支持多文件并行下载，这意味着我们可以更快地下载所需的模型和数据集。</li>
-<li>支持Gated Model下载:对于需要登录的模型(Gated Model)，我们可以通过添加–token hf_***参数来进行下载，其中hf_***是访问令牌，可以在huggingface官网获取。</li>
-</ul>
-<h2 id="使用hf-mirror-com下载模型的步骤"><a href="#使用hf-mirror-com下载模型的步骤" class="headerlink" title="使用hf-mirror.com下载模型的步骤"></a>使用hf-mirror.com下载模型的步骤</h2><ul>
-<li>安装依赖:首先，我们需要安装huggingface-cli命令行工具，可以使用以下命令进行安装:pip install -U huggingface_hub。</li>
-<li>设置镜像endpoint:在下载模型之前，我们需要设置镜像endpoint，可以使用以下命令进行设置:export HF_ENDPOINT&#x3D;<a target="_blank" rel="noopener" href="https://hf-mirror.com./">https://hf-mirror.com。</a></li>
-<li>下载模型:使用huggingface-cli的download命令可以下载模型，例如:huggingface-cli download –resume-download –local-dir-use-symlinks False bigscience&#x2F;bloom-560m –local-dir bloom-560m。</li>
-</ul>
-<h2 id="其他使用方式"><a href="#其他使用方式" class="headerlink" title="其他使用方式"></a>其他使用方式</h2><ol>
-<li>下载需要登录的模型以及使用脚本下载等方法详见参考链接[2]。</li>
-<li>根目录.cache空间不足时使用–cache-dir传参更改下载缓存路径。</li>
-<li>使用Python脚本下载时，在import huggingface库相关语句之前执行环境设置。</li>
-<li>更多功能支持可查阅 huggingface-cli download –help</li>
+            <p>Huggingface是人工智能领域的重要平台，提供了丰富的预训练模型和数据集。然而，由于网络限制，国内用户有时无法直接访问其官网huggingface.co。为了解决这一问题，hf-mirror.com作为Huggingface的镜像站应运而生，为用户提供了稳定的访问和下载服务。</p>
+<h2 id="镜像站的优势"><a href="#镜像站的优势" class="headerlink" title="镜像站的优势"></a>镜像站的优势</h2><ol>
+<li><strong>稳定访问</strong>：hf-mirror.com通过镜像技术，绕过了网络限制，确保用户可以正常访问Huggingface的资源。</li>
+<li><strong>高效下载</strong>：支持断点续传和多文件并行下载，大大提升了模型和数据集下载的效率。</li>
+<li><strong>兼容性强</strong>：支持Gated Model（需要登录的模型）的下载，用户只需提供访问令牌即可。</li>
 </ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>hf-mirror.com是Huggingface的镜像网站，为用户提供了一个备用的访问通道，解决了无法访问huggingface.co的问题。通过hf-mirror.com，我们可以正常地下载所需的模型和数据集，享受Huggingface提供的强大功能。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><ol>
+<li><strong>安装依赖</strong>：使用<code>pip install -U huggingface_hub</code>安装Huggingface的命令行工具。</li>
+<li><strong>设置镜像</strong>：通过<code>export HF_ENDPOINT=https://hf-mirror.com</code>设置镜像站点。</li>
+<li><strong>下载资源</strong>：使用<code>huggingface-cli download</code>命令下载所需模型或数据集。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>hf-mirror.com为国内用户提供了便捷的Huggingface资源访问途径，解决了网络限制带来的困扰。无论是研究人员还是开发者，都可以通过镜像站高效地获取所需资源，推动AI项目的进展。</p>
 
         </div>
 
