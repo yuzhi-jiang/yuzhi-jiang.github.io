@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>使用gradio_client与Gradio应用交互的完整指南 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./resume">resume</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./resume">resume</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">使用gradio_client与Gradio应用交互的完整指南</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 9, 2025&nbsp;&nbsp;7:06:40</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/gradio/">gradio</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="使用gradio-client与Gradio应用交互的完整指南"><a href="#使用gradio-client与Gradio应用交互的完整指南" class="headerlink" title="使用gradio_client与Gradio应用交互的完整指南"></a>使用gradio_client与Gradio应用交互的完整指南</h1><p>Gradio是一个强大的Python库，可以快速构建机器学习应用的Web界面。而<code>gradio_client</code>则是Gradio提供的官方客户端库，允许你以编程方式与任何Gradio应用进行交互。本文将带你全面了解如何使用<code>gradio_client</code>来连接和调用Gradio应用的API。</p>
+<h2 id="安装gradio-client"><a href="#安装gradio-client" class="headerlink" title="安装gradio_client"></a>安装gradio_client</h2><p>首先，确保你已经安装了<code>gradio_client</code>库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install gradio_client</span><br></pre></td></tr></table></figure>
+
+<h2 id="连接到Gradio应用"><a href="#连接到Gradio应用" class="headerlink" title="连接到Gradio应用"></a>连接到Gradio应用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gradio_client <span class="keyword">import</span> Client</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;正在连接到Gradio应用...&quot;</span>)</span><br><span class="line">client = Client(<span class="string">&quot;http://127.0.0.1:7860&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;连接成功！&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这段代码创建了一个Client实例，连接到本地运行的Gradio应用（默认端口7860）。你可以将URL替换为任何公开的Gradio应用地址。</p>
+<h2 id="查看API信息"><a href="#查看API信息" class="headerlink" title="查看API信息"></a>查看API信息</h2><p>在连接成功后，你可以查看应用的API信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.view_api()</span><br></pre></td></tr></table></figure>
+
+<p>这会打印出应用的所有可用API端点及其输入输出参数，帮助你了解如何调用。</p>
+<h2 id="文件处理示例"><a href="#文件处理示例" class="headerlink" title="文件处理示例"></a>文件处理示例</h2><p>下面的代码展示了如何处理音频文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gradio_client.utils <span class="keyword">import</span> file</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download_audio_file</span>(<span class="params">url</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;下载音频文件: <span class="subst">&#123;url&#125;</span>&quot;</span>)</span><br><span class="line">    temp_dir = os.path.join(os.getcwd(), <span class="string">&quot;temp&quot;</span>)</span><br><span class="line">    os.makedirs(temp_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line">    temp_file = os.path.join(temp_dir, <span class="string">&quot;sample.mp3&quot;</span>)</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> os.path.exists(temp_file):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;音频文件已存在: <span class="subst">&#123;temp_file&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> temp_file</span><br><span class="line">  </span><br><span class="line">    response = requests.get(url)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(temp_file, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(response.content)</span><br><span class="line">  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;音频文件已保存到: <span class="subst">&#123;temp_file&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> temp_file</span><br></pre></td></tr></table></figure>
+
+<p>这个函数从给定的URL下载音频文件并保存到本地临时目录中。如果文件已存在，则直接返回路径。</p>
+<h2 id="调用API端点"><a href="#调用API端点" class="headerlink" title="调用API端点"></a>调用API端点</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">handle_file</span>(<span class="params">file_path, task=<span class="string">&quot;ASR (Automatic Speech Recognition)&quot;</span>, custom_prompt=<span class="string">&quot;&quot;</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n尝试调用API...&quot;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 记录开始时间</span></span><br><span class="line">        start_time = time.time()</span><br><span class="line">    </span><br><span class="line">        <span class="comment"># 调用Gradio应用的API</span></span><br><span class="line">        result = client.predict(</span><br><span class="line">            file(file_path),  <span class="comment"># 音频文件路径</span></span><br><span class="line">            task,  <span class="comment"># 任务类型</span></span><br><span class="line">            custom_prompt,  <span class="comment"># 自定义提示</span></span><br><span class="line">            api_name=<span class="string">&quot;/handle_submit&quot;</span>  <span class="comment"># API端点名称</span></span><br><span class="line">        )</span><br><span class="line">    </span><br><span class="line">        <span class="comment"># 计算耗时</span></span><br><span class="line">        end_time = time.time()</span><br><span class="line">        elapsed_time = end_time - start_time</span><br><span class="line">    </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\n识别结果 (耗时: <span class="subst">&#123;elapsed_time:<span class="number">.2</span>f&#125;</span>秒):&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;调用失败: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<p><code>client.predict()</code>方法是调用API的核心，它接受：</p>
+<ol>
+<li>输入参数（这里使用了<code>file()</code>包装器处理文件）</li>
+<li>API端点名称（通过<code>api_name</code>指定）</li>
+<li>其他必要的参数</li>
+</ol>
+<h2 id="完整示例"><a href="#完整示例" class="headerlink" title="完整示例"></a>完整示例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>():</span><br><span class="line">    <span class="comment"># 下载音频示例</span></span><br><span class="line">    audio_url = <span class="string">&quot;https://audio-samples.github.io/samples/mp3/blizzard_unconditional/sample-0.mp3&quot;</span></span><br><span class="line">    audio_file_path = download_audio_file(audio_url)</span><br><span class="line">    <span class="comment"># 或者使用本地文件</span></span><br><span class="line">    <span class="comment"># audio_file_path = &quot;temp/output.wav&quot;</span></span><br><span class="line">  </span><br><span class="line">    result = handle_file(audio_file_path)</span><br><span class="line">    <span class="built_in">print</span>(result)  <span class="comment"># 打印识别结果</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    test()</span><br></pre></td></tr></table></figure>
+
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><ol>
+<li><strong>处理多个API端点</strong>：一个Gradio应用可能有多个API端点，你可以通过指定不同的<code>api_name</code>来调用它们。</li>
+<li><strong>流式输出</strong>：对于长时间运行的任务，可以使用<code>stream_output=True</code>参数来获取实时输出。</li>
+<li><strong>自定义超时</strong>：通过<code>timeout</code>参数设置请求超时时间。</li>
+<li><strong>状态跟踪</strong>：使用<code>job.status()</code>检查任务状态。</li>
+</ol>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>在实际应用中，你应该添加适当的错误处理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    result = client.predict(...)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;API调用失败: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="comment"># 重试或处理错误</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>gradio_client</code>提供了一种简单而强大的方式来以编程方式与Gradio应用交互。通过本文的示例，你应该能够：</p>
+<ol>
+<li>连接到任何Gradio应用</li>
+<li>查看可用的API端点</li>
+<li>上传文件并调用API</li>
+<li>处理返回结果</li>
+<li>实现基本的错误处理和性能监控</li>
+</ol>
+<p>无论是测试自己的Gradio应用，还是集成第三方AI服务，<code>gradio_client</code>都是一个非常有用的工具。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.anml.cn/2025/04/09/%E4%BD%BF%E7%94%A8gradio_client%E4%B8%8EGradio%E5%BA%94%E7%94%A8%E4%BA%A4%E4%BA%92%E7%9A%84%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/">https://blog.anml.cn/2025/04/09/%E4%BD%BF%E7%94%A8gradio_client%E4%B8%8EGradio%E5%BA%94%E7%94%A8%E4%BA%A4%E4%BA%92%E7%9A%84%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/gradio/"># gradio</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/04/09/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
+            
+            
+            <a class="next" rel="next" href="/2025/04/06/Hexo%E7%AE%80%E4%BB%8B%EF%BC%9A%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%B7%A5%E5%85%B7/">Hexo简介：快速搭建静态博客的工具</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
