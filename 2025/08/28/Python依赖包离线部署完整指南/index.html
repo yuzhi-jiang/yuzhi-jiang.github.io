@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="yuzhi">
+
+
+
+
+
+<title>Python依赖包离线部署完整指南 | yuzhi</title>
+
+
+
+    <link rel="icon" href="/./favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">yuzhi&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./resume">resume</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">yuzhi&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/./archives">Posts</a>
+                
+                    <a class="menu-item" href="/./category">Categories</a>
+                
+                    <a class="menu-item" href="/./tag">Tags</a>
+                
+                    <a class="menu-item" href="/./resume">resume</a>
+                
+                    <a class="menu-item" href="/./talks">说说</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python依赖包离线部署完整指南</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">yuzhi</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 28, 2025&nbsp;&nbsp;2:23:51</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/python/">python</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Python依赖包离线部署完整指南"><a href="#Python依赖包离线部署完整指南" class="headerlink" title="Python依赖包离线部署完整指南"></a>Python依赖包离线部署完整指南</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>在企业级生产环境中，由于安全、合规或网络限制等因素，服务器往往无法直接访问互联网。这种”离线环境”或”内网环境”给Python应用的部署带来了挑战，特别是依赖包的安装问题。本文将详细介绍如何将Python项目及其依赖包从有网络的开发环境迁移到无网络的生产环境。</p>
+<h2 id="核心思路"><a href="#核心思路" class="headerlink" title="核心思路"></a>核心思路</h2><p>离线部署的核心思路是：</p>
+<ol>
+<li>在有网络的环境中收集所有依赖包</li>
+<li>将依赖包文件打包传输到离线环境</li>
+<li>在离线环境中使用本地依赖包进行安装</li>
+</ol>
+<h2 id="详细步骤"><a href="#详细步骤" class="headerlink" title="详细步骤"></a>详细步骤</h2><h3 id="第一步：生成依赖清单"><a href="#第一步：生成依赖清单" class="headerlink" title="第一步：生成依赖清单"></a>第一步：生成依赖清单</h3><p>在开发环境中，使用以下命令生成当前环境的依赖清单：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>pip</code>：Python包管理工具</li>
+<li><code>freeze</code>：显示当前环境中已安装包的列表及其确切版本号</li>
+<li><code>&gt;</code>：重定向符号，将命令输出保存到文件中</li>
+<li><code>requirements.txt</code>：输出的文件名，这是Python项目中约定俗成的依赖文件名</li>
+</ul>
+<p><strong>命令作用：</strong><br>将当前Python环境中安装的所有包及其版本号以”包名&#x3D;&#x3D;版本号”的格式保存到requirements.txt文件中。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">numpy==1.21.0</span><br><span class="line">pandas==1.3.0</span><br><span class="line">requests==2.25.1</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意事项：</strong></p>
+<ul>
+<li>建议在虚拟环境中执行此命令，避免包含系统级包</li>
+<li>检查生成的requirements.txt，确保版本号正确</li>
+<li>可以手动编辑requirements.txt，移除不必要的依赖</li>
+</ul>
+<h3 id="第二步：下载依赖包"><a href="#第二步：下载依赖包" class="headerlink" title="第二步：下载依赖包"></a>第二步：下载依赖包</h3><p>在有网络的机器上执行以下命令之一来下载所有依赖包：</p>
+<h4 id="方法一：使用pip-download（推荐）"><a href="#方法一：使用pip-download（推荐）" class="headerlink" title="方法一：使用pip download（推荐）"></a>方法一：使用pip download（推荐）</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip download -d python_packages -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>pip</code>：Python包管理工具</li>
+<li><code>download</code>：下载包但不安装的子命令</li>
+<li><code>-d python_packages</code>：指定下载目录为python_packages文件夹<ul>
+<li><code>-d</code>是<code>--dest</code>的简写，表示destination（目标目录）</li>
+</ul>
+</li>
+<li><code>-r requirements.txt</code>：从requirements.txt文件读取要下载的包列表<ul>
+<li><code>-r</code>是<code>--requirement</code>的简写</li>
+</ul>
+</li>
+</ul>
+<p><strong>命令作用：</strong><br>从PyPI（Python包索引）下载requirements.txt中列出的所有包及其依赖，保存到python_packages目录中。下载的是源码包（.tar.gz）或预编译包（.whl）。</p>
+<h4 id="方法二：使用pip-wheel"><a href="#方法二：使用pip-wheel" class="headerlink" title="方法二：使用pip wheel"></a>方法二：使用pip wheel</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip wheel -w python_packages -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>pip</code>：Python包管理工具</li>
+<li><code>wheel</code>：构建wheel格式包的子命令</li>
+<li><code>-w python_packages</code>：指定wheel文件输出目录<ul>
+<li><code>-w</code>是<code>--wheel-dir</code>的简写</li>
+</ul>
+</li>
+<li><code>-r requirements.txt</code>：从requirements.txt文件读取包列表</li>
+</ul>
+<p><strong>命令作用：</strong><br>下载并构建requirements.txt中的包为wheel格式（.whl文件）。Wheel是Python的标准分发格式，安装速度更快。</p>
+<h4 id="方法三：使用python-m-pip-wheel"><a href="#方法三：使用python-m-pip-wheel" class="headerlink" title="方法三：使用python -m pip wheel"></a>方法三：使用python -m pip wheel</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip wheel -w python_packages -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>python</code>：Python解释器</li>
+<li><code>-m</code>：以模块方式运行，表示”module”</li>
+<li><code>pip</code>：要运行的模块名称</li>
+<li>其余参数同方法二</li>
+</ul>
+<p><strong>命令作用：</strong><br>功能与方法二相同，但通过Python解释器直接调用pip模块，确保使用正确的pip版本。</p>
+<p><strong>三种方法的区别：</strong></p>
+<ul>
+<li><code>pip download</code>：下载原始格式的包（可能是源码包或wheel包）</li>
+<li><code>pip wheel</code>：下载并构建为wheel格式</li>
+<li><code>python -m pip</code>：更明确指定使用哪个Python环境的pip</li>
+</ul>
+<p><strong>参数说明总结：</strong></p>
+<ul>
+<li><code>-d</code> 或 <code>--dest</code>：指定下载目录</li>
+<li><code>-w</code> 或 <code>--wheel-dir</code>：指定wheel文件输出目录</li>
+<li><code>-r</code> 或 <code>--requirement</code>：从文件读取依赖列表</li>
+<li><code>-m</code>：以模块方式运行程序</li>
+</ul>
+<h3 id="第三步：处理平台兼容性"><a href="#第三步：处理平台兼容性" class="headerlink" title="第三步：处理平台兼容性"></a>第三步：处理平台兼容性</h3><p>如果开发环境和生产环境的架构不同（如开发环境是Windows&#x2F;macOS，生产环境是Linux），需要指定目标平台：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载Linux x86_64平台的包</span></span><br><span class="line">pip download -d python_packages -r requirements.txt --platform linux_x86_64 --only-binary=:all:</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>--platform linux_x86_64</code>：指定目标平台架构<ul>
+<li><code>linux_x86_64</code>表示Linux操作系统的64位x86架构</li>
+<li>其他常见平台：<code>win_amd64</code>（Windows 64位）、<code>macosx_10_9_x86_64</code>（macOS）</li>
+</ul>
+</li>
+<li><code>--only-binary=:all:</code>：只下载预编译的二进制包<ul>
+<li><code>:all:</code>表示对所有包都应用此规则</li>
+<li>避免下载需要编译的源码包</li>
+</ul>
+</li>
+</ul>
+<p><strong>命令作用：</strong><br>专门下载适用于指定平台的包版本，确保在目标环境中能正确安装和运行。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 或者下载所有平台的包</span></span><br><span class="line">pip download -d python_packages -r requirements.txt --platform any</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>--platform any</code>：下载平台无关的包<ul>
+<li><code>any</code>表示不限定特定平台</li>
+<li>适用于纯Python包（不包含C扩展的包）</li>
+</ul>
+</li>
+</ul>
+<p><strong>为什么需要指定平台：</strong></p>
+<ul>
+<li>Python包可能包含C扩展模块，这些模块需要针对特定操作系统和架构编译</li>
+<li>在Windows上下载的包可能无法在Linux上运行</li>
+<li>通过指定平台，确保下载的包与目标环境兼容</li>
+</ul>
+<h3 id="第四步：传输到离线环境"><a href="#第四步：传输到离线环境" class="headerlink" title="第四步：传输到离线环境"></a>第四步：传输到离线环境</h3><p>将下载的<code>python_packages</code>目录和<code>requirements.txt</code>文件传输到离线的生产服务器上。</p>
+<p><strong>传输方式说明：</strong></p>
+<ol>
+<li><strong>SCP（Secure Copy Protocol）命令示例：</strong></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将文件从本地传输到远程服务器</span></span><br><span class="line">scp -r python_packages/ requirements.txt user@server_ip:/path/to/destination/</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>scp</code>：安全拷贝命令，通过SSH协议传输文件</li>
+<li><code>-r</code>：递归传输，用于传输整个目录</li>
+<li><code>python_packages/</code>：源目录</li>
+<li><code>requirements.txt</code>：要传输的文件</li>
+<li><code>user@server_ip</code>：目标服务器的用户名和IP地址</li>
+<li><code>:/path/to/destination/</code>：目标服务器上的路径</li>
+</ul>
+<ol start="2">
+<li><strong>创建压缩包传输：</strong></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建压缩包（在有网络的机器上）</span></span><br><span class="line">tar -czf python_offline_packages.tar.gz python_packages/ requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>tar</code>：打包和压缩工具</li>
+<li><code>-c</code>：创建新的归档文件（create）</li>
+<li><code>-z</code>：使用gzip压缩（compress with gzip）</li>
+<li><code>-f</code>：指定归档文件名（file）</li>
+<li><code>python_offline_packages.tar.gz</code>：输出的压缩包文件名</li>
+<li><code>python_packages/ requirements.txt</code>：要打包的文件和目录</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在目标服务器上解压</span></span><br><span class="line">tar -xzf python_offline_packages.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>-x</code>：解压归档文件（extract）</li>
+<li><code>-z</code>：使用gzip解压</li>
+<li><code>-f</code>：指定要解压的文件名</li>
+</ul>
+<ol start="3">
+<li><strong>其他传输方式：</strong></li>
+</ol>
+<ul>
+<li><strong>SFTP</strong>：图形化文件传输工具</li>
+<li><strong>USB存储设备</strong>：物理媒介传输</li>
+<li><strong>内网文件服务器</strong>：通过共享文件夹</li>
+</ul>
+<h3 id="第五步：离线安装"><a href="#第五步：离线安装" class="headerlink" title="第五步：离线安装"></a>第五步：离线安装</h3><p>在离线环境中执行以下命令安装依赖：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --no-index --find-links=python_packages -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>pip</code>：Python包管理工具</li>
+<li><code>install</code>：安装包的子命令</li>
+<li><code>--no-index</code>：不使用PyPI等在线包索引<ul>
+<li>告诉pip不要尝试从互联网下载包</li>
+<li>只使用本地指定的包源</li>
+</ul>
+</li>
+<li><code>--find-links=python_packages</code>：指定本地包目录<ul>
+<li><code>--find-links</code>告诉pip在哪里查找包文件</li>
+<li><code>python_packages</code>是我们之前下载包的目录</li>
+</ul>
+</li>
+<li><code>-r requirements.txt</code>：从requirements.txt文件读取要安装的包列表</li>
+</ul>
+<p><strong>命令作用：</strong><br>从本地python_packages目录中查找并安装requirements.txt中指定的所有包，完全不依赖网络连接。</p>
+<p>或者使用：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --no-index --find-links=python_packages -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>python</code>：Python解释器</li>
+<li><code>-m pip</code>：以模块方式运行pip<ul>
+<li>确保使用当前Python环境对应的pip版本</li>
+<li>在有多个Python版本的系统中特别有用</li>
+</ul>
+</li>
+<li>其余参数功能相同</li>
+</ul>
+<p><strong>两种命令的选择：</strong></p>
+<ul>
+<li>直接使用<code>pip</code>：简单快捷，适合大多数情况</li>
+<li>使用<code>python -m pip</code>：更精确，确保版本匹配，推荐在复杂环境中使用</li>
+</ul>
+<p><strong>安装过程说明：</strong></p>
+<ol>
+<li>pip读取requirements.txt文件</li>
+<li>对每个包，在python_packages目录中查找匹配的文件</li>
+<li>按照依赖关系顺序安装包</li>
+<li>完成后，所有包都安装到当前Python环境中</li>
+</ol>
+<h2 id="python-m-pip-的作用和优势"><a href="#python-m-pip-的作用和优势" class="headerlink" title="python -m pip 的作用和优势"></a>python -m pip 的作用和优势</h2><p><code>python -m pip</code> 通过模块执行方式调用pip，相比直接使用<code>pip</code>命令有以下优势：</p>
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>python</code>：Python解释器程序</li>
+<li><code>-m</code>：”module”的缩写，表示以模块方式运行</li>
+<li><code>pip</code>：要运行的模块名称</li>
+</ul>
+<p><strong>详细作用说明：</strong></p>
+<ol>
+<li><strong>版本一致性</strong>：确保使用当前Python解释器对应的pip版本<ul>
+<li>当系统有多个Python版本时（如Python 2.7、Python 3.8、Python 3.9）</li>
+<li>直接使用<code>pip</code>可能调用错误版本的pip</li>
+<li><code>python -m pip</code>明确使用当前python命令对应的pip</li>
+</ul>
+</li>
+</ol>
+<p><strong>举例说明：</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假设系统有多个Python版本</span></span><br><span class="line">/usr/bin/python2.7 -m pip install package  <span class="comment"># 使用Python 2.7的pip</span></span><br><span class="line">/usr/bin/python3.8 -m pip install package  <span class="comment"># 使用Python 3.8的pip</span></span><br><span class="line">/usr/bin/python3.9 -m pip install package  <span class="comment"># 使用Python 3.9的pip</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>路径问题避免</strong>：在某些系统中，pip可能不在PATH环境变量中<ul>
+<li>PATH是系统查找可执行文件的路径列表</li>
+<li>如果pip不在PATH中，直接运行<code>pip</code>会提示”命令未找到”</li>
+<li><code>python -m pip</code>通过Python解释器查找pip模块，绕过PATH问题</li>
+</ul>
+</li>
+<li><strong>权限问题</strong>：在某些受限环境中更容易执行<ul>
+<li>有些企业环境限制直接执行外部命令</li>
+<li>但允许通过Python解释器运行模块</li>
+<li><code>python -m pip</code>被视为Python脚本的一部分，更容易获得执行权限</li>
+</ul>
+</li>
+<li><strong>虚拟环境明确性</strong>：在虚拟环境中确保使用正确的pip</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 激活虚拟环境后</span></span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br><span class="line">python -m pip install package  <span class="comment"># 明确使用虚拟环境的pip</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>实际应用场景：</strong></p>
+<ul>
+<li>Docker容器中：确保使用容器内Python环境的pip</li>
+<li>CI&#x2F;CD流水线：在自动化脚本中确保版本一致性</li>
+<li>企业内网环境：绕过命令行工具的权限限制</li>
+<li>开发环境切换：在不同项目的虚拟环境间切换时保证正确性</li>
+</ul>
+<h2 id="常见踩坑点及解决方案"><a href="#常见踩坑点及解决方案" class="headerlink" title="常见踩坑点及解决方案"></a>常见踩坑点及解决方案</h2><h3 id="1-架构不匹配问题"><a href="#1-架构不匹配问题" class="headerlink" title="1. 架构不匹配问题"></a>1. 架构不匹配问题</h3><p><strong>问题</strong>：在Windows上下载的包无法在Linux上安装<br><strong>解决方案</strong>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 明确指定目标平台</span></span><br><span class="line">pip download -d python_packages -r requirements.txt --platform linux_x86_64 --only-binary=:all:</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-编译依赖问题"><a href="#2-编译依赖问题" class="headerlink" title="2. 编译依赖问题"></a>2. 编译依赖问题</h3><p><strong>问题</strong>：某些包需要编译，离线环境缺少编译工具<br><strong>解决方案</strong>：</p>
+<ul>
+<li>优先下载预编译的wheel包</li>
+<li>在相同环境的有网络机器上进行编译打包</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 强制使用预编译包</span></span><br><span class="line">pip download -d python_packages -r requirements.txt --only-binary=:all:</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>--only-binary=:all:</code>：对所有包都只下载预编译版本</li>
+<li>预编译包（wheel格式）无需编译，可以直接安装</li>
+<li>避免在离线环境中因缺少编译工具而安装失败</li>
+</ul>
+<h3 id="3-依赖版本冲突"><a href="#3-依赖版本冲突" class="headerlink" title="3. 依赖版本冲突"></a>3. 依赖版本冲突</h3><p><strong>问题</strong>：requirements.txt中的版本在离线环境中冲突<br><strong>解决方案</strong>：</p>
+<ul>
+<li>使用<code>pip-tools</code>生成精确的依赖树</li>
+<li>在有网络环境中先测试安装</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装pip-tools</span></span><br><span class="line">pip install pip-tools</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成精确的依赖版本</span></span><br><span class="line">pip-compile requirements.in</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>pip-tools</code>：Python依赖管理工具，可以锁定依赖版本</li>
+<li><code>pip-compile</code>：pip-tools的命令，用于生成精确的依赖文件</li>
+<li><code>requirements.in</code>：输入文件，包含顶层依赖（不指定具体版本）</li>
+<li>输出<code>requirements.txt</code>：包含所有依赖及其精确版本号</li>
+</ul>
+<p><strong>工作原理：</strong></p>
+<ol>
+<li><code>requirements.in</code>文件写入主要依赖：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">django</span><br><span class="line">requests</span><br><span class="line">pandas</span><br></pre></td></tr></table></figure></li>
+<li><code>pip-compile</code>会解析所有子依赖，生成带版本号的<code>requirements.txt</code>：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">django==3.2.9</span><br><span class="line">requests==2.25.1</span><br><span class="line">pandas==1.3.4</span><br><span class="line">numpy==1.21.2  # pandas的依赖</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-系统包依赖"><a href="#4-系统包依赖" class="headerlink" title="4. 系统包依赖"></a>4. 系统包依赖</h3><p><strong>问题</strong>：某些Python包依赖系统级库<br><strong>解决方案</strong>：</p>
+<ul>
+<li>提前在离线环境安装系统依赖</li>
+<li>使用Docker容器统一环境</li>
+</ul>
+<h3 id="5-大文件传输问题"><a href="#5-大文件传输问题" class="headerlink" title="5. 大文件传输问题"></a>5. 大文件传输问题</h3><p><strong>问题</strong>：依赖包总大小过大，传输困难<br><strong>解决方案</strong>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建压缩包</span></span><br><span class="line">tar -czf python_packages.tar.gz python_packages/ requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在目标机器解压</span></span><br><span class="line">tar -xzf python_packages.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>tar -czf</code>：创建压缩包<ul>
+<li><code>-c</code>：创建（create）</li>
+<li><code>-z</code>：使用gzip压缩（compress）</li>
+<li><code>-f</code>：指定文件名（file）</li>
+</ul>
+</li>
+<li><code>python_packages.tar.gz</code>：压缩包文件名</li>
+<li><code>tar -xzf</code>：解压缩包<ul>
+<li><code>-x</code>：解压（extract）</li>
+<li><code>-z</code>：解压gzip格式</li>
+<li><code>-f</code>：指定要解压的文件</li>
+</ul>
+</li>
+</ul>
+<p><strong>压缩效果：</strong><br>通常可以将几百MB的依赖包压缩到几十MB，大大减少传输时间。</p>
+<h2 id="高级技巧"><a href="#高级技巧" class="headerlink" title="高级技巧"></a>高级技巧</h2><h3 id="1-使用虚拟环境"><a href="#1-使用虚拟环境" class="headerlink" title="1. 使用虚拟环境"></a>1. 使用虚拟环境</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在离线环境创建虚拟环境</span></span><br><span class="line">python -m venv offline_env</span><br><span class="line"><span class="built_in">source</span> offline_env/bin/activate  <span class="comment"># Linux/macOS</span></span><br><span class="line"><span class="comment"># offline_env\Scripts\activate  # Windows</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在虚拟环境中安装</span></span><br><span class="line">pip install --no-index --find-links=python_packages -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>python -m venv offline_env</code>：创建名为offline_env的虚拟环境<ul>
+<li><code>venv</code>：Python内置的虚拟环境模块</li>
+<li><code>offline_env</code>：虚拟环境目录名称</li>
+</ul>
+</li>
+<li><code>source offline_env/bin/activate</code>：激活虚拟环境（Linux&#x2F;macOS）<ul>
+<li><code>source</code>：执行脚本并在当前shell中生效</li>
+<li>激活后，命令行提示符会显示虚拟环境名称</li>
+</ul>
+</li>
+<li><code>offline_env\Scripts\activate</code>：Windows下的激活命令</li>
+<li>在虚拟环境中安装的包不会影响系统Python环境</li>
+</ul>
+<h3 id="2-创建本地PyPI镜像"><a href="#2-创建本地PyPI镜像" class="headerlink" title="2. 创建本地PyPI镜像"></a>2. 创建本地PyPI镜像</h3><p>对于大型项目，可以创建本地PyPI镜像：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用bandersnatch创建本地镜像</span></span><br><span class="line">pip install bandersnatch</span><br><span class="line">bandersnatch mirror</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>bandersnatch</code>：PyPI镜像同步工具</li>
+<li><code>bandersnatch mirror</code>：创建完整的PyPI镜像副本</li>
+<li>需要大量磁盘空间（TB级别）和时间</li>
+<li>适合需要频繁部署多个项目的大型企业</li>
+</ul>
+<h3 id="3-Docker化部署"><a href="#3-Docker化部署" class="headerlink" title="3. Docker化部署"></a>3. Docker化部署</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.9</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> python_packages/ /tmp/python_packages/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> requirements.txt /tmp/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip install --no-index --find-links=/tmp/python_packages -r /tmp/requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理临时文件</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">rm</span> -rf /tmp/python_packages /tmp/requirements.txt</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="验证部署"><a href="#验证部署" class="headerlink" title="验证部署"></a>验证部署</h2><p>安装完成后，验证依赖是否正确安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查已安装的包</span></span><br><span class="line">pip list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证关键包是否可用</span></span><br><span class="line">python -c <span class="string">&quot;import your_main_package; print(&#x27;Import successful&#x27;)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行简单测试</span></span><br><span class="line">python your_main_script.py</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令详解：</strong></p>
+<ul>
+<li><code>pip list</code>：显示当前环境中已安装的所有包及版本</li>
+<li><code>python -c &quot;...&quot;</code>：执行单行Python代码<ul>
+<li><code>-c</code>表示”command”，后面跟Python代码字符串</li>
+<li><code>import your_main_package</code>：尝试导入主要的包</li>
+<li>如果导入成功，说明包已正确安装</li>
+</ul>
+</li>
+<li><code>python your_main_script.py</code>：运行实际的应用程序进行测试</li>
+</ul>
+<h2 id="最佳实践总结"><a href="#最佳实践总结" class="headerlink" title="最佳实践总结"></a>最佳实践总结</h2><ol>
+<li><strong>使用虚拟环境</strong>：避免污染系统Python环境</li>
+<li><strong>版本锁定</strong>：在requirements.txt中明确指定版本号</li>
+<li><strong>平台一致性</strong>：确保开发、打包、部署环境的一致性</li>
+<li><strong>测试先行</strong>：在模拟离线环境中先测试部署流程</li>
+<li><strong>文档记录</strong>：记录部署步骤和遇到的问题</li>
+<li><strong>定期更新</strong>：建立依赖包更新的流程和机制</li>
+</ol>
+<h2 id="自动化脚本示例"><a href="#自动化脚本示例" class="headerlink" title="自动化脚本示例"></a>自动化脚本示例</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># offline_deploy.sh - 自动化离线部署脚本</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> -e</span><br><span class="line"></span><br><span class="line">PROJECT_NAME=<span class="string">&quot;your_project&quot;</span></span><br><span class="line">PACKAGES_DIR=<span class="string">&quot;python_packages&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;开始准备离线部署包...&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理旧文件</span></span><br><span class="line"><span class="built_in">rm</span> -rf <span class="variable">$PACKAGES_DIR</span></span><br><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$PACKAGES_DIR</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成requirements.txt</span></span><br><span class="line">pip freeze &gt; requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载依赖包</span></span><br><span class="line">pip download -d <span class="variable">$PACKAGES_DIR</span> -r requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建部署包</span></span><br><span class="line">tar -czf <span class="variable">$&#123;PROJECT_NAME&#125;</span>_offline_deploy.tar.gz <span class="variable">$PACKAGES_DIR</span> requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;离线部署包准备完成: <span class="variable">$&#123;PROJECT_NAME&#125;</span>_offline_deploy.tar.gz&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;传输到目标服务器后，执行以下命令进行安装：&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;tar -xzf <span class="variable">$&#123;PROJECT_NAME&#125;</span>_offline_deploy.tar.gz&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;pip install --no-index --find-links=<span class="variable">$PACKAGES_DIR</span> -r requirements.txt&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>脚本详解：</strong></p>
+<ul>
+<li><code>#!/bin/bash</code>：指定使用bash解释器执行脚本</li>
+<li><code>set -e</code>：遇到任何错误立即退出脚本</li>
+<li><code>PROJECT_NAME</code>和<code>PACKAGES_DIR</code>：定义变量，便于修改和重用</li>
+<li><code>rm -rf $PACKAGES_DIR</code>：删除旧的包目录（如果存在）<ul>
+<li><code>-r</code>：递归删除</li>
+<li><code>-f</code>：强制删除，不询问</li>
+</ul>
+</li>
+<li><code>mkdir -p $PACKAGES_DIR</code>：创建包目录<ul>
+<li><code>-p</code>：如果父目录不存在则创建</li>
+</ul>
+</li>
+<li><code>echo</code>：输出提示信息</li>
+<li><code>$&#123;PROJECT_NAME&#125;</code>：变量引用语法，获取变量值</li>
+</ul>
+<p><strong>使用方法：</strong></p>
+<ol>
+<li>保存为文件：<code>offline_deploy.sh</code></li>
+<li>添加执行权限：<code>chmod +x offline_deploy.sh</code></li>
+<li>运行脚本：<code>./offline_deploy.sh</code></li>
+</ol>
+<p>通过遵循以上步骤和最佳实践，你可以顺利地将Python应用部署到无网络的生产环境中。记住，每个环境都可能有其特殊性，需要根据实际情况进行调整和优化。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>yuzhi</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://blog.anml.cn/2025/08/28/Python%E4%BE%9D%E8%B5%96%E5%8C%85%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/">https://blog.anml.cn/2025/08/28/Python%E4%BE%9D%E8%B5%96%E5%8C%85%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%95%B4%E6%8C%87%E5%8D%97/</a></span>
+                    </p>
+                
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/python%E4%BE%9D%E8%B5%96/"># python依赖</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2025/08/28/ubuntu20%E7%A7%BB%E9%99%A4snaps/"></a>
+            
+            
+            <a class="next" rel="next" href="/2025/04/09/Huggingface%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F%E7%AB%99/">Huggingface使用镜像站</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+  
+ <div id="gitalk-container"></div>  
+ <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script type="text/javascript">
+
+ var gitalk = new Gitalk({
+
+ clientID: 'Ov23lizF4RGwdp76oHYU',
+
+ clientSecret: 'e6e8a642d6b623ac6d647bfcaeb69cf0ef643dd3',
+
+ repo: 'yuzhi-jiang.github.io',
+
+ owner: 'yuzhi-jiang',
+
+ admin: 'yuzhi-jiang',
+
+ id: md5(location.pathname), 
+
+ labels: 'Gitalk'.split(',').filter(l => l),
+
+ perPage: 10,
+
+ pagerDirection: 'last',
+
+ createIssueManually: true,
+
+ distractionFreeMode: false
+
+ })
+
+ gitalk.render('gitalk-container')
+
+</script>
+  
+
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© yuzhi | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+
+  
+ <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<span class="site-uv">
+
+ 总访客量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+
+</span>&nbsp;
+
+
+
+
+
+<span class="site-pv">
+
+ | 总访问量:
+
+ <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+
+</span>
+
+  
+
+
+</span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
