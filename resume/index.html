@@ -135,9 +135,9 @@
         <h2 class="post-title">我的简历</h2>
         
         <section class="post-content">
-            <h1 id="个人简历"><a href="#个人简历" class="headerlink" title="# 个人简历"></a># 个人简历</h1><ul>
+            <h2 id="个人简历"><a href="#个人简历" class="headerlink" title="个人简历"></a>个人简历</h2><ul>
 <li>姓名：江茂明</li>
-<li>邮箱: <a href="mailto:&#121;&#117;&#x7a;&#x68;&#105;&#x2e;&#x6a;&#105;&#97;&#x6e;&#x67;&#x40;&#102;&#111;&#120;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#121;&#117;&#x7a;&#x68;&#105;&#x2e;&#x6a;&#105;&#97;&#x6e;&#x67;&#x40;&#102;&#111;&#120;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a></li>
+<li>邮箱: <a href="mailto:&#x79;&#x75;&#x7a;&#x68;&#x69;&#46;&#106;&#x69;&#x61;&#110;&#x67;&#x40;&#102;&#x6f;&#120;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x79;&#x75;&#x7a;&#x68;&#x69;&#46;&#106;&#x69;&#x61;&#110;&#x67;&#x40;&#102;&#x6f;&#120;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;</a></li>
 <li>个人博客: <a href="https://blog.anml.cn/">https://blog.anml.cn/</a></li>
 <li>CSDN: <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43727225?type=blog">https://blog.csdn.net/qq_43727225?type&#x3D;blog</a></li>
 </ul>
@@ -147,12 +147,9 @@
 <li><strong>GPA:</strong> 3.2 &#x2F; 4.0</li>
 <li><strong>主修课程:</strong> 数据结构与算法、C、Java程序设计、高等数学、计算机组成原理、操作系统原理、互联网应用开发</li>
 <li><strong>荣誉奖项:</strong><ul>
-<li><p><strong>数学建模竞赛国家级二等奖</strong>（2022）</p>
-</li>
-<li><p><strong>大湾区杯金融数学建模竞赛本科组三等奖</strong>（2021）</p>
-</li>
-<li><p><strong>团体程序设计天梯赛团队三等奖</strong>（2021）</p>
-<br/></li>
+<li><strong>数学建模竞赛国家级二等奖</strong>（2022）</li>
+<li><strong>大湾区杯金融数学建模竞赛本科组三等奖</strong>（2021）</li>
+<li><strong>团体程序设计天梯赛团队三等奖</strong>（2021）</li>
 </ul>
 </li>
 </ul>
@@ -175,16 +172,12 @@
 <h3 id="工作经验"><a href="#工作经验" class="headerlink" title="工作经验"></a>工作经验</h3><p>| <strong>某智能数字化技术有限公司</strong> <strong>2023-02 - 至今</strong></p>
 <p><strong>技术选型: SpringBoot、EasyExcel、EasyPoi、vue-plugins-hiprint（标签或报表打印）、YOLO</strong><br><strong>主要成就:</strong></p>
 <ul>
-<li><strong>性能优化</strong>：重构报表导出模块，将30分钟的大单表导出时间优化至10秒内，复杂场景性能提升10倍+</li>
-<li><strong>架构设计</strong>：设计报表高级查询架构，开发效率提升200%，获得客户一致好评</li>
-<li><strong>安全控制</strong>：实现报表权限管理体系，支持权限字段动态同步至导出文件，有效防止数据泄露</li>
-<li><strong>算法优化</strong>：研发高价值物料智能匹配切割算法，降低物料废弃率20%以上</li>
-<li><strong>系统设计</strong>：设计设备预约调度系统，实现秒级精度分配，最大化设备利用率</li>
-<li><strong>智能监控</strong>：基于<strong>YOLO</strong>实现工作机械状态识别，实时监控设备运行状态，准确率达95%以上</li>
-<li><strong>成本控制</strong>：采用vue-plugins-hiprint替代思迈特报表，降低系统维护成本</li>
-<li><strong>流程优化</strong>：开发内部需求管理平台，实现需求全生命周期管理</li>
-<li><strong>监控体系</strong>：构建系统监控体系，整合主动式与被动式监控机制</li>
-<li><strong>创新研发</strong>：开发材料计算引擎，支持复杂公式解析与逆向求解</li>
+<li><strong>架构设计</strong>：主导研发<strong>企业级动态字段引擎</strong>，构建全链路动态扩展体系。<strong>存储层</strong>基于<strong>MyBatis拦截器</strong>与<strong>纵向扩展表</strong>策略，实现运行时Schema变更不锁表及透明化持久化，内置<strong>递归保护</strong>机制保障事务一致性；<strong>展现层</strong>利用<strong>ResponseBodyAdvice</strong>与<strong>多级缓存</strong>技术（ThreadLocal&#x2F;反射），实现高性能的字段级权限控制、脱敏及<strong>逻辑字段实时计算</strong>；<strong>交互层</strong>深度集成<strong>EasyExcel</strong>，通过自定义<strong>ReadListener</strong>与<strong>WriteHandler</strong>实现动态表头映射与数据读写，结合<strong>Converter</strong>机制完成字典&#x2F;单位等复杂类型的自动翻译与转换；<strong>查询层</strong>集成<strong>JSqlParser</strong>解决复杂联表查询中的动态字段映射难题。</li>
+<li><strong>数据治理</strong>：设计<strong>基础数据引用防护体系</strong>，针对”基础数据被引用时不可删除”的强一致性需求，研发基于<strong>MyBatis拦截器</strong>的全局校验组件。支持<strong>物理&#x2F;逻辑删除</strong>的双重自动拦截，通过<strong>反射机制</strong>智能解析多类型参数（Map&#x2F;List&#x2F;Entity）提取主键，结合<strong>规则注册中心</strong>实现引用检查解耦，在应用层构建轻量级”软外键”防线，杜绝业务数据孤岛。</li>
+<li><strong>性能优化</strong>：重构报表导出模块，将30分钟的大单表导出时间优化至10秒内，复杂场景性能提升10倍+；设计报表高级查询架构，支持动态字段透传，开发效率提升200%。</li>
+<li><strong>安全控制</strong>：构建细粒度的<strong>字段级权限控制体系</strong>，支持动态字段的权限自动过滤与脱敏，有效防止SaaS多租户场景下的数据泄露。</li>
+<li><strong>算法优化</strong>：研发高价值物料智能匹配切割算法，降低物料废弃率20%以上；开发材料计算引擎，支持复杂公式解析与逆向求解。</li>
+<li><strong>智能监控</strong>：基于<strong>YOLO</strong>实现工作机械状态识别，实时监控设备运行状态，准确率达95%以上；构建全链路系统监控体系，整合主动式与被动式监控机制。</li>
 <li><strong>紧追市场AI前沿技术</strong>：探索阅读<strong>cherry-studio</strong>,<strong>cursor</strong>等大厂的MCP客户端实现方式和官方MCP协议，将公司系统部分模块和使用场景进行抽离，接入<strong>function Call</strong>和实现<strong>独立</strong>的<strong>MCP <strong>客户端，并实现</strong>AI模型</strong>可以根据任务，拆分任务，按步骤实现方案。</li>
 </ul>
 <hr>
@@ -263,6 +256,7 @@
 <h2 id="技术文章"><a href="#技术文章" class="headerlink" title="技术文章"></a>技术文章</h2><ul>
 <li><a href="https://blog.anml.cn/2024/07/07/listToTree%E6%B3%A8%E8%A7%A3/listToTree%E6%B3%A8%E8%A7%A3/">利用注解生成树结构</a></li>
 <li><a href="https://blog.anml.cn/2020/11/09/G%20-%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/">G - 编辑距离(算法题解)</a></li>
+<li>其他更多请看<a href="https://blog.anml.cn/">blog.anml.cn</a></li>
 </ul>
 <hr>
 <h2 id="探索-成长路径"><a href="#探索-成长路径" class="headerlink" title="探索&#x2F;成长路径"></a>探索&#x2F;成长路径</h2><ul>
@@ -286,6 +280,8 @@
 <li><strong>small-spring简单实现:</strong> <a target="_blank" rel="noopener" href="https://github.com/yuzhi-jiang/small-sprinig">https://github.com/yuzhi-jiang/small-sprinig</a></li>
 <li><strong>gof23设计模式实现:</strong> <a target="_blank" rel="noopener" href="https://github.com/yuzhi-jiang/gof23">https://github.com/yuzhi-jiang/gof23</a>](<a target="_blank" rel="noopener" href="https://github.com/yuzhi-jiang/gof23">https://github.com/yuzhi-jiang/gof23</a>)</li>
 </ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
 
         </section>
     </article>
